@@ -12,7 +12,7 @@
 
             <?= $this->session->flashdata('message'); ?>
 
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newMenuModal">Add New Menu</a>
+            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newMenuModal" data-title="Add New Menu" data-button="Add" id="menuModal">Add New Menu</a>
 
             <table class="table table-hover">
                 <thead>
@@ -25,15 +25,16 @@
                 <tbody>
                     <?php $i = 1; ?>
                     <?php foreach ($menu as $m) : ?>
-                    <tr>
-                        <th scope="row"><?= $i; ?></th>
-                        <td><?= $m['menu']; ?></td>
-                        <td>
-                            <a href="" class="badge badge-success">edit</a>
-                            <a href="" class="badge badge-danger">delete</a>
-                        </td>
-                    </tr>
-                    <?php $i++; ?>
+                        <tr>
+                            <th scope="row"><?= $i; ?></th>
+                            <td><?= $m['menu']; ?></td>
+                            <td>
+                                <a href="" class="badge badge-success" data-toggle="modal" data-target="#newMenuModal" data-title="Edit Menu" data-button="edit" data-menu="<?= $m['menu']; ?>" data-idMenu="<?= $m['id']; ?>">edit</a>
+
+                                <a href="<?= base_url('menu/delete'); ?>/<?= $m['id']; ?>" class="badge badge-danger" onclick="return confirm('Yakin hapus &quot;<?= $m['menu']; ?>&quot; ?');">delete</a>
+                            </td>
+                        </tr>
+                        <?php $i++; ?>
                     <?php endforeach; ?>
                 </tbody>
             </table>
@@ -64,15 +65,16 @@
             </div>
             <form action="<?= base_url('menu'); ?>" method="post">
                 <div class="modal-body">
+                    <input type="text" class="form-control" id="idMenu" name="idMenu" hidden>
                     <div class="form-group">
                         <input type="text" class="form-control" id="menu" name="menu" placeholder="Menu name">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary action">Add</button>
                 </div>
             </form>
         </div>
     </div>
-</div> 
+</div>

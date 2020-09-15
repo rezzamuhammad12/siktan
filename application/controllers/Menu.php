@@ -65,4 +65,71 @@ class Menu extends CI_Controller
             redirect('menu/submenu');
         }
     }
+
+    public function edit()
+    {
+        $this->form_validation->set_rules('menu', 'Menu', 'required');
+
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed edit menu!!</div>');
+            redirect('menu');
+        } else {
+
+            $this->db->set('menu', htmlspecialchars($this->input->post('menu', true)));
+            $this->db->where('id', $this->input->post('idMenu'));
+            $this->db->update('user_menu');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Menu Edited!!</div>');
+            redirect('menu');
+        }
+    }
+
+    public function delete($id)
+    {
+
+        if ($this->db->delete('user_menu', array('id' => $id))) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Menu Deleted!!</div>');
+            redirect('menu');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed delete Menu!!</div>');
+            redirect('menu');
+        }
+    }
+
+
+    public function editSubMenu()
+    {
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('menu_id', 'Menu', 'required');
+        $this->form_validation->set_rules('url', 'URL', 'required');
+        $this->form_validation->set_rules('icon', 'icon', 'required');
+
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed edit menu!!</div>');
+            redirect('menu/submenu');
+        } else {
+            $data = [
+                'title' => htmlspecialchars($this->input->post('title')),
+                'menu_id' => htmlspecialchars($this->input->post('menu_id')),
+                'url' => htmlspecialchars($this->input->post('url')),
+                'icon' => htmlspecialchars($this->input->post('icon')),
+                'is_active' => htmlspecialchars($this->input->post('is_active'))
+            ];
+            $this->db->set($data);
+            $this->db->where('id', $this->input->post('idmenu'));
+            $this->db->update('user_sub_menu');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Menu Edited!!</div>');
+            redirect('menu/submenu');
+        }
+    }
+
+    public function deleteSubMenu($id)
+    {
+        if ($this->db->delete('user_sub_menu', array('id' => $id))) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Menu Deleted!!</div>');
+            redirect('menu/submenu');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed delete Menu!!</div>');
+            redirect('menu/submenu');
+        }
+    }
 }
