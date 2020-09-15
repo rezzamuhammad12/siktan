@@ -1,0 +1,14 @@
+/*====================================== 
+Modal Detail Kelompok Tani
+======================================*/
+
+#detailKelompokTani .modal-content {
+    padding: 10px;
+}
+
+.registration select#role_id,
+.registration select#id_kota,
+.registration select#id_kecamatan {
+    border-radius: 20px;
+    font-size: 10pt;
+}
