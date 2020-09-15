@@ -6,7 +6,7 @@ class KelompokTani_model extends CI_Model
     public function getKelompokTani()
     {
 
-        $query = "SELECT `kelompok_tani`.* ,`list_kelas`.*, `penyuluh`.`nama` AS `nama_penyuluh`
+        $query = "SELECT `kelompok_tani`.* ,`list_kelas`.`id` AS `id_kelas`, `list_kelas`.`kelas`, `penyuluh`.`nama` AS `nama_penyuluh`
                     FROM `kelompok_tani` INNER JOIN `list_kelas`
                         ON `kelompok_tani`.`id_kelas` = `list_kelas`.`id`
                     INNER JOIN `penyuluh`

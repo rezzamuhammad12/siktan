@@ -18,14 +18,8 @@
                                 <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Username" value="<?= set_value('username'); ?>">
                                 <?= form_error('username', '<small class="text-danger pl-3">', '</small>'); ?>
                             </div>
-
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Username" value="<?= set_value('username'); ?>">
-                                <?= form_error('username', '<small class="text-danger pl-3">', '</small>'); ?>
-                            </div>
-
-                            <div class="form-group">
-                                <select name="role_id" id="role_id" class="form-control">
+                                <select name="role_id" id="role_id" class="form-control" required>
                                     <option value="0">Pilih Role</option>
                                     <option value="2">Admin Kota/Kabupaten</option>
                                     <option value="3">Admin Kecamatan</option>
@@ -33,13 +27,13 @@
                             </div>
 
                             <div class="form-group">
-                                <select name="id_kota" id="id_kota" class="form-control">
+                                <select name="id_kota" id="id_kota" class="form-control" required>
                                     <option value="0">Pilih Kota</option>
                                 </select>
                             </div>
 
                             <div class="form-group kecamatan-wrapper">
-                                <select name="id_kecamatan" id="id_kecamatan" class="form-control">
+                                <select name="id_kecamatan" id="id_kecamatan" class="form-control" required>
                                     <option value="0">Pilih Kecamatan</option>
                                 </select>
                             </div>

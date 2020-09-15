@@ -79,7 +79,7 @@
                         <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Kelompok Tani">
                     </div>
                     <div class="form-group">
-                        <select name="status" id="status" class="form-control">
+                        <select name="penyuluh" id="penyuluh" class="form-control">
                             <option value="">Pilih Penyuluh</option>
                             <?php foreach ($penyuluh as $p) : ?>
                                 <option value="<?= $p['id']; ?>"><?= $p['nama']; ?> (<?= $p['nip']; ?>)</option>
@@ -125,12 +125,16 @@
                     </div>
 
                     <div class="form-group">
-                        <select name="kelas" id="kelas" class="form-control">
+                        <select name="id_kelas" id="id_kelas" class="form-control">
                             <option value="">Pilih Kelas</option>
                             <?php foreach ($listKelas as $lk) : ?>
                                 <option value="<?= $lk['id']; ?>"><?= $lk['kelas']; ?></option>
                             <?php endforeach; ?>
                         </select>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="skor" name="skor" placeholder="Skor">
                     </div>
 
                     <div class="form-group">

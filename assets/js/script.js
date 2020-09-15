@@ -33,7 +33,6 @@ $(document).ready(function () {
     console.log(idKota)
     console.log(idKecamatan)
     if (idKota != 0) {
-        $('#id_kota').attr('disabled', 1)
 
         $.ajax({
             url: 'https://dev.farizdotid.com/api/daerahindonesia/kota/' + idKota,
@@ -79,22 +78,31 @@ $(document).ready(function () {
 
     }
 
-    if (idKota != 0 && idKecamatan != 0) {
-        $('#id_desa').removeAttr('disabled');
 
-        $.ajax({
-            url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + idKecamatan,
-            type: 'GET',
-            dataType: 'json',
-            success: function (result) {
-                $.each(result['kelurahan'], function (key, value) {
-                    $('#id_desa')
-                        .append($("<option></option>")
-                            .attr("value", value['id'])
-                            .text(value['nama']));
-                });
-            },
-            error: err => console.log(err),
-        })
-    }
+
+
+    $('#id_kecamatan').on('change', function () {
+        var idKota = $("#id_kota").prop("selectedIndex", 0).val();
+        var idKecamatan = $(this).val();
+        console.log(idKecamatan)
+        if (idKota != 0 && idKecamatan != 0) {
+            $('#id_desa').removeAttr('disabled');
+
+            $.ajax({
+                url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + idKecamatan,
+                type: 'GET',
+                dataType: 'json',
+                success: function (result) {
+                    $.each(result['kelurahan'], function (key, value) {
+                        $('#id_desa')
+                            .append($("<option></option>")
+                                .attr("value", value['id'])
+                                .text(value['nama']));
+                    });
+                },
+                error: err => console.log(err),
+            })
+        }
+    })
+
 })
