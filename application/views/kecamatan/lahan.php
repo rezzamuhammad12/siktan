@@ -14,7 +14,7 @@
 
             <?= $this->session->flashdata('message'); ?>
 
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addLahan">Tambah Lahan</a>
+            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addLahan" data-title="Tambah Lahan" data-button="Add">Tambah Lahan</a>
 
             <table class="table table-hover">
                 <thead>
@@ -37,8 +37,8 @@
                             <td><?= $l['status']; ?></td>
                             <td><?= is_null($l['approved_by']) ? "diproses" : $l['approved_by'] ?></td>
                             <td>
-                                <a href="" class="badge badge-success">edit</a>
-                                <a href="" class="badge badge-danger">delete</a>
+                                <a href="" class="badge badge-success" data-toggle="modal" data-target="#addLahan" data-title="Edit Lahan" data-button="Edit" data-id="<?= $l['id_lahan'] ?>" data-nama="<?= $l['id'] ?>" data-luas="<?= $l['luas'] ?>" data-status="<?= $l['id_status'] ?>">edit</a>
+                                <a href="deleteLahan/<?= $l['id_lahan']; ?>" class="badge badge-danger" onclick="return confirm('Yakin hapus Lahan dari &quot;<?= $l['nama']; ?>&quot; ?');">delete</a>
                             </td>
                         </tr>
                         <?php $i++; ?>
@@ -69,6 +69,7 @@
             </div>
             <form action="<?= base_url('kecamatan/lahan'); ?>" method="post">
                 <div class="modal-body">
+                    <input type="text" class="form-control" id="id" name="id" hidden>
                     <div class="form-group">
                         <select name="id_kelompok" id="id_kelompok" class="form-control">
                             <option value="">Pilih Kelompok</option>
@@ -92,7 +93,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary action">Add</button>
                 </div>
             </form>
         </div>

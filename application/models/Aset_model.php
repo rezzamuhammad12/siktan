@@ -6,7 +6,7 @@ class Aset_model extends CI_Model
     public function getAset()
     {
 
-        $query = "SELECT `aset`.* , `list_sumber_perolehan`.`sumber_perolehan` ,`kelompok_tani`.`nama`
+        $query = "SELECT `aset`.* , `list_sumber_perolehan`.`sumber_perolehan`, `list_sumber_perolehan`.`id` AS `id_sumber`,`kelompok_tani`.`nama` AS `nama_kelompok`, `kelompok_tani`.`id` AS `id_kelompok`
                     FROM `aset` INNER JOIN `list_sumber_perolehan`
                         ON `aset`.`id_sumber` = `list_sumber_perolehan`.`id`
                     INNER JOIN `kelompok_tani`

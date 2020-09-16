@@ -14,7 +14,7 @@
 
             <?= $this->session->flashdata('message'); ?>
 
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAset">Tambah Aset</a>
+            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAset" data-title="Tambah Aset" data-button="Add">Tambah Aset</a>
 
             <table class="table table-hover">
                 <thead>
@@ -34,14 +34,15 @@
                     <?php foreach ($aset as $a) : ?>
                         <tr>
                             <th scope="row"><?= $i; ?></th>
+                            <td><?= $a['nama_kelompok']; ?></td>
                             <td><?= $a['nama']; ?></td>
-                            <td><?= $a['jumlah']; ?></td>
                             <td><?= $a['sumber_perolehan']; ?></td>
+                            <td><?= $a['jumlah']; ?></td>
                             <td><?= $a['tahun_perolehan']; ?></td>
                             <td><?= is_null($a['approved_by']) ? "diproses" : $a['approved_by'] ?></td>
                             <td>
-                                <a href="" class="badge badge-success">edit</a>
-                                <a href="" class="badge badge-danger">delete</a>
+                                <a href="" class="badge badge-success" data-toggle="modal" data-target="#addAset" data-title="Edit Aset" data-button="Edit" data-id="<?= $a['id']; ?>" data-kelompok="<?= $a['id_kelompok']; ?>" data-nama="<?= $a['nama']; ?>" data-sumber="<?= $a['id_sumber']; ?>" data-jumlah="<?= $a['jumlah']; ?>" data-tahun="<?= $a['tahun_perolehan']; ?>">edit</a>
+                                <a href="deleteAset/<?= $a['id']; ?>" class="badge badge-danger" onclick="return confirm('Yakin hapus &quot;<?= $a['nama']; ?>&quot; dari kelompok <?= $a['nama_kelompok']; ?>?');">delete</a>
                             </td>
                         </tr>
                         <?php $i++; ?>
@@ -72,6 +73,7 @@
             </div>
             <form action="<?= base_url('kecamatan/aset'); ?>" method="post">
                 <div class="modal-body">
+                    <input type="text" class="form-control" id="id" name="id" hidden>
                     <div class="form-group">
                         <select name="id_kelompok" id="id_kelompok" class="form-control">
                             <option value="">Pilih Kelompok</option>
@@ -100,7 +102,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary action">Add</button>
                 </div>
             </form>
         </div>
