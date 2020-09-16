@@ -225,4 +225,40 @@ class Kecamatan extends CI_Controller
             redirect('kecamatan/aset');
         }
     }
+
+    public function komoditi()
+    {
+        $this->load->model('Komoditi_model');
+        $this->load->model('KelompokTani_model');
+
+        $data['title'] = 'Komoditi';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['komoditi'] = $this->Komoditi_model->getKomoditi();
+
+        $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+        $data['listSubsektor'] = $this->db->get('list_subsektor')->result_array();
+        $data['listKomoditas'] = $this->db->get('list_komoditas')->result_array();
+
+
+        $this->form_validation->set_rules('id_kelompok', 'Id_kelompok', 'required');
+        $this->form_validation->set_rules('id_subsektor', 'Id_subsektor', 'required');
+        $this->form_validation->set_rules('id_komoditas', 'id_komoditas', 'required');
+
+        if ($this->form_validation->run() ==  false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('kecamatan/komoditi', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $data = [
+                'id_kelompok' => htmlspecialchars($this->input->post('id_kelompok', true)),
+                'id_subsektor' => htmlspecialchars($this->input->post('id_subsektor', true)),
+                'id_komoditas' => htmlspecialchars($this->input->post('id_komoditas', true))
+            ];
+            $this->db->insert('komoditi', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">komoditi added!</div>');
+            redirect('kecamatan/komoditi');
+        }
+    }
 }
