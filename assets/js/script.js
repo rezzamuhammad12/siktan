@@ -102,9 +102,6 @@ $(document).ready(function () {
     console.log(idKota)
     console.log(idKecamatan)
 
-
-
-
     if (idKota) {
         $.ajax({
             url: 'https://dev.farizdotid.com/api/daerahindonesia/kota/' + idKota,
@@ -196,8 +193,7 @@ $(document).ready(function () {
     $('#id_kecamatan').on('change', function () {
         var idKota = $("#id_kota").val();
         var idKecamatan = $(this).val();
-        console.log(idKota);
-        console.log(idKecamatan);
+
         $('#id_desa')
             .find('option')
             .remove()
