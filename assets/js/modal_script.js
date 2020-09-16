@@ -105,11 +105,16 @@ $('#addAset').on('show.bs.modal', function (event) {
 // Kelompok tani
 $('#addKelompokPetani').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
+    var title = button.data('title')
+    var btn = button.data('button')
+
+    var id = button.data('id');
     var nama = button.data('nama')
     var penyuluh = button.data('penyuluh')
     var alamat = button.data('alamat')
     var desa = button.data('desa')
     var kecamatan = button.data('kecamatan')
+    var bpp = button.data('bpp')
     var kota = button.data('kota')
     var tahun_pembentukan = button.data('tahun_pembentukan')
     var kelas = button.data('kelas')
@@ -117,40 +122,110 @@ $('#addKelompokPetani').on('show.bs.modal', function (event) {
     var tahun_penerapan = button.data('tahun_penerapan')
     var teknologi = button.data('teknologi')
 
-    console.log(nama)
-    console.log(penyuluh)
-    console.log(alamat)
-    console.log(desa)
-    console.log(kecamatan)
-    console.log(kota)
-    console.log(tahun_pembentukan)
-    console.log(kelas)
-    console.log(skor)
-    console.log(tahun_penerapan)
-    console.log(teknologi)
+    var modal = $(this)
+    modal.find('.modal-title').text(title);
+    modal.find('.action').text(btn);
+    if (btn == 'Add') {
+        $('.modal-content form').attr('action', "kelompokTani")
+        modal.find('#id').val("");
+        modal.find('#nama').val("");
+        modal.find('#penyuluh option:eq(0)').prop('selected', true)
+        modal.find('#id_kota')
+            .prepend('<option value="">Pilih Kota</option>')
+            .val('whatever');
+        modal.find('#id_kota option:eq(0)').prop('selected', true)
+        modal.find('#id_kecamatan').find('option')
+            .remove()
+            .end()
+            .append('<option value="">Pilih Kecamatan</option>')
+            .val('whatever');
+        modal.find('#id_kecamatan option:eq(0)').prop('selected', true)
+        modal.find('#id_desa').find('option')
+            .remove()
+            .end()
+            .append('<option value="">Pilih Kecamatan</option>')
+            .val('whatever');
+        modal.find('#id_desa option:eq(0)').prop('selected', true)
+        modal.find('#bpp').val("");
+        modal.find('#alamat').val("");
+        modal.find('#tahun_pembentukan').val("");
+        modal.find('#id_kelas option:eq(0)').prop('selected', true)
+        modal.find('#skor').val(skor);
+        modal.find('#tahun_penerapan').val("");
+        modal.find('#teknologi').val("");
+    } else {
 
-    // var modal = $(this)
-    // modal.find('.modal-title').text(title);
-    // modal.find('.action').text(btn);
+        modal.find('#id_kecamatan').removeAttr('disabled');
+        modal.find('#id_desa').removeAttr('disabled');
+        //Kota
+        $.ajax({
+            url: 'https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=32',
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                $.each(result['kota_kabupaten'], function (key, value) {
+                    $('#id_kota')
+                        .append($("<option></option>")
+                            .attr("value", value['id'])
+                            .text(value['nama']));
+                });
+            },
+            error: err => console.log(err),
+        })
+        // Kecamatan
+        $.ajax({
+            url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + kota,
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                console.log(result['kecamatan'])
+                $.each(result['kecamatan'], function (key, value) {
+                    $('#id_kecamatan')
+                        .append($("<option></option>")
+                            .attr("value", value['id'])
+                            .text(value['nama']));
+                });
+            },
+            error: err => console.log(err),
+        })
+        // Desa
+        $.ajax({
+            url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + kecamatan,
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                $.each(result['kelurahan'], function (key, value) {
+                    $('#id_desa')
+                        .append($("<option></option>")
+                            .attr("value", value['id'])
+                            .text(value['nama']));
+                });
+            },
+            error: err => console.log(err),
+        })
 
-    // modal.find('#id').val(id);
-    // modal.find('#id_kelompok option[value="' + kelompok + '"]').prop('selected', true)
-    // modal.find('#nama').val(nama);
-    // modal.find('#id_sumber_perolehan option[value="' + sumber + '"]').prop('selected', true)
-    // modal.find('#jumlah').val(jumlah);
-    // modal.find('#tahun_perolehan').val(tahun);
+        $('.modal-content form').attr('action', "editKelompokTani")
 
-    // if (btn == 'Add') {
-    //     $('.modal-content form').attr('action', "aset")
-    //     modal.find('#id').val(id);
-    //     modal.find('#id_kelompok option:eq(0)').prop('selected', true)
-    //     modal.find('#nama').val(nama);
-    //     modal.find('#id_sumber_perolehan option:eq(0)').prop('selected', true)
-    //     modal.find('#jumlah').val(jumlah);
-    //     modal.find('#tahun_perolehan').val(tahun);
-    // } else {
-    //     $('.modal-content form').attr('action', "editAset")
-    // }
+        setTimeout(() => {
+            modal.find('#id').val(id);
+            modal.find('#nama').val(nama);
+            modal.find('#penyuluh option[value="' + penyuluh + '"]').prop('selected', true)
+            modal.find('#id_kota option[value="' + kota + '"]').prop('selected', true)
+            modal.find('#id_kecamatan option[value="' + kecamatan + '"]').prop('selected', true)
+            modal.find('#id_desa option[value="' + desa + '"]').prop('selected', true)
+            modal.find('#bpp').val(bpp);
+            modal.find('#alamat').val(alamat);
+            modal.find('#tahun_pembentukan').val(tahun_pembentukan);
+            modal.find('#id_kelas option[value="' + kelas + '"]').prop('selected', true)
+            modal.find('#skor').val(skor);
+            modal.find('#tahun_penerapan').val(tahun_penerapan);
+            modal.find('#teknologi').val(teknologi);
+        }, 500);
+
+
+    }
+
+
 })
 
 // Komoditi

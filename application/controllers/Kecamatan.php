@@ -21,8 +21,6 @@ class Kecamatan extends CI_Controller
         $data['penyuluh'] = $this->Penyuluh_model->getPenyuluh();
         $data['listKelas'] = $this->db->get('list_kelas')->result_array();
 
-
-
         $this->form_validation->set_rules('nama', 'Nama', 'required');
         $this->form_validation->set_rules('penyuluh', 'Penyuluh', 'required');
         $this->form_validation->set_rules('id_kota', 'Id_kota', 'required');
@@ -37,8 +35,6 @@ class Kecamatan extends CI_Controller
         $this->form_validation->set_rules('tahun_penerapan', 'Tahun_penerapan', 'required');
         $this->form_validation->set_rules('teknologi', 'Teknologi', 'required');
         $this->form_validation->set_rules('teknologi', 'Teknologi', 'required');
-
-
 
         if ($this->form_validation->run() ==  false) {
             $this->load->view('templates/header', $data);
@@ -61,11 +57,63 @@ class Kecamatan extends CI_Controller
                 'teknologi' => htmlspecialchars($this->input->post('teknologi', true)),
                 'id_penyuluh' => htmlspecialchars($this->input->post('penyuluh', true))
             ];
-
-            $this->db->trans_start();
             $this->db->insert('kelompok_tani', $data);
-            $this->db->trans_complete();
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Kelompok Tani added!</div>');
+            redirect('kecamatan/kelompokTani');
+        }
+    }
+
+    public function editKelompokTani()
+    {
+        $this->form_validation->set_rules('nama', 'Nama', 'required');
+        $this->form_validation->set_rules('penyuluh', 'Penyuluh', 'required');
+        $this->form_validation->set_rules('id_kota', 'Id_kota', 'required');
+        $this->form_validation->set_rules('id_kecamatan', 'Id_kecamatan', 'required');
+        $this->form_validation->set_rules('id_desa', 'Id_desa', 'required');
+        $this->form_validation->set_rules('bpp', 'Bpp', 'required');
+        $this->form_validation->set_rules('alamat', 'Alamat', 'required');
+        $this->form_validation->set_rules('tahun_pembentukan', 'Tahun_pembentukan', 'required');
+        $this->form_validation->set_rules('tahun_pembentukan', 'Tahun_pembentukan', 'required');
+        $this->form_validation->set_rules('id_kelas', 'Id_kelas', 'required');
+        $this->form_validation->set_rules('skor', 'Skor', 'required|numeric');
+        $this->form_validation->set_rules('tahun_penerapan', 'Tahun_penerapan', 'required');
+        $this->form_validation->set_rules('teknologi', 'Teknologi', 'required');
+        $this->form_validation->set_rules('teknologi', 'Teknologi', 'required');
+
+        if ($this->form_validation->run() == false) {
+            // echo validation_errors();
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed edit Kelompok Tani!!</div>');
+            redirect('kecamatan/kelompokTani');
+        } else {
+            $data = [
+                'nama' => htmlspecialchars($this->input->post('nama', true)),
+                'kota_kab' => htmlspecialchars($this->input->post('id_kota', true)),
+                'bpp' => htmlspecialchars($this->input->post('bpp', true)),
+                'kecamatan' => htmlspecialchars($this->input->post('id_kecamatan', true)),
+                'desa' => htmlspecialchars($this->input->post('id_desa', true)),
+                'tahun_pembentukan' => htmlspecialchars($this->input->post('tahun_pembentukan', true)),
+                'alamat' => htmlspecialchars($this->input->post('alamat', true)),
+                'id_kelas' => htmlspecialchars($this->input->post('id_kelas', true)),
+                'skor' => htmlspecialchars($this->input->post('skor', true)),
+                'tahun_penerapan' => htmlspecialchars($this->input->post('tahun_penerapan', true)),
+                'teknologi' => htmlspecialchars($this->input->post('teknologi', true)),
+                'id_penyuluh' => htmlspecialchars($this->input->post('penyuluh', true))
+            ];
+            $this->db->set($data);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('kelompok_tani');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Kelompok Tani Edited!! </div>');
+            redirect('kecamatan/kelompokTani');
+        }
+    }
+
+    public function deleteKelompokTani($id)
+    {
+        if ($this->db->delete('kelompok_tani', array('id' => $id))) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">kelompokTani Deleted!!</div>');
+            redirect('kecamatan/kelompokTani');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed delete kelompokTani!!</div>');
             redirect('kecamatan/kelompokTani');
         }
     }
