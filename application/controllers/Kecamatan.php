@@ -336,4 +336,40 @@ class Kecamatan extends CI_Controller
             redirect('kecamatan/komoditi');
         }
     }
+
+    public function anggota()
+    {
+        $this->load->model('Anggota_model');
+        $this->load->model('KelompokTani_model');
+
+        $data['title'] = 'Anggota';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['anggota'] = $this->Anggota_model->getAnggota();
+
+        $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+        $data['listStatusAnggota'] = $this->db->get('list_status_anggota')->result_array();
+
+        $this->form_validation->set_rules('id_kelompok', 'Id_kelompok', 'required');
+        $this->form_validation->set_rules('nik', 'Nik', 'required');
+        $this->form_validation->set_rules('nama', 'Nama', 'required');
+        $this->form_validation->set_rules('id_status', 'Id_status', 'required');
+
+        if ($this->form_validation->run() ==  false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('kecamatan/anggota', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $data = [
+                'id_kelompok' => htmlspecialchars($this->input->post('id_kelompok', true)),
+                'nik' => htmlspecialchars($this->input->post('nik', true)),
+                'nama' => htmlspecialchars($this->input->post('nama', true)),
+                'id_status' => htmlspecialchars($this->input->post('id_status', true))
+            ];
+            $this->db->insert('anggota', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Anggota added!</div>');
+            redirect('kecamatan/anggota');
+        }
+    }
 }
