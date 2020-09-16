@@ -14,7 +14,7 @@
 
             <?= $this->session->flashdata('message'); ?>
 
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAnggota">Tambah Anggota</a>
+            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAnggota" data-title="Tambah Anggota" data-button="Add">Tambah Anggota</a>
 
             <table class="table table-hover">
                 <thead>
@@ -37,8 +37,8 @@
                             <td><?= $agt['nama']; ?></td>
                             <td><?= $agt['status']; ?></td>
                             <td>
-                                <a href="" class="badge badge-success">edit</a>
-                                <a href="" class="badge badge-danger">delete</a>
+                                <a href="" class="badge badge-success " data-toggle="modal" data-target="#addAnggota" data-title="Edit Anggota" data-button="Edit" data-id="<?= $agt['id']; ?>" data-namaKelompok="<?= $agt['id_kelompok']; ?>" data-nik="<?= $agt['nik']; ?>" data-nama="<?= $agt['nama']; ?>" data-status="<?= $agt['id_status']; ?>">edit</a>
+                                <a href="deleteAnggota/<?= $agt['id']; ?>" class="badge badge-danger" onclick="return confirm('Yakin hapus Anggota &quot;<?= $agt['nama']; ?>&quot; dari &quot;<?= $agt['nama_kelompok']; ?>&quot; ?');">delete</a>
                             </td>
                         </tr>
                         <?php $i++; ?>
@@ -69,6 +69,7 @@
             </div>
             <form action="<?= base_url('kecamatan/anggota'); ?>" method="post">
                 <div class="modal-body">
+                    <input type="text" name="id" id="id" hidden>
                     <div class="form-group">
                         <select name="id_kelompok" id="id_kelompok" class="form-control">
                             <option value="">Pilih Kelompok</option>
@@ -94,7 +95,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary action">Add</button>
                 </div>
             </form>
         </div>

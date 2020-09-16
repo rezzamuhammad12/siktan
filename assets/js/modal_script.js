@@ -90,12 +90,12 @@ $('#addAset').on('show.bs.modal', function (event) {
 
     if (btn == 'Add') {
         $('.modal-content form').attr('action', "aset")
-        modal.find('#id').val(id);
+        modal.find('#id').val("");
         modal.find('#id_kelompok option:eq(0)').prop('selected', true)
-        modal.find('#nama').val(nama);
+        modal.find('#nama').val("");
         modal.find('#id_sumber_perolehan option:eq(0)').prop('selected', true)
-        modal.find('#jumlah').val(jumlah);
-        modal.find('#tahun_perolehan').val(tahun);
+        modal.find('#jumlah').val("");
+        modal.find('#tahun_perolehan').val("");
     } else {
         $('.modal-content form').attr('action', "editAset")
     }
@@ -151,4 +151,69 @@ $('#addKelompokPetani').on('show.bs.modal', function (event) {
     // } else {
     //     $('.modal-content form').attr('action', "editAset")
     // }
+})
+
+// Komoditi
+
+$('#addKomoditi').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget)
+    var title = button.data('title')
+    var btn = button.data('button')
+
+    var id = button.data('id')
+    var nama = button.data('nama')
+    var subsektor = button.data('subsektor')
+    var komoditas = button.data('komoditas')
+
+    var modal = $(this)
+    modal.find('.modal-title').text(title);
+    modal.find('.action').text(btn);
+
+    modal.find('#id').val(id);
+    modal.find('#id_kelompok option[value="' + nama + '"]').prop('selected', true)
+    modal.find('#id_subsektor option[value="' + subsektor + '"]').prop('selected', true)
+    modal.find('#id_komoditas option[value="' + komoditas + '"]').prop('selected', true)
+
+    if (btn == 'Add') {
+        $('.modal-content form').attr('action', "komoditi")
+        modal.find('#id_kelompok option:eq(0)').prop('selected', true)
+        modal.find('#id_subsektor option:eq(0)').prop('selected', true)
+        modal.find('#id_komoditas option:eq(0)').prop('selected', true)
+    } else {
+        $('.modal-content form').attr('action', "editKomoditi")
+    }
+})
+
+// Anggota
+
+$('#addAnggota').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget)
+    var title = button.data('title')
+    var btn = button.data('button')
+
+    var id = button.data('id')
+    var nama_kelompok = button.data('namakelompok')
+    var nik = button.data('nik')
+    var nama = button.data('nama')
+    var status = button.data('status')
+
+    var modal = $(this)
+    modal.find('.modal-title').text(title);
+    modal.find('.action').text(btn);
+
+    modal.find('#id').val(id);
+    modal.find('#id_kelompok option[value="' + nama_kelompok + '"]').prop('selected', true)
+    modal.find('#nik').val(nik);
+    modal.find('#nama').val(nama);
+    modal.find('#id_status option[value="' + status + '"]').prop('selected', true)
+
+    if (btn == 'Add') {
+        $('.modal-content form').attr('action', "anggota")
+        modal.find('#id_kelompok option:eq(0)').prop('selected', true)
+        modal.find('#nik option:eq(0)').prop('selected', true)
+        modal.find('#nama option:eq(0)').prop('selected', true)
+        modal.find('#id_status option:eq(0)').prop('selected', true)
+    } else {
+        $('.modal-content form').attr('action', "editAnggota")
+    }
 })

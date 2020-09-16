@@ -14,7 +14,7 @@
 
             <?= $this->session->flashdata('message'); ?>
 
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addKomoditi">Tambah Komoditi</a>
+            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addKomoditi" data-title="Tambah Komoditi" data-button="Add">Tambah Komoditi</a>
 
             <table class="table table-hover">
                 <thead>
@@ -37,8 +37,8 @@
                             <td><?= $km['komoditas']; ?></td>
                             <td><?= is_null($km['approved_by']) ? "diproses" : $km['approved_by'] ?></td>
                             <td>
-                                <a href="" class="badge badge-success">edit</a>
-                                <a href="" class="badge badge-danger">delete</a>
+                                <a href="" class="badge badge-success " data-toggle="modal" data-target="#addKomoditi" data-title="Edit Komoditi" data-button="Edit" data-id="<?= $km['id']; ?>" data-nama="<?= $km['id_kelompok']; ?>" data-subsektor="<?= $km['id_subsektor']; ?>" data-komoditas="<?= $km['id_komoditas']; ?>">edit</a>
+                                <a href="deleteKomoditi/<?= $km['id']; ?>" class="badge badge-danger" onclick="return confirm('Yakin hapus Komditi dari &quot;<?= $km['nama']; ?>&quot; ?');">delete</a>
                             </td>
                         </tr>
                         <?php $i++; ?>
@@ -69,6 +69,7 @@
             </div>
             <form action="<?= base_url('kecamatan/komoditi'); ?>" method="post">
                 <div class="modal-body">
+                    <input type="text" name="id" id="id" hidden>
                     <div class="form-group">
                         <select name="id_kelompok" id="id_kelompok" class="form-control">
                             <option value="">Pilih Kelompok</option>
@@ -96,7 +97,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary action">Add</button>
                 </div>
             </form>
         </div>
