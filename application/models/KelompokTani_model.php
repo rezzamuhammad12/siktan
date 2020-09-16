@@ -12,6 +12,7 @@ class KelompokTani_model extends CI_Model
                     INNER JOIN `penyuluh`
                         ON `kelompok_tani`.`id_penyuluh` = `penyuluh`.`id`
                     ";
+
         return $this->db->query($query)->result_array();
     }
 }

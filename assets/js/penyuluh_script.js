@@ -9,19 +9,20 @@ $('#addPenyuluh').on('show.bs.modal', function (event) {
     var nip = button.data('nip')
     var nik = button.data('nik')
 
-    console.log(id)
-    console.log(nama)
-    console.log(status)
-    console.log(nip)
-    console.log(nik)
 
     var modal = $(this)
     modal.find('.modal-title').text(title);
     modal.find('.action').text(btn);
 
+    modal.find('#id').text(id);
+    modal.find('#nama').val(nama);
+    modal.find('#status option[value="' + status + '"]').prop('selected', true)
+    modal.find('#nip').val(nip);
+    modal.find('#nik').val(nik);
+
     if (btn == 'Add') {
         $('.modal-content form').attr('action', "penyuluh")
     } else {
-        $('.modal-content form').attr('action', "penyuluh/edit")
+        $('.modal-content form').attr('action', "editPenyuluh")
     }
 })

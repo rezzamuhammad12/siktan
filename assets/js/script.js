@@ -86,6 +86,10 @@ $('#detailKelompokTani').on('show.bs.modal', function (event) {
     modal.find('.kelas').text(kelas)
     modal.find('.skor').text(skor)
     modal.find('.teknologi').text(teknologi)
+
+    idDesaToVal($(".table-detail-kelompok"))
+    idKecToVal($(".table-detail-kelompok"))
+    idKotaToVal($(".table-detail-kelompok"))
 })
 
 $(document).ready(function () {
@@ -93,8 +97,11 @@ $(document).ready(function () {
     var idKecamatan = $("#id_kecamatan").prop("selectedIndex", 0).val();
     console.log(idKota)
     console.log(idKecamatan)
-    if (idKota != 0) {
 
+
+
+
+    if (idKota) {
         $.ajax({
             url: 'https://dev.farizdotid.com/api/daerahindonesia/kota/' + idKota,
             type: 'GET',
@@ -104,25 +111,69 @@ $(document).ready(function () {
             },
             error: err => console.log(err),
         })
+    } else {
+        $.ajax({
+            url: 'https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=32',
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                $.each(result['kota_kabupaten'], function (key, value) {
+                    $('#id_kota')
+                        .append($("<option></option>")
+                            .attr("value", value['id'])
+                            .text(value['nama']));
+                });
+            },
+            error: err => console.log(err),
+        })
+    }
 
-        if (idKecamatan != 0) {
-            $('#id_kecamatan').attr('disabled', 1)
+    if (idKecamatan) {
+        $('#id_kecamatan').attr('disabled', 1)
 
-            $.ajax({
-                url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan/' + idKecamatan,
-                type: 'GET',
-                dataType: 'json',
-                success: function (result) {
-                    $("#id_kecamatan").find('option').html(result['nama'])
-                },
-                error: err => console.log(err),
-            })
-        } else {
+        $.ajax({
+            url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan/' + idKecamatan,
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                $("#id_kecamatan").find('option').html(result['nama'])
+            },
+            error: err => console.log(err),
+        })
+    } else {
+        $.ajax({
+            url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + idKota,
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                $.each(result['kecamatan'], function (key, value) {
+                    $('#id_kecamatan')
+                        .append($("<option></option>")
+                            .attr("value", value['id'])
+                            .text(value['nama']));
+                });
+            },
+            error: err => console.log(err),
+        })
+    }
+
+    $('#id_kota').on('change', function () {
+        var idKota = $(this).val();
+        $('#id_kecamatan')
+            .find('option')
+            .remove()
+            .end()
+            .append('<option value="">Pilih Kecamatan</option>')
+            .val('whatever');
+
+        if (idKota) {
+            $('#id_kecamatan').removeAttr('disabled');
             $.ajax({
                 url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + idKota,
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
+                    console.log(result['kecamatan'])
                     $.each(result['kecamatan'], function (key, value) {
                         $('#id_kecamatan')
                             .append($("<option></option>")
@@ -132,21 +183,26 @@ $(document).ready(function () {
                 },
                 error: err => console.log(err),
             })
+        } else {
+            // $('#id_kecamatan').attr('disabled', true);
         }
-
-
-    }
-
-
+    })
 
 
     $('#id_kecamatan').on('change', function () {
-        var idKota = $("#id_kota").prop("selectedIndex", 0).val();
+        var idKota = $("#id_kota").val();
         var idKecamatan = $(this).val();
-        console.log(idKecamatan)
-        if (idKota != 0 && idKecamatan != 0) {
-            $('#id_desa').removeAttr('disabled');
+        console.log(idKota);
+        console.log(idKecamatan);
+        $('#id_desa')
+            .find('option')
+            .remove()
+            .end()
+            .append('<option value="">Pilih desa</option>')
+            .val('whatever');
 
+        if (idKota && idKecamatan) {
+            $('#id_desa').removeAttr('disabled');
             $.ajax({
                 url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + idKecamatan,
                 type: 'GET',
@@ -161,6 +217,8 @@ $(document).ready(function () {
                 },
                 error: err => console.log(err),
             })
+        } else {
+            $('#id_desa').attr('disabled', true);
         }
     })
 

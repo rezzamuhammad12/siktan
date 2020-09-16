@@ -39,8 +39,8 @@
                             <td><?= $p['status']; ?></td>
                             <td><?= is_null($p['approved_by']) ? "diproses" : $p['approved_by'] ?></td>
                             <td>
-                                <a href="" class="badge badge-success" data-toggle="modal" data-target="#addPenyuluh" data-title="Edit Penyuluh" data-button="Edit" data-nama="<?= $p['nama']; ?>" data-status="<?= $p['status']; ?>" data-nip="<?= $p['nip']; ?>" data-nik="<?= $p['nik']; ?>" data-id="<?= $p['id']; ?>">edit</a>
-                                <a href="" class="badge badge-danger">delete</a>
+                                <a href="" class="badge badge-success" data-toggle="modal" data-target="#addPenyuluh" data-title="Edit Penyuluh" data-button="Edit" data-nama="<?= $p['nama']; ?>" data-status="<?= $p['id_status']; ?>" data-nip="<?= $p['nip']; ?>" data-nik="<?= $p['nik']; ?>" data-id="<?= $p['id']; ?>">edit</a>
+                                <a href="deletePenyuluh/<?= $p['id']; ?>" class="badge badge-danger" onclick="return confirm('Yakin hapus &quot;<?= $p['nama']; ?>&quot; ?');">delete</a>
                             </td>
                         </tr>
                         <?php $i++; ?>
@@ -71,6 +71,7 @@
             </div>
             <form action="<?= base_url('kecamatan/penyuluh'); ?>" method="post">
                 <div class="modal-body">
+                    <input type="text" class="form-control" id="id" name="id" hidden>
                     <div class="form-group">
                         <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Penyuluh">
                     </div>
@@ -91,7 +92,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary action">Add</button>
                 </div>
             </form>
         </div>

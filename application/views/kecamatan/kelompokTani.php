@@ -16,7 +16,7 @@
 
             <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addKelompokPetani">Tambah Kelompok Tani</a>
 
-            <table class="table table-hover">
+            <table class="table table-hover tabel-kelompok-tani">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -35,7 +35,7 @@
                             <th scope="row"><?= $i; ?></th>
                             <td><?= $kp['nama']; ?></td>
                             <td><?= $kp['nama_penyuluh']; ?></td>
-                            <td><?= $kp['desa']; ?></td>
+                            <td class="desa"><?= $kp['desa']; ?></td>
                             <td><?= $kp['skor']; ?></td>
                             <td><?= is_null($kp['approved_by']) ? "diproses" : $kp['approved_by'] ?></td>
                             <td>
@@ -168,7 +168,7 @@
                 </button>
             </div>
 
-            <table class="table table-striped">
+            <table class="table table-striped table-detail-kelompok">
                 <tbody>
                     <tr>
                         <td>Penyuluh Pendamping</td>

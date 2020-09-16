@@ -65,7 +65,7 @@ class Kecamatan extends CI_Controller
             $this->db->trans_start();
             $this->db->insert('kelompok_tani', $data);
             $this->db->trans_complete();
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New sub menu added!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Kelompok Tani added!</div>');
             redirect('kecamatan/kelompokTani');
         }
     }
@@ -101,13 +101,55 @@ class Kecamatan extends CI_Controller
                 'nama' => htmlspecialchars($this->input->post('nama', true)),
                 'nik' => htmlspecialchars($this->input->post('nik', true)),
                 'nip' => htmlspecialchars($this->input->post('nip', true)),
-                'id_status' => htmlspecialchars($this->input->post('id_status', true))
+                'id_status' => htmlspecialchars($this->input->post('status', true))
             ];
             $this->db->insert('penyuluh', $data);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New sub menu added!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Penyuluh added!</div>');
             redirect('kecamatan/penyuluh');
         }
     }
+
+    public function editPenyuluh()
+    {
+        $this->form_validation->set_rules('nama', 'Nama', 'required');
+        $this->form_validation->set_rules('status', 'status', 'required');
+        $this->form_validation->set_rules('nip', 'nip', 'required|max_length[18]|numeric', [
+            'is_unique' => 'NIP sudah Terdaftar'
+        ]);
+        $this->form_validation->set_rules('nik', 'nik', 'required|max_length[16]|numeric', [
+            'is_unique' => 'NIK sudah Terdaftar'
+        ]);
+
+        if ($this->form_validation->run() == false) {
+            // echo validation_errors();
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed edit Penyuluh!!</div>');
+            redirect('kecamatan/penyuluh');
+        } else {
+            $data = [
+                'nama' => htmlspecialchars($this->input->post('nama', true)),
+                'nik' => htmlspecialchars($this->input->post('nik', true)),
+                'nip' => htmlspecialchars($this->input->post('nip', true)),
+                'id_status' => htmlspecialchars($this->input->post('status', true))
+            ];
+            $this->db->set($data);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('penyuluh');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Penyuluh Edited!!</div>');
+            redirect('kecamatan/penyuluh');
+        }
+    }
+
+    public function deletePenyuluh($id)
+    {
+        if ($this->db->delete('penyuluh', array('id' => $id))) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Penyuluh Deleted!!</div>');
+            redirect('kecamatan/penyuluh');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed delete Penyuluh!!</div>');
+            redirect('kecamatan/penyuluh');
+        }
+    }
+
 
     public function lahan()
     {
@@ -140,7 +182,7 @@ class Kecamatan extends CI_Controller
                 'id_status_kepemilikan' => htmlspecialchars($this->input->post('id_status_kepemilikan', true))
             ];
             $this->db->insert('lahan', $data);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New sub menu added!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Lahan added!</div>');
             redirect('kecamatan/lahan');
         }
     }
@@ -172,7 +214,6 @@ class Kecamatan extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             $data = [
-
                 'id_kelompok' => htmlspecialchars($this->input->post('id_kelompok', true)),
                 'nama' => htmlspecialchars($this->input->post('nama', true)),
                 'jumlah' => htmlspecialchars($this->input->post('jumlah', true)),
@@ -180,7 +221,7 @@ class Kecamatan extends CI_Controller
                 'tahun_perolehan' => htmlspecialchars($this->input->post('tahun_perolehan', true))
             ];
             $this->db->insert('aset', $data);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New sub menu added!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Aset added!</div>');
             redirect('kecamatan/aset');
         }
     }
