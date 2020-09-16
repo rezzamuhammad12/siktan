@@ -14,7 +14,7 @@
 
             <?= $this->session->flashdata('message'); ?>
 
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addPenyuluh">Tambah Penyuluh</a>
+            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addPenyuluh" data-title="Tambah Penyuluh" data-button="Add">Tambah Penyuluh</a>
 
             <table class="table table-hover">
                 <thead>
@@ -39,7 +39,7 @@
                             <td><?= $p['status']; ?></td>
                             <td><?= is_null($p['approved_by']) ? "diproses" : $p['approved_by'] ?></td>
                             <td>
-                                <a href="" class="badge badge-success">edit</a>
+                                <a href="" class="badge badge-success" data-toggle="modal" data-target="#addPenyuluh" data-title="Edit Penyuluh" data-button="Edit" data-nama="<?= $p['nama']; ?>" data-status="<?= $p['status']; ?>" data-nip="<?= $p['nip']; ?>" data-nik="<?= $p['nik']; ?>" data-id="<?= $p['id']; ?>">edit</a>
                                 <a href="" class="badge badge-danger">delete</a>
                             </td>
                         </tr>

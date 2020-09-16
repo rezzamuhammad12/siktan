@@ -5,7 +5,7 @@ class Penyuluh_model extends CI_Model
 {
     public function getPenyuluh()
     {
-        $query = "SELECT `penyuluh`.*, `list_status_penyuluh`.*
+        $query = "SELECT `penyuluh`.*, `list_status_penyuluh`.`status`
                   FROM `penyuluh` JOIN `list_status_penyuluh`
                   ON `penyuluh`.`id_status` = `list_status_penyuluh`.`id`
                 ";
