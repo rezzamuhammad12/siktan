@@ -134,7 +134,7 @@ class Kecamatan extends CI_Controller
             $this->db->set($data);
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('penyuluh');
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Penyuluh Edited!!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Penyuluh Edited!! </div>');
             redirect('kecamatan/penyuluh');
         }
     }
@@ -176,7 +176,6 @@ class Kecamatan extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             $data = [
-
                 'luas' => htmlspecialchars($this->input->post('luas', true)),
                 'id_kelompok' => htmlspecialchars($this->input->post('id_kelompok', true)),
                 'id_status_kepemilikan' => htmlspecialchars($this->input->post('id_status_kepemilikan', true))
@@ -186,6 +185,43 @@ class Kecamatan extends CI_Controller
             redirect('kecamatan/lahan');
         }
     }
+
+    public function editLahan()
+    {
+        $this->form_validation->set_rules('id_status_kepemilikan', 'Id_status_kepemilikan', 'required');
+        $this->form_validation->set_rules('luas', 'Luas', 'required');
+        $this->form_validation->set_rules('id_kelompok', 'Id_kelompok', 'required');
+
+        if ($this->form_validation->run() == false) {
+            // echo validation_errors();
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed edit Lahan!!</div>');
+            redirect('kecamatan/lahan');
+        } else {
+            $data = [
+                'luas' => htmlspecialchars($this->input->post('luas', true)),
+                'id_kelompok' => htmlspecialchars($this->input->post('id_kelompok', true)),
+                'id_status_kepemilikan' => htmlspecialchars($this->input->post('id_status_kepemilikan', true))
+            ];
+            $this->db->set($data);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('lahan');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Lahan Edited!! </div>');
+            redirect('kecamatan/lahan');
+        }
+    }
+
+    public function deleteLahan($id)
+    {
+        if ($this->db->delete('lahan', array('id' => $id))) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Lahan Deleted!!</div>');
+            redirect('kecamatan/lahan');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed delete Lahan!!</div>');
+            redirect('kecamatan/lahan');
+        }
+    }
+
+
 
     public function aset()
     {
@@ -226,6 +262,7 @@ class Kecamatan extends CI_Controller
         }
     }
 
+<<<<<<< HEAD
     public function komoditi()
     {
         $this->load->model('Komoditi_model');
@@ -259,6 +296,44 @@ class Kecamatan extends CI_Controller
             $this->db->insert('komoditi', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">komoditi added!</div>');
             redirect('kecamatan/komoditi');
+=======
+    public function editAset()
+    {
+        $this->form_validation->set_rules('id_kelompok', 'Id_kelompok', 'required');
+        $this->form_validation->set_rules('nama', 'Nama', 'required');
+        $this->form_validation->set_rules('id_sumber_perolehan', 'Id_sumber_perolehan', 'required');
+        $this->form_validation->set_rules('jumlah', 'Jumlah', 'required');
+        $this->form_validation->set_rules('tahun_perolehan', 'Tahun_perolehan', 'required');
+
+        if ($this->form_validation->run() == false) {
+            // echo validation_errors();
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed edit Aset!!</div>');
+            redirect('kecamatan/aset');
+        } else {
+            $data = [
+                'id_kelompok' => htmlspecialchars($this->input->post('id_kelompok', true)),
+                'nama' => htmlspecialchars($this->input->post('nama', true)),
+                'jumlah' => htmlspecialchars($this->input->post('jumlah', true)),
+                'id_sumber' => htmlspecialchars($this->input->post('id_sumber_perolehan', true)),
+                'tahun_perolehan' => htmlspecialchars($this->input->post('tahun_perolehan', true))
+            ];
+            $this->db->set($data);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('aset');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Aset Edited!! </div>');
+            redirect('kecamatan/aset');
+        }
+    }
+
+    public function deleteAset($id)
+    {
+        if ($this->db->delete('aset', array('id' => $id))) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Aset Deleted!!</div>');
+            redirect('kecamatan/aset');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed delete Aset!!</div>');
+            redirect('kecamatan/aset');
+>>>>>>> 8931558d0e4da21db0c0983c2bfbf7febb464cf2
         }
     }
 }
