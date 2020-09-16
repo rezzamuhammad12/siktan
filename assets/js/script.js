@@ -67,9 +67,11 @@ $('#detailKelompokTani').on('show.bs.modal', function (event) {
     var desa = button.data('desa')
     var kecamatan = button.data('kecamatan')
     var kota = button.data('kota')
+    var bpp = button.data('bpp')
     var tahun_pembentukan = button.data('tahun_pembentukan')
     var kelas = button.data('kelas')
     var skor = button.data('skor')
+    var tahun_penerapan = button.data('tahun_penerapan')
     var teknologi = button.data('teknologi')
 
     // Extract info from data-* attributes
@@ -82,9 +84,11 @@ $('#detailKelompokTani').on('show.bs.modal', function (event) {
     modal.find('.desa').text(desa);
     modal.find('.kecamatan').text(kecamatan)
     modal.find('.kota').text(kota)
+    modal.find('.bpp').text(bpp)
     modal.find('.tahun_pembentukan').text(tahun_pembentukan)
     modal.find('.kelas').text(kelas)
     modal.find('.skor').text(skor)
+    modal.find('.tahun_penerapan').text(tahun_penerapan)
     modal.find('.teknologi').text(teknologi)
 
     idDesaToVal($(".table-detail-kelompok"))

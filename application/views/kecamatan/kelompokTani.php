@@ -14,7 +14,7 @@
 
             <?= $this->session->flashdata('message'); ?>
 
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addKelompokPetani">Tambah Kelompok Tani</a>
+            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addKelompokPetani" data-title="Tambah Kelompok Tani" data-button="Add">Tambah Kelompok Tani</a>
 
             <table class="table table-hover tabel-kelompok-tani">
                 <thead>
@@ -39,8 +39,10 @@
                             <td><?= $kp['skor']; ?></td>
                             <td><?= is_null($kp['approved_by']) ? "diproses" : $kp['approved_by'] ?></td>
                             <td>
-                                <a href="" class="badge badge-info" data-toggle="modal" data-target="#detailKelompokTani" data-userid="<?= $kp['id']; ?>" data-nama="<?= $kp['nama']; ?>" data-penyuluh="<?= $kp['nama_penyuluh']; ?>" data-desa="<?= $kp['desa']; ?>" data-kecamatan="<?= $kp['kecamatan']; ?>" data-kota="<?= $kp['kota_kab']; ?>" data-tahun_pembentukan="<?= $kp['tahun_pembentukan']; ?>" data-alamat="<?= $kp['alamat']; ?>" data-kelas="<?= $kp['kelas']; ?>" data-skor="<?= $kp['skor']; ?>" data-tahun_penerapan="<?= $kp['tahun_penerapan']; ?>" data-teknologi="<?= $kp['teknologi']; ?>">detail</a>
-                                <a href="" class="badge badge-success">edit</a>
+                                <a href="" class="badge badge-info" data-toggle="modal" data-target="#detailKelompokTani" data-userid="<?= $kp['id']; ?>" data-nama="<?= $kp['nama']; ?>" data-penyuluh="<?= $kp['nama_penyuluh']; ?>" data-desa="<?= $kp['desa']; ?>" data-kecamatan="<?= $kp['kecamatan']; ?>" data-kota="<?= $kp['kota_kab']; ?>" data-bpp="<?= $kp['bpp']; ?>" data-tahun_pembentukan="<?= $kp['tahun_pembentukan']; ?>" data-alamat="<?= $kp['alamat']; ?>" data-kelas="<?= $kp['kelas']; ?>" data-skor="<?= $kp['skor']; ?>" data-tahun_penerapan="<?= $kp['tahun_penerapan']; ?>" data-teknologi="<?= $kp['teknologi']; ?>">detail</a>
+
+
+                                <a href="" class="badge badge-success" data-toggle="modal" data-target="#addKelompokPetani" data-title="Tambah Kelompok Tani" data-button="Add" data-userid="<?= $kp['id']; ?>" data-nama="<?= $kp['nama']; ?>" data-penyuluh="<?= $kp['id_penyuluh']; ?>" data-desa="<?= $kp['desa']; ?>" data-kecamatan="<?= $kp['kecamatan']; ?>" data-bpp="<?= $kp['bpp']; ?>" data-kota="<?= $kp['kota_kab']; ?>" data-tahun_pembentukan="<?= $kp['tahun_pembentukan']; ?>" data-alamat="<?= $kp['alamat']; ?>" data-kelas="<?= $kp['id_kelas']; ?>" data-skor="<?= $kp['skor']; ?>" data-tahun_penerapan="<?= $kp['tahun_penerapan']; ?>" data-teknologi="<?= $kp['teknologi']; ?>">edit</a>
                                 <a href="" class="badge badge-danger">delete</a>
                             </td>
                         </tr>
@@ -148,7 +150,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary action">Add</button>
                 </div>
             </form>
         </div>
@@ -176,14 +178,9 @@
                         <td class="penyuluh"></td>
                     </tr>
                     <tr>
-                        <td>Alamat</td>
+                        <td>Kota/Kabupaten</td>
                         <td>:</td>
-                        <td class="alamat"></td>
-                    </tr>
-                    <tr>
-                        <td>desa</td>
-                        <td>:</td>
-                        <td class="desa"></td>
+                        <td class="kota"></td>
                     </tr>
                     <tr>
                         <td>Kecamatan</td>
@@ -191,9 +188,19 @@
                         <td class="kecamatan"></td>
                     </tr>
                     <tr>
-                        <td>Kota/Kabupaten</td>
+                        <td>desa</td>
                         <td>:</td>
-                        <td class="kota"></td>
+                        <td class="desa"></td>
+                    </tr>
+                    <tr>
+                        <td>Alamat</td>
+                        <td>:</td>
+                        <td class="alamat"></td>
+                    </tr>
+                    <tr>
+                        <td>BPP</td>
+                        <td>:</td>
+                        <td class="bpp"></td>
                     </tr>
                     <tr>
                         <td>Tahun Pembentukan</td>
@@ -209,6 +216,12 @@
                         <td>Skor</td>
                         <td>:</td>
                         <td class="skor"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Tahun Penerapan</td>
+                        <td>:</td>
+                        <td class="tahun_penerapan"></td>
                     </tr>
 
                     <tr>
