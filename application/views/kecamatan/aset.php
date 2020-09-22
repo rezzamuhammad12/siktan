@@ -16,29 +16,29 @@
 
             <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAset" data-title="Tambah Aset" data-button="Add">Tambah Aset</a>
 
-            <table class="table table-hover">
+            <table class="table table-hover sortable">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col" data-defaultsort="true">#</th>
                         <th scope="col">Nama Kelompok</th>
                         <th scope="col">Nama Aset</th>
                         <th scope="col">Sumber Perolehan</th>
                         <th scope="col">Jumlah</th>
                         <th scope="col">Tahun Perolehan</th>
-                        <th scope="col">Disetujui</th>
-                        <th scope="col">Action</th>
+                        <th scope="col" data-defaultsort="disabled">Disetujui</th>
+                        <th scope="col" data-defaultsort="disabled">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1; ?>
                     <?php foreach ($aset as $a) : ?>
                         <tr>
-                            <th scope="row"><?= $i; ?></th>
-                            <td><?= $a['nama_kelompok']; ?></td>
-                            <td><?= $a['nama']; ?></td>
-                            <td><?= $a['sumber_perolehan']; ?></td>
-                            <td><?= $a['jumlah']; ?></td>
-                            <td><?= $a['tahun_perolehan']; ?></td>
+                            <th scope="row" data-value="<?= $i; ?>"><?= $i; ?></th>
+                            <td data-value="<?= $a['nama_kelompok']; ?>"><?= $a['nama_kelompok']; ?></td>
+                            <td data-value="<?= $a['nama']; ?>"><?= $a['nama']; ?></td>
+                            <td data-value="<?= $a['sumber_perolehan']; ?>"><?= $a['sumber_perolehan']; ?></td>
+                            <td data-value="<?= $a['jumlah']; ?>"><?= $a['jumlah']; ?></td>
+                            <td data-value="<?= $a['tahun_perolehan']; ?>"><?= $a['tahun_perolehan']; ?></td>
                             <td><?= is_null($a['approved_by']) ? "diproses" : $a['approved_by'] ?></td>
                             <td>
                                 <a href="" class="badge badge-success" data-toggle="modal" data-target="#addAset" data-title="Edit Aset" data-button="Edit" data-id="<?= $a['id']; ?>" data-kelompok="<?= $a['id_kelompok']; ?>" data-nama="<?= $a['nama']; ?>" data-sumber="<?= $a['id_sumber']; ?>" data-jumlah="<?= $a['jumlah']; ?>" data-tahun="<?= $a['tahun_perolehan']; ?>">edit</a>
