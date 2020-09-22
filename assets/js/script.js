@@ -222,4 +222,8 @@ $(document).ready(function () {
         }
     })
 
+    $.bootstrapSortable({
+        applyLast: true
+    })
+
 })

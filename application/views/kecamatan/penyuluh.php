@@ -16,27 +16,27 @@
 
             <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addPenyuluh" data-title="Tambah Penyuluh" data-button="Add">Tambah Penyuluh</a>
 
-            <table class="table table-hover">
+            <table class="table table-hover sortable">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col" data-defaultsort="true">#</th>
                         <th scope="col">Nama</th>
                         <th scope="col">NIP</th>
                         <th scope="col">NIK</th>
                         <th scope="col">Status</th>
-                        <th scope="col">Disetujui</th>
-                        <th scope="col">Action</th>
+                        <th scope="col" data-defaultsort="disabled">Disetujui</th>
+                        <th scope="col" data-defaultsort="disabled">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1; ?>
                     <?php foreach ($penyuluh as $p) : ?>
                         <tr>
-                            <th scope="row"><?= $i; ?></th>
-                            <td><?= $p['nama']; ?></td>
-                            <td><?= $p['nip']; ?></td>
-                            <td><?= $p['nik']; ?></td>
-                            <td><?= $p['status']; ?></td>
+                            <th scope="row" data-value="<?= $i; ?>"><?= $i; ?></th>
+                            <td data-value="<?= $p['nama'] ?>"><?= $p['nama']; ?></td>
+                            <td data-value="<?= $p['nip'] ?>"><?= $p['nip']; ?></td>
+                            <td data-value="<?= $p['nik'] ?>"><?= $p['nik']; ?></td>
+                            <td data-value="<?= $p['status'] ?>"><?= $p['status']; ?></td>
                             <td><?= is_null($p['approved_by']) ? "diproses" : $p['approved_by'] ?></td>
                             <td>
                                 <a href="" class="badge badge-success" data-toggle="modal" data-target="#addPenyuluh" data-title="Edit Penyuluh" data-button="Edit" data-nama="<?= $p['nama']; ?>" data-status="<?= $p['id_status']; ?>" data-nip="<?= $p['nip']; ?>" data-nik="<?= $p['nik']; ?>" data-id="<?= $p['id']; ?>">edit</a>
