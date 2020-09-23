@@ -118,6 +118,29 @@ class Kecamatan extends CI_Controller
         }
     }
 
+    public function filterKelompok()
+    {
+        $this->load->model('KelompokTani_model');
+
+        $kota = $this->input->post('kota', true);
+        $kecamatan = $this->input->post('kecamatan', true);
+        $desa = $this->input->post('desa', true);
+
+        $data['kelompokTani'] = $this->KelompokTani_model->filterKelompokTani($kota, $kecamatan, $desa);
+
+        $hasil = $this->load->view('kecamatan/filterKelompok', $data, true);
+
+        $callback = array(
+            'hasil' => $hasil,
+        );
+
+        echo json_encode($callback);
+    }
+
+    // ==============================================
+    //     Penyuluh Section 
+    // ==============================================
+
     public function penyuluh()
     {
         $this->load->model('Penyuluh_model');
@@ -199,6 +222,11 @@ class Kecamatan extends CI_Controller
     }
 
 
+    // ==============================================
+    //     Lahan Section 
+    // ==============================================
+
+
     public function lahan()
     {
         $this->load->model('Lahan_model');
@@ -269,7 +297,9 @@ class Kecamatan extends CI_Controller
         }
     }
 
-
+    // ==============================================
+    //     Aset Section 
+    // ==============================================
 
     public function aset()
     {
@@ -349,6 +379,10 @@ class Kecamatan extends CI_Controller
         }
     }
 
+    // ==============================================
+    //     komoditi Section 
+    // ==============================================
+
     public function komoditi()
     {
         $this->load->model('Komoditi_model');
@@ -420,6 +454,9 @@ class Kecamatan extends CI_Controller
         }
     }
 
+    // ==============================================
+    //     Anggota Section 
+    // ==============================================
 
     public function anggota()
     {

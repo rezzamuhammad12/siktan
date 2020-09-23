@@ -42,6 +42,8 @@ function idKotaToVal(tag) {
 
 $(document).ready(function () {
     idDesaToVal($(".tabel-kelompok-tani"))
+    idKotaToVal($(".tabel-kelompok-tani"))
+    idKecToVal($(".tabel-kelompok-tani"))
 
 
 })

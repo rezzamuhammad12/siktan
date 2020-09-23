@@ -13,8 +13,36 @@
             <?php endif; ?>
 
             <?= $this->session->flashdata('message'); ?>
+            <div class="btn-toolbar mb-3">
+                <a href="" class="btn btn-primary mr-3" data-toggle="modal" data-target="#addKelompokPetani" data-title="Tambah Kelompok Tani" data-button="Add">Tambah Kelompok Tani</a>
+                <a class="btn btn-primary" data-toggle="collapse" href="#filterTable" role="button" aria-expanded="false" aria-controls="filterTable">
+                    Filter
+                </a>
+            </div>
 
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addKelompokPetani" data-title="Tambah Kelompok Tani" data-button="Add">Tambah Kelompok Tani</a>
+            <div class="collapse" id="filterTable">
+                <div class="card card-body">
+                    <div class="btn-toolbar">
+                        <div class="btn-group mr-2">
+                            <select name="kota_filter" id="kota_filter" class="filter-form form-control">
+                                <option value="">Kota</option>
+                            </select>
+                        </div>
+                        <div class="btn-group mr-2">
+                            <select name="kecamatan_filter" id="kecamatan_filter" class="filter-form form-control" disabled>
+                                <option value="">Kecamatan</option>
+                            </select>
+                        </div>
+                        <div class="btn-group mr-2">
+                            <select name="desa_filter" id="desa_filter" class="filter-form form-control" disabled>
+                                <option value="">Desa</option>
+                            </select>
+                        </div>
+
+                        <button id="gofilter" class="btn btn-success">Go Filter</button>
+                    </div>
+                </div>
+            </div>
 
             <table class="table table-hover tabel-kelompok-tani">
                 <thead>
@@ -22,19 +50,23 @@
                         <th scope="col">#</th>
                         <th scope="col">Nama</th>
                         <th scope="col">Penyuluh Pendamping</th>
+                        <th scope="col">Kota</th>
+                        <th scope="col">Kecamatan</th>
                         <th scope="col">Desa</th>
                         <th scope="col">Skor</th>
                         <th scope="col">Disetujui</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="dicobain">
                     <?php $i = 1; ?>
                     <?php foreach ($kelompokTani as $kp) : ?>
                         <tr>
                             <th scope="row"><?= $i; ?></th>
                             <td><?= $kp['nama']; ?></td>
                             <td><?= $kp['nama_penyuluh']; ?></td>
+                            <td class="kota"><?= $kp['kota_kab']; ?></td>
+                            <td class="kecamatan"><?= $kp['kecamatan']; ?></td>
                             <td class="desa"><?= $kp['desa']; ?></td>
                             <td><?= $kp['skor']; ?></td>
                             <td><?= is_null($kp['approved_by']) ? "diproses" : $kp['approved_by'] ?></td>
@@ -51,6 +83,10 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+
+            <div class="nyobainLagi">
+
+            </div>
 
 
         </div>

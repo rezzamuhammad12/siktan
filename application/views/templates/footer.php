@@ -54,6 +54,7 @@
             <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
             <script src="<?= base_url('assets/'); ?>js/modal_script.js"></script>
             <script src="<?= base_url('assets/'); ?>js/area_script.js"></script>
+            <script src="<?= base_url('assets/'); ?>js/filter_script.js"></script>
             <script src="<?= base_url('assets/'); ?>js/script.js"></script>
 
             <script>

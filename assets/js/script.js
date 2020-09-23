@@ -99,8 +99,6 @@ $('#detailKelompokTani').on('show.bs.modal', function (event) {
 $(document).ready(function () {
     var idKota = $("#id_kota").prop("selectedIndex", 0).val();
     var idKecamatan = $("#id_kecamatan").prop("selectedIndex", 0).val();
-    console.log(idKota)
-    console.log(idKecamatan)
 
     if (idKota) {
         $.ajax({
