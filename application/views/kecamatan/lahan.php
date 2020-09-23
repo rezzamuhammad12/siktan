@@ -16,25 +16,25 @@
 
             <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addLahan" data-title="Tambah Lahan" data-button="Add">Tambah Lahan</a>
 
-            <table class="table table-hover">
+            <table class="table table-hover sortable">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col" data-defaultsort="true">#</th>
                         <th scope="col">Nama Kelompok</th>
                         <th scope="col">Luas Lahan</th>
                         <th scope="col">Status Kepemilikan</th>
-                        <th scope="col">Disetujui</th>
-                        <th scope="col">Action</th>
+                        <th scope="col" data-defaultsort="disabled">Disetujui</th>
+                        <th scope="col" data-defaultsort="disabled">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1; ?>
                     <?php foreach ($lahan as $l) : ?>
                         <tr>
-                            <th scope="row"><?= $i; ?></th>
-                            <td><?= $l['nama']; ?></td>
-                            <td><?= $l['luas']; ?></td>
-                            <td><?= $l['status']; ?></td>
+                            <th scope="row" data-value="<?= $i; ?>"><?= $i; ?></th>
+                            <td data-value="<?= $l['nama'] ?>"><?= $l['nama']; ?></td>
+                            <td data-value="<?= $l['luas'] ?>"><?= $l['luas']; ?></td>
+                            <td data-value="<?= $l['status'] ?>"><?= $l['status']; ?></td>
                             <td><?= is_null($l['approved_by']) ? "diproses" : $l['approved_by'] ?></td>
                             <td>
                                 <a href="" class="badge badge-success" data-toggle="modal" data-target="#addLahan" data-title="Edit Lahan" data-button="Edit" data-id="<?= $l['id_lahan'] ?>" data-nama="<?= $l['id'] ?>" data-luas="<?= $l['luas'] ?>" data-status="<?= $l['id_status'] ?>">edit</a>

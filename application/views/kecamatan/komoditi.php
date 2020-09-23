@@ -16,25 +16,25 @@
 
             <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addKomoditi" data-title="Tambah Komoditi" data-button="Add">Tambah Komoditi</a>
 
-            <table class="table table-hover">
+            <table class="table table-hover sortable">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col" data-defaultsort="true">#</th>
                         <th scope="col">Nama Kelompok</th>
                         <th scope="col">Subsektor</th>
                         <th scope="col">Komoditas</th>
-                        <th scope="col">Disetujui</th>
-                        <th scope="col">Action</th>
+                        <th scope="col" data-defaultsort="disabled">Disetujui</th>
+                        <th scope="col" data-defaultsort="disabled">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1; ?>
                     <?php foreach ($komoditi as $km) : ?>
                         <tr>
-                            <th scope="row"><?= $i; ?></th>
-                            <td><?= $km['nama']; ?></td>
-                            <td><?= $km['subsektor']; ?></td>
-                            <td><?= $km['komoditas']; ?></td>
+                            <th scope="row" data-value="<?= $i; ?>"><?= $i; ?></th>
+                            <td data-value="<?= $km['nama']; ?>"><?= $km['nama']; ?></td>
+                            <td data-value="<?= $km['subsektor']; ?>"><?= $km['subsektor']; ?></td>
+                            <td data-value="<?= $km['komoditas']; ?>"><?= $km['komoditas']; ?></td>
                             <td><?= is_null($km['approved_by']) ? "diproses" : $km['approved_by'] ?></td>
                             <td>
                                 <a href="" class="badge badge-success " data-toggle="modal" data-target="#addKomoditi" data-title="Edit Komoditi" data-button="Edit" data-id="<?= $km['id']; ?>" data-nama="<?= $km['id_kelompok']; ?>" data-subsektor="<?= $km['id_subsektor']; ?>" data-komoditas="<?= $km['id_komoditas']; ?>">edit</a>

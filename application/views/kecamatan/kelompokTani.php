@@ -44,31 +44,29 @@
                 </div>
             </div>
 
-            <table class="table table-hover tabel-kelompok-tani">
+            <table class="table table-hover tabel-kelompok-tani sortable">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col" data-defaultsort="true">#</th>
                         <th scope="col">Nama</th>
                         <th scope="col">Penyuluh Pendamping</th>
                         <th scope="col">Kota</th>
                         <th scope="col">Kecamatan</th>
                         <th scope="col">Desa</th>
                         <th scope="col">Skor</th>
-                        <th scope="col">Disetujui</th>
-                        <th scope="col">Action</th>
+                        <th scope="col" data-defaultsort="disabled">Disetujui</th>
+                        <th scope="col" data-defaultsort="disabled">Action</th>
                     </tr>
                 </thead>
                 <tbody id="dicobain">
                     <?php $i = 1; ?>
                     <?php foreach ($kelompokTani as $kp) : ?>
                         <tr>
-                            <th scope="row"><?= $i; ?></th>
-                            <td><?= $kp['nama']; ?></td>
-                            <td><?= $kp['nama_penyuluh']; ?></td>
-                            <td class="kota"><?= $kp['kota_kab']; ?></td>
-                            <td class="kecamatan"><?= $kp['kecamatan']; ?></td>
-                            <td class="desa"><?= $kp['desa']; ?></td>
-                            <td><?= $kp['skor']; ?></td>
+                            <th scope="row" data-value="<?= $i; ?>"><?= $i; ?></th>
+                            <td data-value="<?= $kp['nama']; ?>"><?= $kp['nama']; ?></td>
+                            <td data-value="<?= $kp['nama_penyuluh']; ?>"><?= $kp['nama_penyuluh']; ?></td>
+                            <td class="desa" data-value="<?= $kp['desa']; ?>"><?= $kp['desa']; ?></td>
+                            <td data-value="<?= $kp['skor']; ?>"><?= $kp['skor']; ?></td>
                             <td><?= is_null($kp['approved_by']) ? "diproses" : $kp['approved_by'] ?></td>
                             <td>
                                 <a href="" class="badge badge-info" data-toggle="modal" data-target="#detailKelompokTani" data-userid="<?= $kp['id']; ?>" data-nama="<?= $kp['nama']; ?>" data-penyuluh="<?= $kp['nama_penyuluh']; ?>" data-desa="<?= $kp['desa']; ?>" data-kecamatan="<?= $kp['kecamatan']; ?>" data-kota="<?= $kp['kota_kab']; ?>" data-bpp="<?= $kp['bpp']; ?>" data-tahun_pembentukan="<?= $kp['tahun_pembentukan']; ?>" data-alamat="<?= $kp['alamat']; ?>" data-kelas="<?= $kp['kelas']; ?>" data-skor="<?= $kp['skor']; ?>" data-tahun_penerapan="<?= $kp['tahun_penerapan']; ?>" data-teknologi="<?= $kp['teknologi']; ?>">detail</a>
