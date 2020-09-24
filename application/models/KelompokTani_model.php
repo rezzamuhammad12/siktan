@@ -26,6 +26,7 @@ class KelompokTani_model extends CI_Model
                         ON `kelompok_tani`.`id_penyuluh` = `penyuluh`.`id`
                     WHERE `kelompok_tani`.`id` = $id
                     ";
+        return $this->db->query($query)->result_array();
     }
     public function filterKelompokTani($kota, $kec, $desa)
     {

@@ -567,7 +567,6 @@ class Kecamatan extends CI_Controller
 
     public function detailMasterData($id)
     {
-        $this->load->model('Penyuluh_model');
         $this->load->model('KelompokTani_model');
         $this->load->model('Aset_model');
         $this->load->model('Anggota_model');
@@ -577,7 +576,6 @@ class Kecamatan extends CI_Controller
         $data['title'] = 'Master Data';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['kelompokTani'] = $this->KelompokTani_model->getSingleKelompokTani($id);
-        $data['penyuluh'] = $this->Penyuluh_model->getSinglePenyuluh($id);
         $data['aset'] = $this->Aset_model->getSingleAset($id);
         $data['anggota'] = $this->Anggota_model->getSingleAnggota($id);
         $data['komoditi'] = $this->Komoditi_model->getSingleKomoditi($id);

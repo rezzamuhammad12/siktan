@@ -15,7 +15,7 @@
                 <tr>
                     <td>Kota/Kabupaten</td>
                     <td>:</td>
-                    <td class="kota"></td>
+                    <td class="kota"><?= $kelompokTani[0]['kota']; ?></td>
                 </tr>
                 <tr>
                     <td>Kecamatan</td>
