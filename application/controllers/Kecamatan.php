@@ -21,6 +21,7 @@ class Kecamatan extends CI_Controller
         $data['penyuluh'] = $this->Penyuluh_model->getPenyuluh();
         $data['listKelas'] = $this->db->get('list_kelas')->result_array();
 
+        $this->form_validation->set_rules('kode_kelompok', 'Kode_kelompok', 'required');
         $this->form_validation->set_rules('nama', 'Nama', 'required');
         $this->form_validation->set_rules('penyuluh', 'Penyuluh', 'required');
         $this->form_validation->set_rules('id_kota', 'Id_kota', 'required');
@@ -44,6 +45,7 @@ class Kecamatan extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             $data = [
+                'kode_kelompok' => htmlspecialchars($this->input->post('kode_kelompok', true)),
                 'nama' => htmlspecialchars($this->input->post('nama', true)),
                 'kota_kab' => htmlspecialchars($this->input->post('id_kota', true)),
                 'bpp' => htmlspecialchars($this->input->post('bpp', true)),
@@ -65,6 +67,7 @@ class Kecamatan extends CI_Controller
 
     public function editKelompokTani()
     {
+        $this->form_validation->set_rules('kode_kelompok', 'Kode_kelompok', 'required');
         $this->form_validation->set_rules('nama', 'Nama', 'required');
         $this->form_validation->set_rules('penyuluh', 'Penyuluh', 'required');
         $this->form_validation->set_rules('id_kota', 'Id_kota', 'required');
@@ -86,6 +89,7 @@ class Kecamatan extends CI_Controller
             redirect('kecamatan/kelompokTani');
         } else {
             $data = [
+                'kode_kelompok' => htmlspecialchars($this->input->post('kode_kelompok', true)),
                 'nama' => htmlspecialchars($this->input->post('nama', true)),
                 'kota_kab' => htmlspecialchars($this->input->post('id_kota', true)),
                 'bpp' => htmlspecialchars($this->input->post('bpp', true)),
@@ -491,6 +495,65 @@ class Kecamatan extends CI_Controller
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed delete Anggota!!</div>');
             redirect('kecamatan/anggota');
+        }
+    }
+
+    public function masterData()
+    {
+        $this->load->model('Penyuluh_model');
+        $this->load->model('KelompokTani_model');
+        $this->load->model('Aset_model');
+        $this->load->model('Anggota_model');
+        $this->load->model('Komoditi_model');
+        $this->load->model('Lahan_model');
+
+        $data['title'] = 'Master Data';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+        $data['penyuluh'] = $this->Penyuluh_model->getPenyuluh();
+        $data['aset'] = $this->Aset_model->getAset();
+        $data['anggota'] = $this->Anggota_model->getAnggota();
+        $data['komoditi'] = $this->Komoditi_model->getKomoditi();
+        $data['lahan'] = $this->Lahan_model->getLahan();
+        $data['listKelas'] = $this->db->get('list_kelas')->result_array();
+
+        if ($this->form_validation->run() ==  false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('kecamatan/masterData', $data);
+            $this->load->view('templates/footer');
+        } else {
+            redirect('kecamatan/masterData');
+        }
+    }
+
+    public function detailMasterData($id)
+    {
+        $this->load->model('Penyuluh_model');
+        $this->load->model('KelompokTani_model');
+        $this->load->model('Aset_model');
+        $this->load->model('Anggota_model');
+        $this->load->model('Komoditi_model');
+        $this->load->model('Lahan_model');
+
+        $data['title'] = 'Master Data';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['kelompokTani'] = $this->KelompokTani_model->getSingleKelompokTani($id);
+        $data['penyuluh'] = $this->Penyuluh_model->getSinglePenyuluh($id);
+        $data['aset'] = $this->Aset_model->getSingleAset($id);
+        $data['anggota'] = $this->Anggota_model->getSingleAnggota($id);
+        $data['komoditi'] = $this->Komoditi_model->getSingleKomoditi($id);
+        $data['lahan'] = $this->Lahan_model->getSingleLahan($id);
+
+        if ($this->form_validation->run() ==  false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('kecamatan/detailMasterData', $data);
+            $this->load->view('templates/footer');
+        } else {
+            redirect('kecamatan/detailMasterData');
         }
     }
 }

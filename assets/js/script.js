@@ -61,6 +61,7 @@ $('#newSubMenuModal').on('show.bs.modal', function (event) {
 
 $('#detailKelompokTani').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
+    var kode_kelompok = button.data('kode_kelompok')
     var nama = button.data('nama')
     var penyuluh = button.data('penyuluh')
     var alamat = button.data('alamat')
@@ -78,6 +79,7 @@ $('#detailKelompokTani').on('show.bs.modal', function (event) {
     // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
     var modal = $(this)
+    modal.find('.kode_kelompok').text(kode_kelompok);
     modal.find('.modal-title').text('Data Kelompok ' + nama);
     modal.find('.penyuluh').text(penyuluh);
     modal.find('.alamat').text(alamat);
