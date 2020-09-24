@@ -65,6 +65,8 @@
                             <th scope="row" data-value="<?= $i; ?>"><?= $i; ?></th>
                             <td data-value="<?= $kp['nama']; ?>"><?= $kp['nama']; ?></td>
                             <td data-value="<?= $kp['nama_penyuluh']; ?>"><?= $kp['nama_penyuluh']; ?></td>
+                            <td class="kota" data-value="<?= $kp['kota_kab']; ?>"><?= $kp['kota_kab']; ?></td>
+                            <td class="kecamatan" data-value="<?= $kp['kecamatan']; ?>"><?= $kp['kecamatan']; ?></td>
                             <td class="desa" data-value="<?= $kp['desa']; ?>"><?= $kp['desa']; ?></td>
                             <td data-value="<?= $kp['skor']; ?>"><?= $kp['skor']; ?></td>
                             <td><?= is_null($kp['approved_by']) ? "diproses" : $kp['approved_by'] ?></td>
