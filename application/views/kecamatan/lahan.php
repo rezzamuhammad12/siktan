@@ -21,7 +21,7 @@
                     <tr>
                         <th scope="col" data-defaultsort="true">#</th>
                         <th scope="col">Nama Kelompok</th>
-                        <th scope="col">Luas Lahan</th>
+                        <th scope="col">Luas Lahan(ha)</th>
                         <th scope="col">Status Kepemilikan</th>
                         <th scope="col" data-defaultsort="disabled">Disetujui</th>
                         <th scope="col" data-defaultsort="disabled">Action</th>

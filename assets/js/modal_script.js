@@ -109,6 +109,7 @@ $('#addKelompokPetani').on('show.bs.modal', function (event) {
     var btn = button.data('button')
 
     var id = button.data('id');
+    var kode_kelompok = button.data('kode_kelompok');
     var nama = button.data('nama')
     var penyuluh = button.data('penyuluh')
     var alamat = button.data('alamat')
@@ -127,7 +128,9 @@ $('#addKelompokPetani').on('show.bs.modal', function (event) {
     modal.find('.action').text(btn);
     if (btn == 'Add') {
         $('.modal-content form').attr('action', "kelompokTani")
+        modal.find('#kode_kelompok').removeAttr('hidden');
         modal.find('#id').val("");
+        modal.find('#kode_kelompok').val("");
         modal.find('#nama').val("");
         modal.find('#penyuluh option:eq(0)').prop('selected', true)
         modal.find('#id_kota')
@@ -154,7 +157,7 @@ $('#addKelompokPetani').on('show.bs.modal', function (event) {
         modal.find('#tahun_penerapan').val("");
         modal.find('#teknologi').val("");
     } else {
-
+        modal.find('#kode_kelompok').attr('hidden', 'true');
         modal.find('#id_kecamatan').removeAttr('disabled');
         modal.find('#id_desa').removeAttr('disabled');
         //Kota
@@ -208,6 +211,7 @@ $('#addKelompokPetani').on('show.bs.modal', function (event) {
 
         setTimeout(() => {
             modal.find('#id').val(id);
+            modal.find('#kode_kelompok').val(kode_kelompok);
             modal.find('#nama').val(nama);
             modal.find('#penyuluh option[value="' + penyuluh + '"]').prop('selected', true)
             modal.find('#id_kota option[value="' + kota + '"]').prop('selected', true)
