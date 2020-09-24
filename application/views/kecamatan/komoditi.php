@@ -21,6 +21,7 @@
                     <tr>
                         <th scope="col" data-defaultsort="true">#</th>
                         <th scope="col">Nama Kelompok</th>
+                        <th scope="col">Nama Anggota</th>
                         <th scope="col">Subsektor</th>
                         <th scope="col">Komoditas</th>
                         <th scope="col" data-defaultsort="disabled">Disetujui</th>
@@ -33,11 +34,12 @@
                         <tr>
                             <th scope="row" data-value="<?= $i; ?>"><?= $i; ?></th>
                             <td data-value="<?= $km['nama']; ?>"><?= $km['nama']; ?></td>
+                            <td data-value="<?= $km['nama_anggota']; ?>"><?= $km['nama_anggota']; ?></td>
                             <td data-value="<?= $km['subsektor']; ?>"><?= $km['subsektor']; ?></td>
                             <td data-value="<?= $km['komoditas']; ?>"><?= $km['komoditas']; ?></td>
                             <td><?= is_null($km['approved_by']) ? "diproses" : $km['approved_by'] ?></td>
                             <td>
-                                <a href="" class="badge badge-success " data-toggle="modal" data-target="#addKomoditi" data-title="Edit Komoditi" data-button="Edit" data-id="<?= $km['id']; ?>" data-nama="<?= $km['id_kelompok']; ?>" data-subsektor="<?= $km['id_subsektor']; ?>" data-komoditas="<?= $km['id_komoditas']; ?>">edit</a>
+                                <a href="" class="badge badge-success " data-toggle="modal" data-target="#addKomoditi" data-title="Edit Komoditi" data-button="Edit" data-id="<?= $km['id']; ?>" data-nama="<?= $km['id_kelompok']; ?>" data-anggota="<?= $km['id_anggota']; ?>" data-subsektor="<?= $km['id_subsektor']; ?>" data-komoditas="<?= $km['id_komoditas']; ?>">edit</a>
                                 <a href="deleteKomoditi/<?= $km['id']; ?>" class="badge badge-danger" onclick="return confirm('Yakin hapus Komditi dari &quot;<?= $km['nama']; ?>&quot; ?');">delete</a>
                             </td>
                         </tr>
@@ -76,6 +78,11 @@
                             <?php foreach ($kelompokTani as $kt) : ?>
                                 <option value="<?= $kt['id']; ?>"><?= $kt['nama']; ?></option>
                             <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select name="id_anggota" id="id_anggota" class="form-control" disabled>
+                            <option value="">Pilih Anggota</option>
                         </select>
                     </div>
                     <div class="form-group">

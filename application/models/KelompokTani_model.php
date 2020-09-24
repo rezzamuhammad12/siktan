@@ -27,6 +27,7 @@ class KelompokTani_model extends CI_Model
                     WHERE `kelompok_tani`.`id` = $id
                     ";
     }
+
     public function filterKelompokTani($kota, $kec, $desa)
     {
         $key = "";

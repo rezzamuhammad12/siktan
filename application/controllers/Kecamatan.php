@@ -130,7 +130,10 @@ class Kecamatan extends CI_Controller
         $kecamatan = $this->input->post('kecamatan', true);
         $desa = $this->input->post('desa', true);
 
+        $from = $this->input->post('from', true);
+
         $data['kelompokTani'] = $this->KelompokTani_model->filterKelompokTani($kota, $kecamatan, $desa);
+        $data['from'] = $from;
 
         $hasil = $this->load->view('kecamatan/filterKelompok', $data, true);
 
@@ -301,6 +304,23 @@ class Kecamatan extends CI_Controller
         }
     }
 
+    public function filterLahan()
+    {
+        $id = $this->input->post('id', true);
+        $this->load->model('Lahan_model');
+
+        $data['lahan'] = $this->Lahan_model->getSingleLahan($id);
+
+
+        $hasil = $this->load->view('kecamatan/filterLahan', $data, true);
+
+        $callback = array(
+            'hasil' => $hasil,
+        );
+
+        echo json_encode($callback);
+    }
+
     // ==============================================
     //     Aset Section 
     // ==============================================
@@ -383,6 +403,23 @@ class Kecamatan extends CI_Controller
         }
     }
 
+    public function filterAset()
+    {
+        $id = $this->input->post('id', true);
+        $this->load->model('Aset_model');
+
+        $data['aset'] = $this->Aset_model->getSingleAset($id);
+
+
+        $hasil = $this->load->view('kecamatan/filterAset', $data, true);
+
+        $callback = array(
+            'hasil' => $hasil,
+        );
+
+        echo json_encode($callback);
+    }
+
     // ==============================================
     //     komoditi Section 
     // ==============================================
@@ -456,6 +493,23 @@ class Kecamatan extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed delete Komoditi!!</div>');
             redirect('kecamatan/komoditi');
         }
+    }
+
+    public function filterKomoditi()
+    {
+        $id = $this->input->post('id', true);
+        $this->load->model('Komoditi_model');
+
+        $data['komoditi'] = $this->Komoditi_model->getSingleKomoditi($id);
+
+
+        $hasil = $this->load->view('kecamatan/filterKomoditi', $data, true);
+
+        $callback = array(
+            'hasil' => $hasil,
+        );
+
+        echo json_encode($callback);
     }
 
     // ==============================================
@@ -535,6 +589,34 @@ class Kecamatan extends CI_Controller
         }
     }
 
+    public function getListAnggota()
+    {
+        $id = $this->input->post('id', true);
+        $this->load->model('Anggota_model');
+
+        $data = $this->Anggota_model->getSingleAnggota($id);
+
+        echo json_encode($data);
+    }
+
+    public function filterAnggota()
+    {
+        $id = $this->input->post('id', true);
+        $this->load->model('Anggota_model');
+
+        $data['anggota'] = $this->Anggota_model->getSingleAnggota($id);
+
+
+
+        $hasil = $this->load->view('kecamatan/filterAnggota', $data, true);
+
+        $callback = array(
+            'hasil' => $hasil,
+        );
+
+        echo json_encode($callback);
+    }
+
     public function masterData()
     {
         $this->load->model('Penyuluh_model');
@@ -577,7 +659,6 @@ class Kecamatan extends CI_Controller
         $data['title'] = 'Master Data';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['kelompokTani'] = $this->KelompokTani_model->getSingleKelompokTani($id);
-        $data['penyuluh'] = $this->Penyuluh_model->getSinglePenyuluh($id);
         $data['aset'] = $this->Aset_model->getSingleAset($id);
         $data['anggota'] = $this->Anggota_model->getSingleAnggota($id);
         $data['komoditi'] = $this->Komoditi_model->getSingleKomoditi($id);
