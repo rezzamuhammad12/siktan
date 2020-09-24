@@ -16,20 +16,46 @@
             <?= $this->session->flashdata('message'); ?>
 
             <h3 class="h3 mt-3 text-gray-800">Kelompok Tani</h3>
-            <table class="table table-hover tabel-master-data sortable">
+
+
+            <div class="card card-body">
+                <div class="btn-toolbar">
+                    <div class="btn-group mr-2">
+                        <select name="kota_filter" id="kota_filter" class="filter-form form-control">
+                            <option value="">Kota</option>
+                        </select>
+                    </div>
+                    <div class="btn-group mr-2">
+                        <select name="kecamatan_filter" id="kecamatan_filter" class="filter-form form-control" disabled>
+                            <option value="">Kecamatan</option>
+                        </select>
+                    </div>
+                    <div class="btn-group mr-2">
+                        <select name="desa_filter" id="desa_filter" class="filter-form form-control" disabled>
+                            <option value="">Desa</option>
+                        </select>
+                    </div>
+
+                    <button id="gofilter" class="btn btn-success" data-from="master">Go Filter</button>
+                </div>
+            </div>
+
+            <table class="table table-hover tabel-kelompok-tani sortable">
                 <thead>
                     <tr>
                         <th scope="col" data-defaultsort="true">#</th>
                         <th scope="col">Kode Kelompok</th>
                         <th scope="col">Nama Kelompok</th>
                         <th scope="col">Penyuluh Pendamping</th>
+                        <th scope="col">Kota</th>
+                        <th scope="col">Kecamatan</th>
                         <th scope="col">Desa</th>
                         <th scope="col">Skor</th>
                         <th scope="col" data-defaultsort="disabled">Disetujui</th>
                         <th scope="col" data-defaultsort="disabled">Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tbody-kelompok">
                     <?php $i = 1; ?>
                     <?php foreach ($kelompokTani as $kp) : ?>
                         <tr>
@@ -37,6 +63,8 @@
                             <td data-value="<?= $kp['kode_kelompok']; ?>"><?= $kp['kode_kelompok']; ?></td>
                             <td data-value="<?= $kp['nama']; ?>"><?= $kp['nama']; ?></td>
                             <td data-value="<?= $kp['nama_penyuluh']; ?>"><?= $kp['nama_penyuluh']; ?></td>
+                            <td class="kota" data-value="<?= $kp['kota_kab']; ?>"><?= $kp['kota_kab']; ?></td>
+                            <td class="kecamatan" data-value="<?= $kp['kecamatan']; ?>"><?= $kp['kecamatan']; ?></td>
                             <td class="desa" data-value="<?= $kp['desa']; ?>"><?= $kp['desa']; ?></td>
                             <td data-value="<?= $kp['skor']; ?>"><?= $kp['skor']; ?></td>
                             <td><?= is_null($kp['approved_by']) ? "diproses" : $kp['approved_by'] ?></td>
@@ -88,22 +116,41 @@
 
     <h3 class="h3 mt-3 text-gray-800">Lahan</h3>
     <div class="row">
+
+
+        <div class="card card-body mb-3">
+            <div class="btn-toolbar">
+                <div class="btn-group ml-auto">
+                    <select name="filter_lahan" id="filter_lahan" class="filter-form form-control">
+                        <option value="">Kelompok</option>
+                        <?php foreach ($kelompokTani as $kp) : ?>
+                            <option value="<?= $kp['id'] ?>"><?= $kp['nama'] ?></option>
+
+                        <?php endforeach ?>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
         <table class="table table-hover sortable">
             <thead>
                 <tr>
                     <th scope="col" data-defaultsort="true">#</th>
                     <th scope="col">Nama Kelompok</th>
+                    <th scope="col">Nama Anggota</th>
                     <th scope="col">Luas Lahan(ha)</th>
                     <th scope="col">Status Kepemilikan</th>
                     <th scope="col" data-defaultsort="disabled">Disetujui</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tbody-lahan">
                 <?php $i = 1; ?>
                 <?php foreach ($lahan as $l) : ?>
                     <tr>
                         <th scope="row" data-value="<?= $i; ?>"><?= $i; ?></th>
                         <td data-value="<?= $l['nama'] ?>"><?= $l['nama']; ?></td>
+                        <td data-value="<?= $l['nama_anggota'] ?>"><?= $l['nama_anggota']; ?></td>
                         <td data-value="<?= $l['luas'] ?>"><?= $l['luas']; ?></td>
                         <td data-value="<?= $l['status'] ?>"><?= $l['status']; ?></td>
                         <td><?= is_null($l['approved_by']) ? "diproses" : $l['approved_by'] ?></td>
@@ -118,6 +165,20 @@
 
     <h3 class="h3 mt-3 text-gray-800">Aset</h3>
     <div class="row">
+
+        <div class="card card-body mb-3">
+            <div class="btn-toolbar">
+                <div class="btn-group ml-auto">
+                    <select name="filter_aset" id="filter_aset" class="filter-form form-control">
+                        <option value="">Kelompok</option>
+                        <?php foreach ($kelompokTani as $kp) : ?>
+                            <option value="<?= $kp['id'] ?>"><?= $kp['nama'] ?></option>
+
+                        <?php endforeach ?>
+                    </select>
+                </div>
+            </div>
+        </div>
         <table class="table table-hover sortable">
             <thead>
                 <tr>
@@ -130,7 +191,7 @@
                     <th scope="col" data-defaultsort="disabled">Disetujui</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tbody-aset">
                 <?php $i = 1; ?>
                 <?php foreach ($aset as $a) : ?>
                     <tr>
@@ -152,22 +213,38 @@
 
     <h3 class="h3 mt-3 text-gray-800">Komoditi</h3>
     <div class="row">
+
+        <div class="card card-body mb-3">
+            <div class="btn-toolbar">
+                <div class="btn-group ml-auto">
+                    <select name="filter_komoditi" id="filter_komoditi" class="filter-form form-control">
+                        <option value="">Kelompok</option>
+                        <?php foreach ($kelompokTani as $kp) : ?>
+                            <option value="<?= $kp['id'] ?>"><?= $kp['nama'] ?></option>
+
+                        <?php endforeach ?>
+                    </select>
+                </div>
+            </div>
+        </div>
         <table class="table table-hover sortable">
             <thead>
                 <tr>
                     <th scope="col" data-defaultsort="true">#</th>
                     <th scope="col">Nama Kelompok</th>
+                    <th scope="col">Nama Anggota</th>
                     <th scope="col">Subsektor</th>
                     <th scope="col">Komoditas</th>
                     <th scope="col" data-defaultsort="disabled">Disetujui</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tbody-komoditi">
                 <?php $i = 1; ?>
                 <?php foreach ($komoditi as $km) : ?>
                     <tr>
                         <th scope="row" data-value="<?= $i; ?>"><?= $i; ?></th>
                         <td data-value="<?= $km['nama']; ?>"><?= $km['nama']; ?></td>
+                        <td data-value="<?= $km['nama_anggota']; ?>"><?= $km['nama_anggota']; ?></td>
                         <td data-value="<?= $km['subsektor']; ?>"><?= $km['subsektor']; ?></td>
                         <td data-value="<?= $km['komoditas']; ?>"><?= $km['komoditas']; ?></td>
                         <td><?= is_null($km['approved_by']) ? "diproses" : $km['approved_by'] ?></td>
@@ -181,6 +258,20 @@
     <!-- Master Anggota -->
     <h3 class="h3 mt-3 text-gray-800">Anggota</h3>
     <div class="row">
+
+        <div class="card card-body mb-3">
+            <div class="btn-toolbar">
+                <div class="btn-group ml-auto">
+                    <select name="filter_anggota" id="filter_anggota" class="filter-form form-control">
+                        <option value="">Kelompok</option>
+                        <?php foreach ($kelompokTani as $kp) : ?>
+                            <option value="<?= $kp['id'] ?>"><?= $kp['nama'] ?></option>
+
+                        <?php endforeach ?>
+                    </select>
+                </div>
+            </div>
+        </div>
         <table class="table table-hover sortable">
             <thead>
                 <tr>
@@ -191,7 +282,7 @@
                     <th scope="col">Status Anggota</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tbody-anggota">
                 <?php $i = 1; ?>
                 <?php foreach ($anggota as $agt) : ?>
                     <tr>

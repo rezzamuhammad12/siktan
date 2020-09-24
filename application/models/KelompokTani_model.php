@@ -28,6 +28,7 @@ class KelompokTani_model extends CI_Model
                     ";
         return $this->db->query($query)->result_array();
     }
+
     public function filterKelompokTani($kota, $kec, $desa)
     {
         $key = "";

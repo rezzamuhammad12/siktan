@@ -40,8 +40,11 @@ $('#addLahan').on('show.bs.modal', function (event) {
 
     var id = button.data('id')
     var nama = button.data('nama')
+    var anggota = button.data('anggota')
     var luas = button.data('luas')
     var status = button.data('status')
+
+    getListAnggota(id)
 
     var modal = $(this)
     modal.find('.modal-title').text(title);
@@ -49,19 +52,60 @@ $('#addLahan').on('show.bs.modal', function (event) {
 
     modal.find('#id').val(id);
     modal.find('#id_kelompok option[value="' + nama + '"]').prop('selected', true)
+    modal.find('#id_anggota option[value="' + anggota + '"]').prop('selected', true)
     modal.find('#luas').val(luas);
     modal.find('#id_status_kepemilikan option[value="' + status + '"]').prop('selected', true)
 
     if (btn == 'Add') {
+        modal.find('#id_anggota').attr('disabled', true)
         $('.modal-content form').attr('action', "lahan")
         modal.find('#id').val("");
         modal.find('#id_kelompok option:eq(0)').prop('selected', true)
+        modal.find('#id_anggota option:eq(0)').prop('selected', true)
         modal.find('#luas').val(luas);
         modal.find('#id_status_kepemilikan option:eq(0)').prop('selected', true)
     } else {
+        modal.find('#id_anggota').removeAttr('disabled')
         $('.modal-content form').attr('action', "editLahan")
     }
 })
+
+
+$('#id_kelompok').on('change', function () {
+    var id = $(this).val();
+    $('#id_anggota')
+        .find('option:not(:first-child)')
+        .remove()
+        .end()
+
+    if (id) {
+        $('#id_anggota').removeAttr('disabled');
+        getListAnggota(id)
+    } else {
+        $('#id_anggota').attr('disabled', true);
+    }
+})
+
+function getListAnggota(id) {
+    $.ajax({
+        url: 'http://localhost/siktan-jabar/kecamatan/getListAnggota',
+        type: 'POST',
+        async: false,
+        data: {
+            id: id,
+        },
+        dataType: 'json',
+        success: function (result) {
+            $.each(result, function (key, value) {
+                $('#id_anggota')
+                    .append($("<option></option>")
+                        .attr("value", value['id'])
+                        .text(value['nama']));
+            });
+        },
+        error: err => console.log(err),
+    })
+}
 
 //aset
 
@@ -137,17 +181,15 @@ $('#addKelompokPetani').on('show.bs.modal', function (event) {
             .prepend('<option value="">Pilih Kota</option>')
             .val('whatever');
         modal.find('#id_kota option:eq(0)').prop('selected', true)
-        modal.find('#id_kecamatan').find('option')
+        modal.find('#id_kecamatan')
+            .find('option:not(:first-child)')
             .remove()
             .end()
-            .append('<option value="">Pilih Kecamatan</option>')
-            .val('whatever');
         modal.find('#id_kecamatan option:eq(0)').prop('selected', true)
-        modal.find('#id_desa').find('option')
+        modal.find('#id_desa')
+            .find('option:not(:first-child)')
             .remove()
             .end()
-            .append('<option value="">Pilih Kecamatan</option>')
-            .val('whatever');
         modal.find('#id_desa option:eq(0)').prop('selected', true)
         modal.find('#bpp').val("");
         modal.find('#alamat').val("");
@@ -241,27 +283,35 @@ $('#addKomoditi').on('show.bs.modal', function (event) {
 
     var id = button.data('id')
     var nama = button.data('nama')
+    var anggota = button.data('anggota')
     var subsektor = button.data('subsektor')
     var komoditas = button.data('komoditas')
+
+    getListAnggota(nama)
 
     var modal = $(this)
     modal.find('.modal-title').text(title);
     modal.find('.action').text(btn);
-
     modal.find('#id').val(id);
     modal.find('#id_kelompok option[value="' + nama + '"]').prop('selected', true)
+    modal.find('#id_anggota option[value="' + anggota + '"]').prop('selected', true)
     modal.find('#id_subsektor option[value="' + subsektor + '"]').prop('selected', true)
     modal.find('#id_komoditas option[value="' + komoditas + '"]').prop('selected', true)
 
     if (btn == 'Add') {
+        modal.find('#id_anggota').attr('disabled', 'true')
         $('.modal-content form').attr('action', "komoditi")
         modal.find('#id_kelompok option:eq(0)').prop('selected', true)
+        modal.find('#id_anggota option:eq(0)').prop('selected', true)
         modal.find('#id_subsektor option:eq(0)').prop('selected', true)
         modal.find('#id_komoditas option:eq(0)').prop('selected', true)
     } else {
+        modal.find('#id_anggota').removeAttr('disabled')
         $('.modal-content form').attr('action', "editKomoditi")
     }
 })
+
+
 
 // Anggota
 

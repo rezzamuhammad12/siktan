@@ -17,11 +17,9 @@ $.ajax({
 $('#kota_filter').on('change', function () {
     var idKota = $(this).val();
     $('#kecamatan_filter')
-        .find('option')
+        .find('option:not(:first-child)')
         .remove()
         .end()
-        .append('<option value="">Pilih Kecamatan</option>')
-        .val('whatever');
     if (idKota) {
         $('#kecamatan_filter').removeAttr('disabled')
         $.ajax({
@@ -47,11 +45,9 @@ $('#kota_filter').on('change', function () {
 $('#kecamatan_filter').on('change', function () {
     var idKec = $(this).val();
     $('#desa_filter')
-        .find('option')
+        .find('option:not(:first-child)')
         .remove()
         .end()
-        .append('<option value="">Pilih Desa</option>')
-        .val('whatever');
     if (idKec) {
         $('#desa_filter').removeAttr('disabled')
         $.ajax({
@@ -81,6 +77,7 @@ $('#gofilter').on('click', function () {
     var kota = $('#kota_filter').find(':selected').val();
     var kecamatan = $('#kecamatan_filter').find(':selected').val();
     var desa = $('#desa_filter').find(':selected').val();
+    var from = $(this).data('from');
 
     $.ajax({
         url: 'http://localhost/siktan-jabar/kecamatan/filterKelompok',
@@ -89,7 +86,8 @@ $('#gofilter').on('click', function () {
         data: {
             kota: kota,
             kecamatan: kecamatan,
-            desa: desa
+            desa: desa,
+            from: from
         },
         beforeSend: function (e) {
             if (e && e.overrideMimeType) {
@@ -97,10 +95,8 @@ $('#gofilter').on('click', function () {
             }
         },
         success: function (response) {
-            // console.log($('#tabel-kelompok-tani tbody').find('tr').remove().end());
-            $('#dicobain').find('tr').remove().end()
-            $('#dicobain').append(response['hasil']);
-            console.log(response['hasil']);
+            $('#tbody-kelompok').find('tr').remove().end()
+            $('#tbody-kelompok').append(response['hasil']);
         },
         error: function (xhr, status, error) {
             console.log(xhr.responseText);
@@ -108,4 +104,114 @@ $('#gofilter').on('click', function () {
             console.log(error)
         },
     })
+})
+
+// Filter Lahan
+
+$('#filter_lahan').on('change', function () {
+    id = $(this).val();
+
+    if (id) {
+        $.ajax({
+            url: 'http://localhost/siktan-jabar/kecamatan/filterLahan',
+            type: 'POST',
+            async: false,
+            data: {
+                id: id,
+            },
+            dataType: 'json',
+            success: function (result) {
+
+                $('#tbody-lahan').find('tr').remove().end()
+                $('#tbody-lahan').append(result['hasil']);
+
+            },
+            error: err => console.log(err),
+        })
+    } else {
+
+    }
+})
+
+
+// Filter Aset
+
+$('#filter_aset').on('change', function () {
+    id = $(this).val();
+
+    if (id) {
+        $.ajax({
+            url: 'http://localhost/siktan-jabar/kecamatan/filterAset',
+            type: 'POST',
+            async: false,
+            data: {
+                id: id,
+            },
+            dataType: 'json',
+            success: function (result) {
+
+                $('#tbody-aset').find('tr').remove().end()
+                $('#tbody-aset').append(result['hasil']);
+
+            },
+            error: err => console.log(err),
+        })
+    } else {
+
+    }
+})
+
+// Filter Komoditi
+
+$('#filter_komoditi').on('change', function () {
+    id = $(this).val();
+
+    if (id) {
+        $.ajax({
+            url: 'http://localhost/siktan-jabar/kecamatan/filterKomoditi',
+            type: 'POST',
+            async: false,
+            data: {
+                id: id,
+            },
+            dataType: 'json',
+            success: function (result) {
+
+                $('#tbody-komoditi').find('tr').remove().end()
+                $('#tbody-komoditi').append(result['hasil']);
+
+            },
+            error: err => console.log(err),
+        })
+    } else {
+
+    }
+})
+
+
+// Filter Anggota
+
+$('#filter_anggota').on('change', function () {
+    id = $(this).val();
+
+    if (id) {
+        $.ajax({
+            url: 'http://localhost/siktan-jabar/kecamatan/filterAnggota',
+            type: 'POST',
+            async: false,
+            data: {
+                id: id,
+            },
+            dataType: 'json',
+            success: function (result) {
+
+                $('#tbody-anggota').find('tr').remove().end()
+                $('#tbody-anggota').append(result['hasil']);
+
+            },
+            error: err => console.log(err),
+        })
+    } else {
+
+    }
 })

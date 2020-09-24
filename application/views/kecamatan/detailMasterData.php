@@ -1,5 +1,8 @@
-<!-- Begin Page Content -->
+<?php
+var_dump($kelompokTani);
+?>
 
+<!-- Begin Page Content -->
 <div class="container-fluid">
 
     <!-- Page Heading -->
