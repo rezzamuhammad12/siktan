@@ -36,7 +36,8 @@
                         </select>
                     </div>
 
-                    <button id="gofilter" class="btn btn-success" data-from="master">Go Filter</button>
+                    <button id="gofilter" class="btn btn-success mr-2" data-from="master">Go Filter</button>
+                    <a href="<?= base_url('kecamatan/export_excel'); ?>" class="btn btn-warning">Export</a>
                 </div>
             </div>
 

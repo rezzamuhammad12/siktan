@@ -1,5 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+require FCPATH . '/vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Kecamatan extends CI_Controller
 {
@@ -672,5 +676,154 @@ class Kecamatan extends CI_Controller
         } else {
             redirect('kecamatan/detailMasterData');
         }
+    }
+
+    public function export_excel()
+    {
+        $this->load->model('KelompokTani_model');
+        $this->load->model('Anggota_model');
+        $this->load->model('Lahan_model');
+        $this->load->model('Komoditi_model');
+        $this->load->model('Aset_model');
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+        $data['listKelas'] = $this->db->get('list_kelas')->result_array();
+
+
+
+
+
+
+        $spreadsheet = new Spreadsheet;
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        // Set document properties
+        $spreadsheet->getProperties()->setCreator('siktan.co.th')
+            ->setLastModifiedBy('Cholcool')
+            ->setTitle('how to export data to excel use phpspreadsheet in codeigniter')
+            ->setSubject('Generate Excel use PhpSpreadsheet in CodeIgniter')
+            ->setDescription('Export data to Excel Work for me!');
+        // add style to the header
+        $styleArray = array(
+            'font' => array(
+                'bold' => true,
+            ),
+            'alignment' => array(
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical'   => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            ),
+            'borders' => array(
+                'bottom' => array(
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+                    'color' => array('rgb' => '#000000'),
+                ),
+            ),
+            'fill' => array(
+                'type'       => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_GRADIENT_LINEAR,
+                'rotation'   => 90,
+                'startcolor' => array('rgb' => '00FF00'),
+                'endColor'   => array('rgb' => '32CD32'),
+            ),
+        );
+        $spreadsheet->getActiveSheet()->getStyle('A1:AB1')->applyFromArray($styleArray);
+        // auto fit column to content
+        foreach (range('A', 'AB') as $columnID) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+        }
+
+
+        $sheet->setCellValue('A1', 'No');
+        $sheet->setCellValue('B1', 'BPP');
+        $sheet->setCellValue('C1', 'Kecamatan');
+        $sheet->setCellValue('D1', 'Desa');
+        $sheet->setCellValue('E1', 'Penyuluh Pendamping');
+        $sheet->setCellValue('F1', 'Nip Penyuluh');
+        $sheet->setCellValue('G1', 'Nik Penyuluh');
+        $sheet->setCellValue('H1', 'Status Penyuluh');
+        $sheet->setCellValue('I1', 'Nama Kelompok Tani Binaan');
+        $sheet->setCellValue('J1', 'Tahun Pembentukan');
+        $sheet->setCellValue('K1', 'Alamat Sekretariat');
+        $sheet->setCellValue('L1', 'Kelas');
+        $sheet->setCellValue('M1', 'Skor');
+        $sheet->setCellValue('N1', 'Tahun Penetapan');
+        $sheet->setCellValue('O1', 'Jumlah Anggota');
+        $sheet->setCellValue('P1', 'No');
+        $sheet->setCellValue('Q1', 'Nama Anggota');
+        $sheet->setCellValue('R1', 'Nik Anggota');
+        $sheet->setCellValue('S1', 'Status Dalam Kelompok');
+        $sheet->setCellValue('T1', 'Luas Lahan (ha)');
+        $sheet->setCellValue('U1', 'Status Kepemilikan Lahan');
+        $sheet->setCellValue('V1', 'Subsektor');
+        $sheet->setCellValue('W1', 'Komoditas');
+        $sheet->setCellValue('X1', 'Aset Kelompok');
+        $sheet->setCellValue('Y1', 'Sumber Perolehan Aset');
+        $sheet->setCellValue('Z1', 'Jumlah Aset');
+        $sheet->setCellValue('AA1', 'Tahun Perolehan');
+        $sheet->setCellValue('AB1', 'Teknologi yang di Gunakan');
+
+        $kolom = 2;
+        $nomor = 1;
+        foreach ($data['kelompokTani'] as $ex) {
+            $sheet->setCellValue('A' . $kolom, $nomor);
+            $sheet->setCellValue('B' . $kolom, $ex['bpp']);
+            $sheet->setCellValue('C' . $kolom, $ex['kecamatan']);
+            $sheet->setCellValue('D' . $kolom, $ex['desa']);
+            $sheet->setCellValue('E' . $kolom, $ex['nama_penyuluh']);
+            $sheet->setCellValue('F' . $kolom, "'" . $ex['nip']);
+            $sheet->setCellValue('G' . $kolom, "'" . $ex['nik']);
+            $sheet->setCellValue('H' . $kolom, $ex['status']);
+            $sheet->setCellValue('I' . $kolom, $ex['nama']);
+            $sheet->setCellValue('J' . $kolom, $ex['tahun_pembentukan']);
+            $sheet->setCellValue('K' . $kolom, $ex['alamat']);
+            $sheet->setCellValue('L' . $kolom, $ex['kelas']);
+            $sheet->setCellValue('M' . $kolom, $ex['skor']);
+            $sheet->setCellValue('N' . $kolom, $ex['tahun_penerapan']);
+
+            $anggota = $this->Anggota_model->getSingleAnggota($ex['id']);
+            $aset = $this->Aset_model->getSingleAset($ex['id']);
+            $kolomAnggota = $kolom;
+            $nomorAnggota = 1;
+            foreach ($anggota as $a) {
+                $lahan = $this->Lahan_model->getListLahan($a['id']);
+                $komoditi = $this->Komoditi_model->getListKomoditi($a['id']);
+                $sheet->setCellValue('P' . $kolomAnggota, $nomorAnggota);
+                $sheet->setCellValue('Q' . $kolomAnggota, $a['nama']);
+                $sheet->setCellValue('R' . $kolomAnggota, "'" . $a['nik']);
+                $sheet->setCellValue('S' . $kolomAnggota, $a['status']);
+                $sheet->setCellValue('T' . $kolomAnggota, $lahan[0]['luas']);
+                $sheet->setCellValue('U' . $kolomAnggota, $lahan[0]['status']);
+                $sheet->setCellValue('V' . $kolomAnggota, $komoditi[0]['subsektor']);
+                $sheet->setCellValue('W' . $kolomAnggota, $komoditi[0]['komoditas']);
+
+                $nomorAnggota++;
+                $kolomAnggota++;
+            };
+            $sheet->setCellValue('O' . $kolom, $nomorAnggota - 1);
+            $kolomAset = $kolom;
+            foreach ($aset as $a) {
+                $sheet->setCellValue('X' . $kolomAset, $a['nama']);
+                $sheet->setCellValue('Y' . $kolomAset, $a['sumber_perolehan']);
+                $sheet->setCellValue('Z' . $kolomAset, $a['jumlah']);
+                $sheet->setCellValue('AA' . $kolomAset, $a['tahun_perolehan']);
+                $kolomAset++;
+            }
+
+            $sheet->setCellValue('AB' . $kolom, $ex['teknologi']);
+
+            $kolom = $kolomAnggota - 1;
+            $kolom++;
+            $nomor++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="SiktanJabar.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+
+        // $writer->save('recruitment_form.xlsx');
+        redirect('kecamatan/masterData');
     }
 }

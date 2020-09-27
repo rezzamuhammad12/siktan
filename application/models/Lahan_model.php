@@ -30,4 +30,18 @@ class Lahan_Model extends CI_Model
                     ";
         return $this->db->query($query)->result_array();
     }
+
+    public function getListLahan($id)
+    {
+        $query = "SELECT `lahan`.`id` AS `id_lahan`, `lahan`.`luas` ,`kelompok_tani`.*, `list_status_kepemilikan`.`status`, `list_status_kepemilikan`.`id` AS `id_status`, `anggota`.`nama` AS `nama_anggota`, `anggota`.`id` AS `id_anggota`
+                    FROM `lahan` INNER JOIN `kelompok_tani`
+                        ON `lahan`.`id_kelompok` = `kelompok_tani`.`id`
+                    INNER JOIN `list_status_kepemilikan`
+                        ON `lahan`.`id_status_kepemilikan` = `list_status_kepemilikan`.`id`
+                    INNER JOIN `anggota`
+                        ON `lahan`.`id_anggota` = `anggota`.`id`
+                    WHERE `lahan`.`id_anggota` = $id
+                    ";
+        return $this->db->query($query)->result_array();
+    }
 }
