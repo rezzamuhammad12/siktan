@@ -52,6 +52,13 @@ class Komoditi_model extends CI_Model
                     
                     WHERE `komoditi`.`id_anggota` = $id
                     ";
+
+        return $this->db->query($query)->result_array();
+    }
+    public function getListKomoditas($id)
+    {
+        $query = "SELECT * FROM `list_komoditas` WHERE `id_subsektor` = $id";
+
         return $this->db->query($query)->result_array();
     }
 }

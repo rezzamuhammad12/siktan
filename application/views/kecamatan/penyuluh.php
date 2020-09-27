@@ -38,7 +38,14 @@
                             <td data-value="<?= $p['nip'] ?>"><?= $p['nip']; ?></td>
                             <td data-value="<?= $p['nik'] ?>"><?= $p['nik']; ?></td>
                             <td data-value="<?= $p['status'] ?>"><?= $p['status']; ?></td>
-                            <td><?= is_null($p['approved_by']) ? "diproses" : $p['approved_by'] ?></td>
+                            <td><?php if (is_null($p['verifikasi'])) : ?>
+                                    <div class="badge badge-info">Diproses</div>
+                                <?php elseif ($p['verifikasi'] == "revisi") : ?>
+                                    <a href="" data-toggle="modal" data-target="#catatanRevisi" class="badge badge-warning" data-title="Catatan Revisi Kelompok <?= $p['nama'] ?>" data-catatan="<?= $p['catatan'] ?>">Revisi</a>
+                                <?php else : ?>
+                                    <div class="badge badge-success">Terverifikasi</div>
+                                <?php endif ?>
+                            </td>
                             <td>
                                 <a href="" class="badge badge-success" data-toggle="modal" data-target="#addPenyuluh" data-title="Edit Penyuluh" data-button="Edit" data-nama="<?= $p['nama']; ?>" data-status="<?= $p['id_status']; ?>" data-nip="<?= $p['nip']; ?>" data-nik="<?= $p['nik']; ?>" data-id="<?= $p['id']; ?>">edit</a>
                                 <a href="deletePenyuluh/<?= $p['id']; ?>" class="badge badge-danger" onclick="return confirm('Yakin hapus &quot;<?= $p['nama']; ?>&quot; ?');">delete</a>
@@ -96,6 +103,31 @@
                     <button type="submit" class="btn btn-primary action">Add</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Catatan -->
+
+<div class="modal fade" id="catatanRevisi" tabindex="-1" role="dialog" aria-labelledby="catatanRevisiLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="catatanRevisiLabel">Catatan Revisi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p class="catatan"></p>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
         </div>
     </div>
 </div>

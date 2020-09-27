@@ -59,7 +59,7 @@
                         <th scope="col" data-defaultsort="disabled">Action</th>
                     </tr>
                 </thead>
-                <tbody id="dicobain">
+                <tbody id="tbody-kelompok">
                     <?php $i = 1; ?>
                     <?php foreach ($kelompokTani as $kp) : ?>
                         <tr>
@@ -71,7 +71,14 @@
                             <td class="kecamatan" data-value="<?= $kp['kecamatan']; ?>"><?= $kp['kecamatan']; ?></td>
                             <td class="desa" data-value="<?= $kp['desa']; ?>"><?= $kp['desa']; ?></td>
                             <td data-value="<?= $kp['skor']; ?>"><?= $kp['skor']; ?></td>
-                            <td><?= is_null($kp['approved_by']) ? "diproses" : $kp['approved_by'] ?></td>
+                            <td><?php if (is_null($kp['verifikasi'])) : ?>
+                                    <div class="badge badge-info">Diproses</div>
+                                <?php elseif ($kp['verifikasi'] == "revisi") : ?>
+                                    <a href="" data-toggle="modal" data-target="#catatanRevisi" class="badge badge-warning" data-title="Catatan Revisi Kelompok <?= $kp['nama'] ?>" data-catatan="<?= $kp['catatan'] ?>">Revisi</a>
+                                <?php else : ?>
+                                    <div class="badge badge-success">Terverifikasi</div>
+                                <?php endif ?>
+                            </td>
                             <td>
                                 <a href="" class="badge badge-info" data-toggle="modal" data-target="#detailKelompokTani" data-userid="<?= $kp['id']; ?>" data-kodekelompok="<?= $kp['kode_kelompok']; ?>" data-nama="<?= $kp['nama']; ?>" data-penyuluh="<?= $kp['nama_penyuluh']; ?>" data-desa="<?= $kp['desa']; ?>" data-kecamatan="<?= $kp['kecamatan']; ?>" data-kota="<?= $kp['kota_kab']; ?>" data-bpp="<?= $kp['bpp']; ?>" data-tahun_pembentukan="<?= $kp['tahun_pembentukan']; ?>" data-alamat="<?= $kp['alamat']; ?>" data-kelas="<?= $kp['kelas']; ?>" data-skor="<?= $kp['skor']; ?>" data-tahun_penerapan="<?= $kp['tahun_penerapan']; ?>" data-teknologi="<?= $kp['teknologi']; ?>">detail</a>
 
@@ -273,6 +280,31 @@
                     </tr>
                 </tbody>
             </table>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal Catatan -->
+
+<div class="modal fade" id="catatanRevisi" tabindex="-1" role="dialog" aria-labelledby="catatanRevisiLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="catatanRevisiLabel">Catatan Revisi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p class="catatan"></p>
+
+            </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

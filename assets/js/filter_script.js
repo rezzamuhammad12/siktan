@@ -77,7 +77,17 @@ $('#gofilter').on('click', function () {
     var kota = $('#kota_filter').find(':selected').val();
     var kecamatan = $('#kecamatan_filter').find(':selected').val();
     var desa = $('#desa_filter').find(':selected').val();
-    var from = $(this).data('from');
+    from = window.location.href;
+    from = from.split('/');
+    from = from.pop().toLowerCase();
+
+    if (from == 'masterdata') {
+        from = 'master';
+    } else if (from == 'kota') {
+        from = 'kota';
+    } else {
+        from = '';
+    }
 
     $.ajax({
         url: 'http://localhost/siktan-jabar/kecamatan/filterKelompok',
@@ -97,6 +107,9 @@ $('#gofilter').on('click', function () {
         success: function (response) {
             $('#tbody-kelompok').find('tr').remove().end()
             $('#tbody-kelompok').append(response['hasil']);
+            idDesaToVal($(".tabel-kelompok-tani"))
+            idKotaToVal($(".tabel-kelompok-tani"))
+            idKecToVal($(".tabel-kelompok-tani"))
         },
         error: function (xhr, status, error) {
             console.log(xhr.responseText);
@@ -104,12 +117,29 @@ $('#gofilter').on('click', function () {
             console.log(error)
         },
     })
+
+    // $(document).ajaxStop(function () {
+    //     idDesaToVal($(".tabel-kelompok-tani"))
+    //     idKotaToVal($(".tabel-kelompok-tani"))
+    //     idKecToVal($(".tabel-kelompok-tani"))
+    // })
 })
 
 // Filter Lahan
 
 $('#filter_lahan').on('change', function () {
     id = $(this).val();
+    from = window.location.href;
+    from = from.split('/');
+    from = from.pop().toLowerCase();
+
+    if (from == 'masterdata') {
+        from = 'master';
+    } else if (from == 'kota') {
+        from = 'kota';
+    } else {
+        from = '';
+    }
 
     if (id) {
         $.ajax({
@@ -118,6 +148,7 @@ $('#filter_lahan').on('change', function () {
             async: false,
             data: {
                 id: id,
+                from: from
             },
             dataType: 'json',
             success: function (result) {
@@ -138,6 +169,18 @@ $('#filter_lahan').on('change', function () {
 
 $('#filter_aset').on('change', function () {
     id = $(this).val();
+    from = window.location.href;
+    from = from.split('/');
+    from = from.pop().toLowerCase();
+
+    if (from == 'masterdata') {
+        from = 'master';
+    } else if (from == 'kota') {
+        from = 'kota';
+    } else {
+        from = '';
+    }
+
 
     if (id) {
         $.ajax({
@@ -146,6 +189,7 @@ $('#filter_aset').on('change', function () {
             async: false,
             data: {
                 id: id,
+                from: from
             },
             dataType: 'json',
             success: function (result) {
@@ -165,6 +209,17 @@ $('#filter_aset').on('change', function () {
 
 $('#filter_komoditi').on('change', function () {
     id = $(this).val();
+    from = window.location.href;
+    from = from.split('/');
+    from = from.pop().toLowerCase();
+
+    if (from == 'masterdata') {
+        from = 'master';
+    } else if (from == 'kota') {
+        from = 'kota';
+    } else {
+        from = '';
+    }
 
     if (id) {
         $.ajax({
@@ -173,6 +228,7 @@ $('#filter_komoditi').on('change', function () {
             async: false,
             data: {
                 id: id,
+                from: from
             },
             dataType: 'json',
             success: function (result) {
@@ -193,6 +249,17 @@ $('#filter_komoditi').on('change', function () {
 
 $('#filter_anggota').on('change', function () {
     id = $(this).val();
+    from = window.location.href;
+    from = from.split('/');
+    from = from.pop().toLowerCase();
+
+    if (from == 'masterdata') {
+        from = 'master';
+    } else if (from == 'kota') {
+        from = 'kota';
+    } else {
+        from = '';
+    }
 
     if (id) {
         $.ajax({
@@ -201,6 +268,7 @@ $('#filter_anggota').on('change', function () {
             async: false,
             data: {
                 id: id,
+                from: from
             },
             dataType: 'json',
             success: function (result) {

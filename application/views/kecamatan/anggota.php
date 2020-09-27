@@ -14,7 +14,18 @@
 
             <?= $this->session->flashdata('message'); ?>
 
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAnggota" data-title="Tambah Anggota" data-button="Add">Tambah Anggota</a>
+            <div class="btn-toolbar">
+                <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAnggota" data-title="Tambah Anggota" data-button="Add">Tambah Anggota</a>
+                <div class="btn-group ml-auto">
+                    <select name="filter_anggota" id="filter_anggota" class="filter-form form-control">
+                        <option value="">Kelompok</option>
+                        <?php foreach ($kelompokTani as $kp) : ?>
+                            <option value="<?= $kp['id'] ?>"><?= $kp['nama'] ?></option>
+
+                        <?php endforeach ?>
+                    </select>
+                </div>
+            </div>
 
             <table class="table table-hover sortable">
                 <thead>
@@ -24,10 +35,11 @@
                         <th scope="col">NIK</th>
                         <th scope="col">Nama</th>
                         <th scope="col">Status Anggota</th>
+                        <th scope="col">Disetujui</th>
                         <th scope="col" data-defaultsort="disabled">Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tbody-anggota">
                     <?php $i = 1; ?>
                     <?php foreach ($anggota as $agt) : ?>
                         <tr>
@@ -36,6 +48,14 @@
                             <td data-value="<?= $agt['nik']; ?>"><?= $agt['nik']; ?></td>
                             <td data-value="<?= $agt['nama']; ?>"><?= $agt['nama']; ?></td>
                             <td data-value="<?= $agt['status']; ?>"><?= $agt['status']; ?></td>
+                            <td><?php if (is_null($agt['verifikasi'])) : ?>
+                                    <div class="badge badge-info">Diproses</div>
+                                <?php elseif ($agt['verifikasi'] == "revisi") : ?>
+                                    <a href="" data-toggle="modal" data-target="#catatanRevisi" class="badge badge-warning" data-title="Catatan Revisi Kelompok <?= $agt['nama'] ?>" data-catatan="<?= $agt['catatan'] ?>">Revisi</a>
+                                <?php else : ?>
+                                    <div class="badge badge-success">Terverifikasi</div>
+                                <?php endif ?>
+                            </td>
                             <td>
                                 <a href="" class="badge badge-success " data-toggle="modal" data-target="#addAnggota" data-title="Edit Anggota" data-button="Edit" data-id="<?= $agt['id']; ?>" data-namaKelompok="<?= $agt['id_kelompok']; ?>" data-nik="<?= $agt['nik']; ?>" data-nama="<?= $agt['nama']; ?>" data-status="<?= $agt['id_status']; ?>">edit</a>
                                 <a href="deleteAnggota/<?= $agt['id']; ?>" class="badge badge-danger" onclick="return confirm('Yakin hapus Anggota &quot;<?= $agt['nama']; ?>&quot; dari &quot;<?= $agt['nama_kelompok']; ?>&quot; ?');">delete</a>
@@ -98,6 +118,29 @@
                     <button type="submit" class="btn btn-primary action">Add</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="catatanRevisi" tabindex="-1" role="dialog" aria-labelledby="catatanRevisiLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="catatanRevisiLabel">Catatan Revisi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p class="catatan"></p>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
         </div>
     </div>
 </div>
