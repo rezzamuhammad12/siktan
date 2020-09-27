@@ -1,10 +1,10 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title . " " . $kelompokTani[0]['nama']; ?></h1>
+    <?= $this->session->flashdata('message'); ?>
     <div class="row">
-        <table class="table table-striped table-kelompok-tani">
+        <table class="table table-striped tabel-kelompok-tani">
             <tbody>
                 <tr>
                     <td>Penyuluh Pendamping</td>
@@ -65,6 +65,20 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+
+    <div class="row">
+        <form action="<?= base_url('kota/verifikasi/') . $kelompokTani[0]['id']; ?>" method="post" style="width: 70%;">
+            <div class="form-group">
+                <textarea class="form-control" id="catatan" name="catatan" placeholder="Catatan" rows="7"></textarea>
+            </div>
+
+            <div class="btn-toolbar">
+                <button type="submit" name="btn-verif" value="diverifikasi" class="btn btn-success mr-2 ml-auto">Verifikasi</button>
+                <button type="submit" name="btn-verif" value="revisi" class="btn btn-danger action mr-2">Revisi</button>
+                <a href="../../kota" type="submit" class="btn btn-link ">batal</a>
+            </div>
+        </form>
     </div>
 
 </div>

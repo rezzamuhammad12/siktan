@@ -1,3 +1,7 @@
+// Baseurl
+
+var base_url = window.location.origin + "/siktan-jabar/";
+
 $('#addPenyuluh').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)
     var title = button.data('title')
@@ -345,4 +349,35 @@ $('#addAnggota').on('show.bs.modal', function (event) {
     } else {
         $('.modal-content form').attr('action', "editAnggota")
     }
+})
+
+// Modal Catatan Revisi
+
+$('#catatanRevisi').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget)
+    var title = button.data('title')
+    var catatan = button.data('catatan')
+
+    console.log(title)
+    console.log(catatan)
+
+    var modal = $(this)
+    modal.find('.modal-title').text(title)
+    modal.find('.catatan').text(catatan)
+})
+
+// Modal Verifikasi
+
+$('#modalVerifikasi').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget)
+    var title = button.data('title')
+    var id = button.data('id')
+    var baseurl = button.data('url')
+
+    url = base_url + "/kota/" + baseurl
+
+    var modal = $(this);
+    modal.find('.modal-title').text(title);
+    modal.find('#id').val(id)
+    modal.find('#url').attr('action', url);
 })

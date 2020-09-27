@@ -34,7 +34,14 @@
                 <td class="kecamatan" data-value="<?= $kp['kecamatan']; ?>"><?= $kp['kecamatan']; ?></td>
                 <td class="desa" data-value="<?= $kp['desa']; ?>"><?= $kp['desa']; ?></td>
                 <td data-value="<?= $kp['skor']; ?>"><?= $kp['skor']; ?></td>
-                <td><?= is_null($kp['approved_by']) ? "diproses" : $kp['approved_by'] ?></td>
+                <td><?php if (is_null($kp['verifikasi'])) : ?>
+                        <div class="badge badge-info">Diproses</div>
+                    <?php elseif ($kp['verifikasi'] == "revisi") : ?>
+                        <a href="" data-toggle="modal" data-target="#catatanRevisi" class="badge badge-warning" data-title="Catatan Revisi Kelompok <?= $kp['nama'] ?>" data-catatan="<?= $kp['catatan'] ?>">Revisi</a>
+                    <?php else : ?>
+                        <div class="badge badge-success">Terverifikasi</div>
+                    <?php endif ?>
+                </td>
                 <td>
                     <a href="<?= base_url('kecamatan/detailMasterData/') ?><?= $kp['id']; ?>" class="badge badge-info">Detail</a>
                 </td>

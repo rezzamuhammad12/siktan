@@ -110,6 +110,14 @@ $('#gofilter').on('click', function () {
 
 $('#filter_lahan').on('change', function () {
     id = $(this).val();
+    from = window.location.href;
+    from = from.split('/');
+
+    if (from.pop().toLowerCase() == 'masterdata') {
+        from = 'master'
+    } else {
+        from = '';
+    }
 
     if (id) {
         $.ajax({
@@ -118,6 +126,7 @@ $('#filter_lahan').on('change', function () {
             async: false,
             data: {
                 id: id,
+                from: from
             },
             dataType: 'json',
             success: function (result) {
@@ -138,6 +147,14 @@ $('#filter_lahan').on('change', function () {
 
 $('#filter_aset').on('change', function () {
     id = $(this).val();
+    from = window.location.href;
+    from = from.split('/');
+
+    if (from.pop().toLowerCase() == 'masterdata') {
+        from = 'master'
+    } else {
+        from = '';
+    }
 
     if (id) {
         $.ajax({
@@ -146,6 +163,7 @@ $('#filter_aset').on('change', function () {
             async: false,
             data: {
                 id: id,
+                from: from
             },
             dataType: 'json',
             success: function (result) {
@@ -165,6 +183,14 @@ $('#filter_aset').on('change', function () {
 
 $('#filter_komoditi').on('change', function () {
     id = $(this).val();
+    from = window.location.href;
+    from = from.split('/');
+
+    if (from.pop().toLowerCase() == 'masterdata') {
+        from = 'master'
+    } else {
+        from = '';
+    }
 
     if (id) {
         $.ajax({
@@ -173,6 +199,7 @@ $('#filter_komoditi').on('change', function () {
             async: false,
             data: {
                 id: id,
+                from: from
             },
             dataType: 'json',
             success: function (result) {

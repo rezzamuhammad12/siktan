@@ -14,7 +14,18 @@
 
             <?= $this->session->flashdata('message'); ?>
 
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addKomoditi" data-title="Tambah Komoditi" data-button="Add">Tambah Komoditi</a>
+            <div class="btn-toolbar">
+                <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addKomoditi" data-title="Tambah Komoditi" data-button="Add">Tambah Komoditi</a>
+                <div class="btn-group ml-auto">
+                    <select name="filter_komoditi" id="filter_komoditi" class="filter-form form-control">
+                        <option value="">Kelompok</option>
+                        <?php foreach ($kelompokTani as $kp) : ?>
+                            <option value="<?= $kp['id'] ?>"><?= $kp['nama'] ?></option>
+
+                        <?php endforeach ?>
+                    </select>
+                </div>
+            </div>
 
             <table class="table table-hover sortable">
                 <thead>
@@ -37,7 +48,14 @@
                             <td data-value="<?= $km['nama_anggota']; ?>"><?= $km['nama_anggota']; ?></td>
                             <td data-value="<?= $km['subsektor']; ?>"><?= $km['subsektor']; ?></td>
                             <td data-value="<?= $km['komoditas']; ?>"><?= $km['komoditas']; ?></td>
-                            <td><?= is_null($km['approved_by']) ? "diproses" : $km['approved_by'] ?></td>
+                            <td><?php if (is_null($km['verifikasi'])) : ?>
+                                    <div class="badge badge-info">Diproses</div>
+                                <?php elseif ($km['verifikasi'] == "revisi") : ?>
+                                    <a href="" data-toggle="modal" data-target="#catatanRevisi" class="badge badge-warning" data-title="Catatan Revisi Kelompok <?= $km['nama'] ?>" data-catatan="<?= $km['catatan'] ?>">Revisi</a>
+                                <?php else : ?>
+                                    <div class="badge badge-success">Terverifikasi</div>
+                                <?php endif ?>
+                            </td>
                             <td>
                                 <a href="" class="badge badge-success " data-toggle="modal" data-target="#addKomoditi" data-title="Edit Komoditi" data-button="Edit" data-id="<?= $km['id']; ?>" data-nama="<?= $km['id_kelompok']; ?>" data-anggota="<?= $km['id_anggota']; ?>" data-subsektor="<?= $km['id_subsektor']; ?>" data-komoditas="<?= $km['id_komoditas']; ?>">edit</a>
                                 <a href="deleteKomoditi/<?= $km['id']; ?>" class="badge badge-danger" onclick="return confirm('Yakin hapus Komditi dari &quot;<?= $km['nama']; ?>&quot; ?');">delete</a>
@@ -107,6 +125,31 @@
                     <button type="submit" class="btn btn-primary action">Add</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Catatan -->
+
+<div class="modal fade" id="catatanRevisi" tabindex="-1" role="dialog" aria-labelledby="catatanRevisiLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="catatanRevisiLabel">Catatan Revisi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p class="catatan"></p>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
         </div>
     </div>
 </div>

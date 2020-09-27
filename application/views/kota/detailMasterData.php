@@ -4,7 +4,7 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title . " " . $kelompokTani[0]['nama']; ?></h1>
     <div class="row">
-        <table class="table table-striped table-kelompok-tani">
+        <table class="table table-striped tabel-kelompok-tani">
             <tbody>
                 <tr>
                     <td>Penyuluh Pendamping</td>

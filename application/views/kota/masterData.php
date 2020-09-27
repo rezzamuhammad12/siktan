@@ -13,7 +13,7 @@
                 </div>
             <?php endif; ?>
 
-            <?= $this->session->flashdata('message'); ?>
+
 
             <h3 class="h3 mt-3 text-gray-800">Kelompok Tani</h3>
 
@@ -39,6 +39,8 @@
                     <button id="gofilter" class="btn btn-success" data-from="master">Go Filter</button>
                 </div>
             </div>
+
+
 
             <table class="table table-hover tabel-kelompok-tani sortable">
                 <thead>
@@ -68,15 +70,15 @@
                             <td class="desa" data-value="<?= $kp['desa']; ?>"><?= $kp['desa']; ?></td>
                             <td data-value="<?= $kp['skor']; ?>"><?= $kp['skor']; ?></td>
                             <td><?php if (is_null($kp['verifikasi'])) : ?>
-                                    <div class="badge badge-info">Diproses</div>
+                                    <a href="<?= base_url('kota/verifikasi/') ?><?= $kp['id']; ?>" class="badge badge-warning">Verifikasi</a>
                                 <?php elseif ($kp['verifikasi'] == "revisi") : ?>
-                                    <a href="" data-toggle="modal" data-target="#catatanRevisi" class="badge badge-warning" data-title="Catatan Revisi Kelompok <?= $kp['nama'] ?>" data-catatan="<?= $kp['catatan'] ?>">Revisi</a>
+                                    <a href="<?= base_url('kota/verifikasi/') ?><?= $kp['id']; ?>" class="badge badge-warning">Revisi</a>
                                 <?php else : ?>
-                                    <div class="badge badge-success">Terverifikasi</div>
+                                    <a href="<?= base_url('kota/verifikasi/') ?><?= $kp['id']; ?>" class="badge badge-success">Terverifikasi</a>
                                 <?php endif ?>
                             </td>
                             <td>
-                                <a href="<?= base_url('kecamatan/detailMasterData/') ?><?= $kp['id']; ?>" class="badge badge-info">Detail</a>
+                                <a href="<?= base_url('kota/detailMasterData/') ?><?= $kp['id']; ?>" class="badge badge-info">Detail</a>
                             </td>
                         </tr>
 
@@ -89,7 +91,8 @@
 
     <!-- Master Penyuluh -->
 
-    <h3 class="h3 mt-3 text-gray-800">Penyuluh</h3>
+    <h3 class="h3 mt-3 text-gray-800" id="penyuluh">Penyuluh</h3>
+    <?= $this->session->flashdata('message_penyuluh'); ?>
     <div class="row">
         <table class="table table-hover sortable">
             <thead>
@@ -112,11 +115,11 @@
                         <td data-value="<?= $p['nik'] ?>"><?= $p['nik']; ?></td>
                         <td data-value="<?= $p['status'] ?>"><?= $p['status']; ?></td>
                         <td><?php if (is_null($p['verifikasi'])) : ?>
-                                <div class="badge badge-info">Diproses</div>
+                                <a href="" data-toggle="modal" data-target="#modalVerifikasi" data-title="Verifikasi Penyuluh <?= $p['nama'] ?>" data-id="<?= $p['id'] ?>" data-url="verifikasiPenyuluh" class="badge badge-warning">Verifikasi</a>
                             <?php elseif ($p['verifikasi'] == "revisi") : ?>
-                                <a href="" data-toggle="modal" data-target="#catatanRevisi" class="badge badge-warning" data-title="Catatan Revisi Kelompok <?= $p['nama'] ?>" data-catatan="<?= $p['catatan'] ?>">Revisi</a>
+                                <a href="" data-toggle="modal" data-target="#modalVerifikasi" data-title="Verifikasi Penyuluh <?= $p['nama'] ?>" data-id="<?= $p['id'] ?>" data-url="verifikasiPenyuluh" class="badge badge-warning">Revisi</a>
                             <?php else : ?>
-                                <div class="badge badge-success">Terverifikasi</div>
+                                <a href="" data-toggle="modal" data-target="#modalVerifikasi" data-title="Verifikasi Penyuluh <?= $p['nama'] ?>" data-id="<?= $p['id'] ?>" data-url="verifikasiPenyuluh" class="badge badge-success">Terverifikasi</a>
                             <?php endif ?>
                         </td>
                     </tr>
@@ -128,7 +131,8 @@
 
     <!-- Master Lahan -->
 
-    <h3 class="h3 mt-3 text-gray-800">Lahan</h3>
+    <h3 class="h3 mt-3 text-gray-800" id="lahan">Lahan</h3>
+    <?= $this->session->flashdata('message_lahan'); ?>
     <div class="row">
 
 
@@ -168,11 +172,11 @@
                         <td data-value="<?= $l['luas'] ?>"><?= $l['luas']; ?></td>
                         <td data-value="<?= $l['status'] ?>"><?= $l['status']; ?></td>
                         <td><?php if (is_null($l['verifikasi_lahan'])) : ?>
-                                <div class="badge badge-info">Diproses</div>
+                                <a href="" data-toggle="modal" data-target="#modalVerifikasi" data-title="Verifikasi Lahan <?= $l['nama_anggota'] ?>" data-id="<?= $l['id'] ?>" data-url="verifikasiLahan" class="badge badge-warning">Verifikasi</a>
                             <?php elseif ($l['verifikasi_lahan'] == "revisi") : ?>
-                                <a href="" data-toggle="modal" data-target="#catatanRevisi" class="badge badge-warning" data-title="Catatan Revisi Kelompok <?= $l['nama'] ?>" data-catatan="<?= $l['catatan_lahan'] ?>">Revisi</a>
+                                <a href="" data-toggle="modal" data-target="#modalVerifikasi" data-title="Verifikasi Lahan <?= $l['nama_anggota'] ?>" data-id="<?= $l['id'] ?>" data-url="verifikasiLahan" class="badge badge-warning">Revisi</a>
                             <?php else : ?>
-                                <div class="badge badge-success">Terverifikasi</div>
+                                <a href="" data-toggle="modal" data-target="#modalVerifikasi" data-title="Verifikasi Lahan <?= $l['nama_anggota'] ?>" data-id="<?= $l['id'] ?>" data-url="verifikasiLahan" class="badge badge-success">Terverifikasi</a>
                             <?php endif ?>
                         </td>
                     </tr>
@@ -184,7 +188,8 @@
 
     <!-- Master Aset -->
 
-    <h3 class="h3 mt-3 text-gray-800">Aset</h3>
+    <h3 class="h3 mt-3 text-gray-800" id="aset">Aset</h3>
+    <?= $this->session->flashdata('message_aset'); ?>
     <div class="row">
 
         <div class="card card-body mb-3">
@@ -223,11 +228,11 @@
                         <td data-value="<?= $a['jumlah']; ?>"><?= $a['jumlah']; ?></td>
                         <td data-value="<?= $a['tahun_perolehan']; ?>"><?= $a['tahun_perolehan']; ?></td>
                         <td><?php if (is_null($a['verifikasi'])) : ?>
-                                <div class="badge badge-info">Diproses</div>
+                                <a href="" data-toggle="modal" data-target="#modalVerifikasi" data-title="Verifikasi Aset <?= $a['nama'] ?> dari kelompok <?= $a['nama_kelompok']; ?>"" data-id=" <?= $a['id'] ?>" data-url="verifikasiAset" class="badge badge-warning">Verifikasi</a>
                             <?php elseif ($a['verifikasi'] == "revisi") : ?>
-                                <a href="" data-toggle="modal" data-target="#catatanRevisi" class="badge badge-warning" data-title="Catatan Revisi Kelompok <?= $a['nama'] ?>" data-catatan="<?= $a['catatan'] ?>">Revisi</a>
+                                <a href="" data-toggle="modal" data-target="#modalVerifikasi" data-title="Verifikasi Aset <?= $a['nama'] ?> dari kelompok <?= $a['nama_kelompok']; ?>" data-id="<?= $a['id'] ?>" data-url="verifikasiAset" class="badge badge-warning">Revisi</a>
                             <?php else : ?>
-                                <div class="badge badge-success">Terverifikasi</div>
+                                <a href="" data-toggle="modal" data-target="#modalVerifikasi" data-title="Verifikasi Aset <?= $a['nama'] ?> dari kelompok <?= $a['nama_kelompok']; ?>" data-id="<?= $a['id'] ?>" data-url="verifikasiAset" class="badge badge-success">Terverifikasi</a>
                             <?php endif ?>
                         </td>
                     </tr>
@@ -239,7 +244,8 @@
 
     <!-- Master Komoditi -->
 
-    <h3 class="h3 mt-3 text-gray-800">Komoditi</h3>
+    <h3 class="h3 mt-3 text-gray-800" id="komoditi">Komoditi</h3>
+    <?= $this->session->flashdata('message_komoditi'); ?>
     <div class="row">
 
         <div class="card card-body mb-3">
@@ -276,11 +282,11 @@
                         <td data-value="<?= $km['subsektor']; ?>"><?= $km['subsektor']; ?></td>
                         <td data-value="<?= $km['komoditas']; ?>"><?= $km['komoditas']; ?></td>
                         <td><?php if (is_null($km['verifikasi'])) : ?>
-                                <div class="badge badge-info">Diproses</div>
+                                <a href="" data-toggle="modal" data-target="#modalVerifikasi" data-title="Verifikasi Komoditi dari <?= $km['nama_anggota']; ?>"" data-id=" <?= $km['id'] ?>" data-url="verifikasiKomoditi" class="badge badge-warning">Verifikasi</a>
                             <?php elseif ($km['verifikasi'] == "revisi") : ?>
-                                <a href="" data-toggle="modal" data-target="#catatanRevisi" class="badge badge-warning" data-title="Catatan Revisi Kelompok <?= $km['nama'] ?>" data-catatan="<?= $km['catatan'] ?>">Revisi</a>
+                                <a href="" data-toggle="modal" data-target="#modalVerifikasi" data-title="Verifikasi Komoditi dari <?= $km['nama_anggota']; ?>" data-id="<?= $km['id'] ?>" data-url="verifikasiKomoditi" class="badge badge-warning">Revisi</a>
                             <?php else : ?>
-                                <div class="badge badge-success">Terverifikasi</div>
+                                <a href="" data-toggle="modal" data-target="#modalVerifikasi" data-title="Verifikasi Komoditi dari <?= $km['nama_anggota']; ?>" data-id="<?= $km['id'] ?>" data-url="verifikasiKomoditi" class="badge badge-success">Terverifikasi</a>
                             <?php endif ?>
                         </td>
                     </tr>
@@ -291,7 +297,8 @@
     </div>
 
     <!-- Master Anggota -->
-    <h3 class="h3 mt-3 text-gray-800">Anggota</h3>
+    <h3 class="h3 mt-3 text-gray-800" id="anggota">Anggota</h3>
+    <?= $this->session->flashdata('message_anggota'); ?>
     <div class="row">
 
         <div class="card card-body mb-3">
@@ -328,11 +335,11 @@
                         <td data-value="<?= $agt['nama']; ?>"><?= $agt['nama']; ?></td>
                         <td data-value="<?= $agt['status']; ?>"><?= $agt['status']; ?></td>
                         <td><?php if (is_null($agt['verifikasi'])) : ?>
-                                <div class="badge badge-info">Diproses</div>
+                                <a href="" data-toggle="modal" data-target="#modalVerifikasi" data-title="Verifikasi Anggota <?= $agt['nama'] ?> dari kelompok <?= $agt['nama_kelompok']; ?>" data-id=" <?= $agt['id'] ?>" data-url="verifikasiAnggota" class="badge badge-warning">Verifikasi</a>
                             <?php elseif ($agt['verifikasi'] == "revisi") : ?>
-                                <a href="" data-toggle="modal" data-target="#catatanRevisi" class="badge badge-warning" data-title="Catatan Revisi Kelompok <?= $agt['nama'] ?>" data-catatan="<?= $agt['catatan'] ?>">Revisi</a>
+                                <a href="" data-toggle="modal" data-target="#modalVerifikasi" data-title="Verifikasi Anggota <?= $agt['nama'] ?> dari kelompok <?= $agt['nama_kelompok']; ?>" data-id="<?= $agt['id'] ?>" data-url="verifikasiAnggota" class="badge badge-warning">Revisi</a>
                             <?php else : ?>
-                                <div class="badge badge-success">Terverifikasi</div>
+                                <a href="" data-toggle="modal" data-target="#modalVerifikasi" data-title="Verifikasi Anggota <?= $agt['nama'] ?> dari kelompok <?= $agt['nama_kelompok']; ?>" data-id="<?= $agt['id'] ?>" data-url="verifikasiAnggota" class="badge badge-success">Terverifikasi</a>
                             <?php endif ?>
                         </td>
                     </tr>
@@ -352,25 +359,33 @@
 </div>
 <!-- End of Main Content -->
 
-<!-- Modal Catatan -->
-
-<div class="modal fade" id="catatanRevisi" tabindex="-1" role="dialog" aria-labelledby="catatanRevisiLabel" aria-hidden="true">
+<div class="modal fade" id="modalVerifikasi" tabindex="-1" role="dialog" aria-labelledby="modalVerifikasiLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="catatanRevisiLabel">Catatan Revisi</h5>
+                <h5 class="modal-title" id="modalVerifikasiLabel">Catatan Revisi</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
             <div class="modal-body">
-                <p class="catatan"></p>
+                <form id="url" action="" method="post">
+                    <input type="text" hidden id="id" name="id">
+                    <div class="form-group">
+                        <textarea class="form-control" id="catatan" name="catatan" placeholder="Catatan" rows="7"></textarea>
+                    </div>
+
 
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <div class="btn-toolbar">
+                    <button type="submit" name="btn-verif" value="diverifikasi" class="btn btn-success mr-2 ml-auto">Verifikasi</button>
+                    <button type="submit" name="btn-verif" value="revisi" class="btn btn-danger action mr-2">Revisi</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                </form>
             </div>
 
         </div>

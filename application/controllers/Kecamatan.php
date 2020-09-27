@@ -308,9 +308,10 @@ class Kecamatan extends CI_Controller
     {
         $id = $this->input->post('id', true);
         $this->load->model('Lahan_model');
+        $from = $this->input->post('from', true);
 
         $data['lahan'] = $this->Lahan_model->getSingleLahan($id);
-
+        $data['from'] = $from;
 
         $hasil = $this->load->view('kecamatan/filterLahan', $data, true);
 
@@ -407,9 +408,10 @@ class Kecamatan extends CI_Controller
     {
         $id = $this->input->post('id', true);
         $this->load->model('Aset_model');
+        $from = $this->input->post('from', true);
 
         $data['aset'] = $this->Aset_model->getSingleAset($id);
-
+        $data['from'] = $from;
 
         $hasil = $this->load->view('kecamatan/filterAset', $data, true);
 
@@ -655,7 +657,7 @@ class Kecamatan extends CI_Controller
         $this->load->model('Komoditi_model');
         $this->load->model('Lahan_model');
 
-        $data['title'] = 'Master Data';
+        $data['title'] = 'Detail Data Kelompok';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['kelompokTani'] = $this->KelompokTani_model->getSingleKelompokTani($id);
         $data['aset'] = $this->Aset_model->getSingleAset($id);

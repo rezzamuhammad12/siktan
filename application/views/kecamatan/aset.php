@@ -14,7 +14,18 @@
 
             <?= $this->session->flashdata('message'); ?>
 
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAset" data-title="Tambah Aset" data-button="Add">Tambah Aset</a>
+            <div class="btn-toolbar">
+                <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAset" data-title="Tambah Aset" data-button="Add">Tambah Aset</a>
+                <div class="btn-group ml-auto">
+                    <select name="filter_aset" id="filter_aset" class="filter-form form-control">
+                        <option value="">Kelompok</option>
+                        <?php foreach ($kelompokTani as $kp) : ?>
+                            <option value="<?= $kp['id'] ?>"><?= $kp['nama'] ?></option>
+
+                        <?php endforeach ?>
+                    </select>
+                </div>
+            </div>
 
             <table class="table table-hover sortable">
                 <thead>
@@ -29,7 +40,7 @@
                         <th scope="col" data-defaultsort="disabled">Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tbody-aset">
                     <?php $i = 1; ?>
                     <?php foreach ($aset as $a) : ?>
                         <tr>
@@ -39,7 +50,14 @@
                             <td data-value="<?= $a['sumber_perolehan']; ?>"><?= $a['sumber_perolehan']; ?></td>
                             <td data-value="<?= $a['jumlah']; ?>"><?= $a['jumlah']; ?></td>
                             <td data-value="<?= $a['tahun_perolehan']; ?>"><?= $a['tahun_perolehan']; ?></td>
-                            <td><?= is_null($a['approved_by']) ? "diproses" : $a['approved_by'] ?></td>
+                            <td><?php if (is_null($a['verifikasi'])) : ?>
+                                    <div class="badge badge-info">Diproses</div>
+                                <?php elseif ($a['verifikasi'] == "revisi") : ?>
+                                    <a href="" data-toggle="modal" data-target="#catatanRevisi" class="badge badge-warning" data-title="Catatan Revisi Kelompok <?= $a['nama'] ?>" data-catatan="<?= $a['catatan'] ?>">Revisi</a>
+                                <?php else : ?>
+                                    <div class="badge badge-success">Terverifikasi</div>
+                                <?php endif ?>
+                            </td>
                             <td>
                                 <a href="" class="badge badge-success" data-toggle="modal" data-target="#addAset" data-title="Edit Aset" data-button="Edit" data-id="<?= $a['id']; ?>" data-kelompok="<?= $a['id_kelompok']; ?>" data-nama="<?= $a['nama']; ?>" data-sumber="<?= $a['id_sumber']; ?>" data-jumlah="<?= $a['jumlah']; ?>" data-tahun="<?= $a['tahun_perolehan']; ?>">edit</a>
                                 <a href="deleteAset/<?= $a['id']; ?>" class="badge badge-danger" onclick="return confirm('Yakin hapus &quot;<?= $a['nama']; ?>&quot; dari kelompok <?= $a['nama_kelompok']; ?>?');">delete</a>
@@ -105,6 +123,31 @@
                     <button type="submit" class="btn btn-primary action">Add</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Catatan -->
+
+<div class="modal fade" id="catatanRevisi" tabindex="-1" role="dialog" aria-labelledby="catatanRevisiLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="catatanRevisiLabel">Catatan Revisi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p class="catatan"></p>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
         </div>
     </div>
 </div>
