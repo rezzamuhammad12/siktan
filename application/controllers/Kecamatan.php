@@ -712,11 +712,6 @@ class Kecamatan extends CI_Controller
         $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
         $data['listKelas'] = $this->db->get('list_kelas')->result_array();
 
-
-
-
-
-
         $spreadsheet = new Spreadsheet;
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -787,10 +782,13 @@ class Kecamatan extends CI_Controller
         $kolom = 2;
         $nomor = 1;
         foreach ($data['kelompokTani'] as $ex) {
+            $kec = $this->KelompokTani_model->convertCodeArea("kecamatan", $ex['kecamatan']);
+            $desa = $this->KelompokTani_model->convertCodeArea("kelurahan", $ex['desa']);
+
             $sheet->setCellValue('A' . $kolom, $nomor);
             $sheet->setCellValue('B' . $kolom, $ex['bpp']);
-            $sheet->setCellValue('C' . $kolom, $ex['kecamatan']);
-            $sheet->setCellValue('D' . $kolom, $ex['desa']);
+            $sheet->setCellValue('C' . $kolom, $kec['nama']);
+            $sheet->setCellValue('D' . $kolom, $desa['nama']);
             $sheet->setCellValue('E' . $kolom, $ex['nama_penyuluh']);
             $sheet->setCellValue('F' . $kolom, "'" . $ex['nip']);
             $sheet->setCellValue('G' . $kolom, "'" . $ex['nik']);
@@ -847,6 +845,15 @@ class Kecamatan extends CI_Controller
         $writer->save('php://output');
 
         // $writer->save('recruitment_form.xlsx');
-        redirect('kecamatan/masterData');
+        redirect('kecamatan');
+    }
+
+    public function cekJson()
+    {
+        $this->load->model('KelompokTani_model');
+
+        $data = $this->KelompokTani_model->convertCodeArea("desa", "3206090007");
+
+        echo $data;
     }
 }
