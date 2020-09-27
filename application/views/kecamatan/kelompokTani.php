@@ -59,7 +59,7 @@
                         <th scope="col" data-defaultsort="disabled">Action</th>
                     </tr>
                 </thead>
-                <tbody id="dicobain">
+                <tbody id="tbody-kelompok">
                     <?php $i = 1; ?>
                     <?php foreach ($kelompokTani as $kp) : ?>
                         <tr>

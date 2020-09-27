@@ -501,8 +501,10 @@ class Kecamatan extends CI_Controller
     {
         $id = $this->input->post('id', true);
         $this->load->model('Komoditi_model');
+        $from = $this->input->post('from', true);
 
         $data['komoditi'] = $this->Komoditi_model->getSingleKomoditi($id);
+        $data['from'] = $from;
 
 
         $hasil = $this->load->view('kecamatan/filterKomoditi', $data, true);
@@ -605,8 +607,11 @@ class Kecamatan extends CI_Controller
     {
         $id = $this->input->post('id', true);
         $this->load->model('Anggota_model');
+        $from = $this->input->post('from', true);
+
 
         $data['anggota'] = $this->Anggota_model->getSingleAnggota($id);
+        $data['from'] = $from;
 
 
 

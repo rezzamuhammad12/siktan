@@ -40,7 +40,7 @@ function idKotaToVal(tag) {
     })
 }
 
-$(document).ready(function () {
+$(document).ajaxStop(function () {
     idDesaToVal($(".tabel-kelompok-tani"))
     idKotaToVal($(".tabel-kelompok-tani"))
     idKecToVal($(".tabel-kelompok-tani"))

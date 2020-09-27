@@ -39,7 +39,7 @@
                         <th scope="col" data-defaultsort="disabled">Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tbody-komoditi">
                     <?php $i = 1; ?>
                     <?php foreach ($komoditi as $km) : ?>
                         <tr>

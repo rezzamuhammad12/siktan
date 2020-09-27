@@ -14,7 +14,18 @@
 
             <?= $this->session->flashdata('message'); ?>
 
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAnggota" data-title="Tambah Anggota" data-button="Add">Tambah Anggota</a>
+            <div class="btn-toolbar">
+                <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAnggota" data-title="Tambah Anggota" data-button="Add">Tambah Anggota</a>
+                <div class="btn-group ml-auto">
+                    <select name="filter_anggota" id="filter_anggota" class="filter-form form-control">
+                        <option value="">Kelompok</option>
+                        <?php foreach ($kelompokTani as $kp) : ?>
+                            <option value="<?= $kp['id'] ?>"><?= $kp['nama'] ?></option>
+
+                        <?php endforeach ?>
+                    </select>
+                </div>
+            </div>
 
             <table class="table table-hover sortable">
                 <thead>
@@ -28,7 +39,7 @@
                         <th scope="col" data-defaultsort="disabled">Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tbody-anggota">
                     <?php $i = 1; ?>
                     <?php foreach ($anggota as $agt) : ?>
                         <tr>
