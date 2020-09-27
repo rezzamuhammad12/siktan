@@ -5,6 +5,7 @@ require FCPATH . '/vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+
 class Kecamatan extends CI_Controller
 {
     public function __construct()
@@ -667,10 +668,10 @@ class Kecamatan extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('kecamatan/masterData', $data);
+            $this->load->view('kecamatan/index', $data);
             $this->load->view('templates/footer');
         } else {
-            redirect('kecamatan/masterData');
+            redirect('kecamatan/index');
         }
     }
 
@@ -711,11 +712,6 @@ class Kecamatan extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
         $data['listKelas'] = $this->db->get('list_kelas')->result_array();
-
-
-
-
-
 
         $spreadsheet = new Spreadsheet;
         $spreadsheet = new Spreadsheet();
@@ -847,6 +843,51 @@ class Kecamatan extends CI_Controller
         $writer->save('php://output');
 
         // $writer->save('recruitment_form.xlsx');
-        redirect('kecamatan/masterData');
+        redirect('kecamatan/index');
     }
+
+    // public function import_excel()
+    // {
+    //     $this->load->model('KelompokTani_model');
+    //     $this->load->model('Anggota_model');
+    //     $this->load->model('Lahan_model');
+    //     $this->load->model('Komoditi_model');
+    //     $this->load->model('Aset_model');
+    //     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+    //     $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+    //     $data['listKelas'] = $this->db->get('list_kelas')->result_array();
+
+    //     $file_mimes = array('application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+    //     if (isset($_FILES['berkas_excel']['name']) && in_array($_FILES['berkas_excel']['type'], $file_mimes)) {
+
+    //         $arr_file = explode('.', $_FILES['berkas_excel']['name']);
+    //         $extension = end($arr_file);
+
+    //         if ('csv' == $extension) {
+    //             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+    //         } else {
+    //             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+    //         }
+
+    //         $spreadsheet = $reader->load($_FILES['berkas_excel']['tmp_name']);
+
+    //         $sheetData = $spreadsheet->getActiveSheet()->toArray();
+    //         for ($i = 1; $i < count($sheetData); $i++) {
+    //             $kode_kelompok = $sheetData[$i]['1'];
+    //             $nama = $sheetData[$i]['2'];
+    //             $kota_kab = $sheetData[$i]['3'];
+    //             $bpp = $sheetData[$i]['4'];
+    //             $kecamatan = $sheetData[$i]['5'];
+    //             $desa = $sheetData[$i]['6'];
+    //             $tahun_pembentukan = $sheetData[$i]['7'];
+    //             $alamat = $sheetData[$i]['8'];
+    //             $skor = $sheetData[$i]['9'];
+    //             $tahun_penerapan = $sheetData[$i]['10'];
+    //             $teknologi = $sheetData[$i]['11'];
+
+    //             mysqli_query($this->db, "insert into tb_siswa (id,kode_kelompok,nama,kota_kab,bpp,kecamatan,desa,tahun_pembentukan,alamat,skor,tahun_penerapan,teknologi) values ('','$kode_kelompok','$nama','$kota_kab,$bpp,$kecamatan,$desa,$tahun_pembentukan,$alamat,$skor,$tahun_penerapan,$teknologi')");
+    //         }
+    //     }
+    // }
 }
