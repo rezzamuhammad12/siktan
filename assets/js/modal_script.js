@@ -90,6 +90,59 @@ $('#id_kelompok').on('change', function () {
     }
 })
 
+$('#id_subsektor').on('change', function () {
+    var id = $(this).val();
+    $('#id_komoditas')
+        .find('option:not(:first-child)')
+        .remove()
+        .end()
+
+    if (id) {
+        $('#id_komoditas').removeAttr('disabled');
+        $.ajax({
+            url: 'http://localhost/siktan-jabar/kecamatan/getListKomoditas',
+            type: 'POST',
+            async: false,
+            data: {
+                id: id,
+            },
+            dataType: 'json',
+            success: function (result) {
+                $.each(result, function (key, value) {
+                    $('#id_komoditas')
+                        .append($("<option></option>")
+                            .attr("value", value['id'])
+                            .text(value['komoditas']));
+                });
+            },
+            error: err => console.log(err),
+        })
+    } else {
+        $('#id_anggota').attr('disabled', true);
+    }
+})
+
+function getListKomoditas(id) {
+    $.ajax({
+        url: 'http://localhost/siktan-jabar/kecamatan/getListKomoditas',
+        type: 'POST',
+        async: false,
+        data: {
+            id: id,
+        },
+        dataType: 'json',
+        success: function (result) {
+            $.each(result, function (key, value) {
+                $('#id_komoditas')
+                    .append($("<option></option>")
+                        .attr("value", value['id'])
+                        .text(value['nama']));
+            });
+        },
+        error: err => console.log(err),
+    })
+}
+
 function getListAnggota(id) {
     $.ajax({
         url: 'http://localhost/siktan-jabar/kecamatan/getListAnggota',
@@ -304,6 +357,7 @@ $('#addKomoditi').on('show.bs.modal', function (event) {
 
     if (btn == 'Add') {
         modal.find('#id_anggota').attr('disabled', 'true')
+        modal.find('#id_komoditas').attr('disabled', 'true')
         $('.modal-content form').attr('action', "komoditi")
         modal.find('#id_kelompok option:eq(0)').prop('selected', true)
         modal.find('#id_anggota option:eq(0)').prop('selected', true)
@@ -311,6 +365,7 @@ $('#addKomoditi').on('show.bs.modal', function (event) {
         modal.find('#id_komoditas option:eq(0)').prop('selected', true)
     } else {
         modal.find('#id_anggota').removeAttr('disabled')
+        modal.find('#id_komoditas').removeAttr('disabled')
         $('.modal-content form').attr('action', "editKomoditi")
     }
 })

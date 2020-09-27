@@ -107,6 +107,9 @@ $('#gofilter').on('click', function () {
         success: function (response) {
             $('#tbody-kelompok').find('tr').remove().end()
             $('#tbody-kelompok').append(response['hasil']);
+            idDesaToVal($(".tabel-kelompok-tani"))
+            idKotaToVal($(".tabel-kelompok-tani"))
+            idKecToVal($(".tabel-kelompok-tani"))
         },
         error: function (xhr, status, error) {
             console.log(xhr.responseText);
@@ -115,11 +118,11 @@ $('#gofilter').on('click', function () {
         },
     })
 
-    $(document).ajaxStop(function () {
-        idDesaToVal($(".tabel-kelompok-tani"))
-        idKotaToVal($(".tabel-kelompok-tani"))
-        idKecToVal($(".tabel-kelompok-tani"))
-    })
+    // $(document).ajaxStop(function () {
+    //     idDesaToVal($(".tabel-kelompok-tani"))
+    //     idKotaToVal($(".tabel-kelompok-tani"))
+    //     idKecToVal($(".tabel-kelompok-tani"))
+    // })
 })
 
 // Filter Lahan

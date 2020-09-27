@@ -248,7 +248,8 @@ class Kecamatan extends CI_Controller
 
 
         $this->form_validation->set_rules('id_status_kepemilikan', 'Id_status_kepemilikan', 'required');
-        $this->form_validation->set_rules('luas', 'Luas', 'required');
+        $this->form_validation->set_rules('id_anggota', 'Id_anggota', 'required');
+        $this->form_validation->set_rules('luas', 'Luas', 'required|numeric');
         $this->form_validation->set_rules('id_kelompok', 'Id_kelompok', 'required');
 
         if ($this->form_validation->run() ==  false) {
@@ -261,6 +262,7 @@ class Kecamatan extends CI_Controller
             $data = [
                 'luas' => htmlspecialchars($this->input->post('luas', true)),
                 'id_kelompok' => htmlspecialchars($this->input->post('id_kelompok', true)),
+                'id_anggota' => htmlspecialchars($this->input->post('id_anggota', true)),
                 'id_status_kepemilikan' => htmlspecialchars($this->input->post('id_status_kepemilikan', true))
             ];
             $this->db->insert('lahan', $data);
@@ -272,7 +274,7 @@ class Kecamatan extends CI_Controller
     public function editLahan()
     {
         $this->form_validation->set_rules('id_status_kepemilikan', 'Id_status_kepemilikan', 'required');
-        $this->form_validation->set_rules('luas', 'Luas', 'required');
+        $this->form_validation->set_rules('luas', 'Luas', 'required|numeric');
         $this->form_validation->set_rules('id_kelompok', 'Id_kelompok', 'required');
 
         if ($this->form_validation->run() == false) {
@@ -441,6 +443,7 @@ class Kecamatan extends CI_Controller
 
 
         $this->form_validation->set_rules('id_kelompok', 'Id_kelompok', 'required');
+        $this->form_validation->set_rules('id_anggota', 'Id_anggota', 'required');
         $this->form_validation->set_rules('id_subsektor', 'Id_subsektor', 'required');
         $this->form_validation->set_rules('id_komoditas', 'id_komoditas', 'required');
 
@@ -453,6 +456,7 @@ class Kecamatan extends CI_Controller
         } else {
             $data = [
                 'id_kelompok' => htmlspecialchars($this->input->post('id_kelompok', true)),
+                'id_anggota' => htmlspecialchars($this->input->post('id_anggota', true)),
                 'id_subsektor' => htmlspecialchars($this->input->post('id_subsektor', true)),
                 'id_komoditas' => htmlspecialchars($this->input->post('id_komoditas', true))
             ];
@@ -465,6 +469,7 @@ class Kecamatan extends CI_Controller
     public function editKomoditi()
     {
         $this->form_validation->set_rules('id_kelompok', 'Id_kelompok', 'required');
+        $this->form_validation->set_rules('id_anggota', 'Id_anggota', 'required');
         $this->form_validation->set_rules('id_subsektor', 'Id_subsektor', 'required');
         $this->form_validation->set_rules('id_komoditas', 'id_komoditas', 'required');
 
@@ -475,6 +480,7 @@ class Kecamatan extends CI_Controller
         } else {
             $data = [
                 'id_kelompok' => htmlspecialchars($this->input->post('id_kelompok', true)),
+                'id_anggota' => htmlspecialchars($this->input->post('id_anggota', true)),
                 'id_subsektor' => htmlspecialchars($this->input->post('id_subsektor', true)),
                 'id_komoditas' => htmlspecialchars($this->input->post('id_komoditas', true))
             ];
@@ -514,6 +520,16 @@ class Kecamatan extends CI_Controller
         );
 
         echo json_encode($callback);
+    }
+
+    public function getListKomoditas()
+    {
+        $id = $this->input->post('id', true);
+        $this->load->model('Komoditi_model');
+
+        $data = $this->Komoditi_model->getListKomoditas($id);
+
+        echo json_encode($data);
     }
 
     // ==============================================
@@ -624,7 +640,7 @@ class Kecamatan extends CI_Controller
         echo json_encode($callback);
     }
 
-    public function masterData()
+    public function index()
     {
         $this->load->model('Penyuluh_model');
         $this->load->model('KelompokTani_model');
