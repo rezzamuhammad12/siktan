@@ -57,6 +57,35 @@
             <script src="<?= base_url('assets/'); ?>js/filter_script.js"></script>
             <script src="<?= base_url('assets/'); ?>js/script.js"></script>
 
+            <!-- Dashboard Admin -->
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+            <script src="<?= base_url('assets/'); ?>vendor/jquery/jquery.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+            </script>
+
+            <!-- Vendor JS Files -->
+            <script src="<?= base_url('assets/'); ?>vendor/jquery.easing/jquery.easing.min.js"></script>
+            <script src="<?= base_url('assets/'); ?>vendor/venobox/venobox.min.js"></script>
+            <script src="<?= base_url('assets/'); ?>vendor/aos/aos.js"></script>
+            <script src="<?= base_url('assets/'); ?>vendor/owl.carousel/owl.carousel.min.js"></script>
+
+
+
+            <!-- Custom scripts for all pages-->
+            <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
+
+            <!-- Page level plugins -->
+            <script src="<?= base_url('assets/'); ?>vendor/chart.js/Chart.min.js"></script>
+
+            <!-- Page level custom scripts -->
+            <script src="<?= base_url('assets/'); ?>js/demo/chart-area-demo.js"></script>
+            <script src="<?= base_url('assets/'); ?>js/demo/chart-pie-demo.js"></script>
+            <script src="<?= base_url('assets/'); ?>js/demo/chart-bar-demo.js"></script>
+
+            <!-- Custom JS File -->
+            <script src="<?= base_url('assets/'); ?>js/landingpage_script.js"></script>
+            <!-- End Dashboard Admin -->
+
             <script>
                 $('.custom-file-input').on('change', function() {
                     let fileName = $(this).val().split('\\').pop();

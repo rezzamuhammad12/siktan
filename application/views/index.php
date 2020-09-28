@@ -233,7 +233,6 @@
         <div class="footer-text text-center">
             <h2><strong>Dinas Pertanian dan Ketahanan Pangan</strong></h2>
             <h5><i class="icofont-copyright"></i> 2020 Proudly present by Bondowoso</h5>
-            <h5><i class="icofont-ui-theme"></i> Design by <a href="">Wildan Fauzi Rakhman </a> </h5>
         </div>
 
     </footer>
