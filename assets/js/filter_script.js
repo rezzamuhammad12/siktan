@@ -90,7 +90,7 @@ $('#gofilter').on('click', function () {
     }
 
     $.ajax({
-        url: 'http://localhost/siktan-jabar/kecamatan/filterKelompok',
+        url: window.location.origin + 'siktan-jabar/kecamatan/filterKelompok',
         type: 'POST',
         dataType: 'json',
         data: {
@@ -143,7 +143,7 @@ $('#filter_lahan').on('change', function () {
 
     if (id) {
         $.ajax({
-            url: 'http://localhost/siktan-jabar/kecamatan/filterLahan',
+            url: window.location.origin + 'siktan-jabar/kecamatan/filterLahan',
             type: 'POST',
             async: false,
             data: {
@@ -184,7 +184,7 @@ $('#filter_aset').on('change', function () {
 
     if (id) {
         $.ajax({
-            url: 'http://localhost/siktan-jabar/kecamatan/filterAset',
+            url: window.location.origin + 'siktan-jabar/kecamatan/filterAset',
             type: 'POST',
             async: false,
             data: {
@@ -223,7 +223,7 @@ $('#filter_komoditi').on('change', function () {
 
     if (id) {
         $.ajax({
-            url: 'http://localhost/siktan-jabar/kecamatan/filterKomoditi',
+            url: window.location.origin + 'siktan-jabar/kecamatan/filterKomoditi',
             type: 'POST',
             async: false,
             data: {
@@ -263,7 +263,7 @@ $('#filter_anggota').on('change', function () {
 
     if (id) {
         $.ajax({
-            url: 'http://localhost/siktan-jabar/kecamatan/filterAnggota',
+            url: window.location.origin + 'siktan-jabar/kecamatan/filterAnggota',
             type: 'POST',
             async: false,
             data: {

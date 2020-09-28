@@ -100,7 +100,7 @@ $('#id_subsektor').on('change', function () {
     if (id) {
         $('#id_komoditas').removeAttr('disabled');
         $.ajax({
-            url: 'http://localhost/siktan-jabar/kecamatan/getListKomoditas',
+            url: window.location.origin + '/siktan-jabar/kecamatan/getListKomoditas',
             type: 'POST',
             async: false,
             data: {
@@ -124,7 +124,7 @@ $('#id_subsektor').on('change', function () {
 
 function getListKomoditas(id) {
     $.ajax({
-        url: 'http://localhost/siktan-jabar/kecamatan/getListKomoditas',
+        url: window.location.origin + '/siktan-jabar/kecamatan/getListKomoditas',
         type: 'POST',
         async: false,
         data: {
@@ -145,7 +145,7 @@ function getListKomoditas(id) {
 
 function getListAnggota(id) {
     $.ajax({
-        url: 'http://localhost/siktan-jabar/kecamatan/getListAnggota',
+        url: window.location.origin + '/siktan-jabar/kecamatan/getListAnggota',
         type: 'POST',
         async: false,
         data: {
