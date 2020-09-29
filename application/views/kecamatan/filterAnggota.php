@@ -14,7 +14,7 @@
                     <?php elseif ($agt['verifikasi'] == "revisi") : ?>
                         <a href="" data-toggle="modal" data-target="#catatanRevisi" class="badge badge-warning" data-title="Catatan Revisi Kelompok <?= $agt['nama'] ?>" data-catatan="<?= $agt['catatan'] ?>">Revisi</a>
                     <?php else : ?>
-                        <div class="badge badge-success">Terverifikasi</div>
+                        <div class="badge badge-success">Terverifikasi <?= $from ?></div>
                     <?php endif ?>
                 </td>
                 <td>

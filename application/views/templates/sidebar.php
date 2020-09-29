@@ -16,7 +16,7 @@
             <!-- QUERY MENU -->
             <?php
             $role_id = $this->session->userdata('role_id');
-            $queryMenu = "SELECT `user_menu`.`id`, `menu`
+            $queryMenu = "SELECT `user_menu`.`id`, `menu`, role_id, menu_id
                             FROM `user_menu` JOIN `user_access_menu`
                               ON `user_menu`.`id` = `user_access_menu`.`menu_id`
                            WHERE `user_access_menu`.`role_id` = $role_id
@@ -28,6 +28,9 @@
 
             <!-- LOOPING MENU -->
             <?php foreach ($menu as $m) : ?>
+                <?php if ((($m['role_id'] == 2) && ($m['menu_id'] == 5))) {
+                    continue;
+                } ?>
                 <div class="sidebar-heading">
                     <?= $m['menu']; ?>
                 </div>

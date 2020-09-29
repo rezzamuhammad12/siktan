@@ -19,7 +19,7 @@
                     <?php elseif ($kp['verifikasi'] == "revisi") : ?>
                         <a href="" data-toggle="modal" data-target="#catatanRevisi" class="badge badge-warning" data-title="Catatan Revisi Kelompok <?= $kp['nama'] ?>" data-catatan="<?= $kp['catatan'] ?>">Revisi</a>
                     <?php else : ?>
-                        <div class="badge badge-success">Terverifikasi</div>
+                        <div class="badge badge-success">Terverifikasi <?php var_dump($from) ?></div>
                     <?php endif ?>
                 </td>
                 <td>
