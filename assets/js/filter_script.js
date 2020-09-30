@@ -1,18 +1,85 @@
 // Kota
-$.ajax({
-    url: 'https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=32',
-    type: 'GET',
-    dataType: 'json',
-    success: function (result) {
-        $.each(result['kota_kabupaten'], function (key, value) {
-            $('#kota_filter')
-                .append($("<option></option>")
-                    .attr("value", value['id'])
-                    .text(value['nama']));
-        });
-    },
-    error: err => console.log(err),
-})
+base_url = base_url + ''
+kota_filter = $('#kota_filter').val();
+kecamatan_filter = $('#kecamatan_filter').val();
+
+if (kota_filter) {
+    $('#kota_filter').attr('readonly', 'readonly')
+    $.ajax({
+        url: 'https://dev.farizdotid.com/api/daerahindonesia/kota/' + kota_filter,
+        type: 'GET',
+        dataType: 'json',
+        success: function (result) {
+            $("#kota_filter").find('option').html(result['nama'])
+        },
+        error: err => console.log(err),
+    })
+} else {
+    $.ajax({
+        url: 'https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=32',
+        type: 'GET',
+        dataType: 'json',
+        success: function (result) {
+            $.each(result['kota_kabupaten'], function (key, value) {
+                $('#kota_filter')
+                    .append($("<option></option>")
+                        .attr("value", value['id'])
+                        .text(value['nama']));
+            });
+        },
+        error: err => console.log(err),
+    })
+}
+
+if (kecamatan_filter != 0) {
+    $('#kecamatan_filter').attr('readonly', 'readonly')
+    $('#kecamatan_filter').removeAttr('disabled')
+    $('#desa_filter').removeAttr('disabled')
+    $.ajax({
+        url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan/' + kecamatan_filter,
+        type: 'GET',
+        dataType: 'json',
+        success: function (result) {
+            $("#kecamatan_filter").find('option').html(result['nama'])
+        },
+        error: err => console.log(err),
+    })
+
+    $.ajax({
+        url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + kecamatan_filter,
+        type: 'GET',
+        dataType: 'json',
+        success: function (result) {
+            $.each(result['kelurahan'], function (key, value) {
+                $('#desa_filter')
+                    .append($("<option></option>")
+                        .attr("value", value['id'])
+                        .text(value['nama']));
+            });
+        },
+        error: err => console.log(err),
+    })
+} else {
+    console.log("masuk kesini" + kota_filter)
+
+    $('#kecamatan_filter').removeAttr('readonly')
+    $('#kecamatan_filter').removeAttr('disabled')
+    $.ajax({
+        url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + kota_filter,
+        type: 'GET',
+        dataType: 'json',
+        success: function (result) {
+            $.each(result['kecamatan'], function (key, value) {
+                $('#kecamatan_filter')
+                    .append($("<option></option>")
+                        .attr("value", value['id'])
+                        .text(value['nama']));
+            });
+        },
+        error: err => console.log(err),
+    })
+}
+
 
 $('#kota_filter').on('change', function () {
     var idKota = $(this).val();
@@ -90,7 +157,7 @@ $('#gofilter').on('click', function () {
     }
 
     $.ajax({
-        url: window.location.origin + '/siktan-jabar/kecamatan/filterKelompok',
+        url: base_url + 'kecamatan/filterKelompok',
         type: 'POST',
         dataType: 'json',
         data: {
@@ -143,7 +210,7 @@ $('#filter_lahan').on('change', function () {
 
     if (id) {
         $.ajax({
-            url: window.location.origin + '/siktan-jabar/kecamatan/filterLahan',
+            url: base_url + 'kecamatan/filterLahan',
             type: 'POST',
             async: false,
             data: {
@@ -184,7 +251,7 @@ $('#filter_aset').on('change', function () {
 
     if (id) {
         $.ajax({
-            url: window.location.origin + '/siktan-jabar/kecamatan/filterAset',
+            url: base_url + 'kecamatan/filterAset',
             type: 'POST',
             async: false,
             data: {
@@ -223,7 +290,7 @@ $('#filter_komoditi').on('change', function () {
 
     if (id) {
         $.ajax({
-            url: window.location.origin + '/siktan-jabar/kecamatan/filterKomoditi',
+            url: base_url + 'kecamatan/filterKomoditi',
             type: 'POST',
             async: false,
             data: {
@@ -263,7 +330,7 @@ $('#filter_anggota').on('change', function () {
 
     if (id) {
         $.ajax({
-            url: window.location.origin + '/siktan-jabar/kecamatan/filterAnggota',
+            url: base_url + 'kecamatan/filterAnggota',
             type: 'POST',
             async: false,
             data: {

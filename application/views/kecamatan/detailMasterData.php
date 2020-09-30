@@ -3,9 +3,15 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title . " " . $kelompokTani[0]['nama']; ?></h1>
+    <a href="../" class="btn btn-danger goback mb-2"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> kembali</a>
     <div class="row">
         <table class="table table-striped tabel-kelompok-tani">
             <tbody>
+                <tr>
+                    <td>Kode Kelompok</td>
+                    <td>:</td>
+                    <td class="penyuluh"><?= $kelompokTani[0]['kode_kelompok']; ?></td>
+                </tr>
                 <tr>
                     <td>Penyuluh Pendamping</td>
                     <td>:</td>

@@ -24,13 +24,21 @@
                 <div class="card card-body">
                     <div class="btn-toolbar">
                         <div class="btn-group mr-2">
-                            <select name="kota_filter" id="kota_filter" class="filter-form form-control">
-                                <option value="">Kota</option>
+                            <select name="kota_filter" id="kota_filter" class="filter-form form-control" readonly="readonly">
+                                <?php if (!(is_null($user['id_kota']))) : ?>
+                                    <option value="<?= $user['id_kota']; ?>">Pilih Kota/Kabupaten</option>
+                                <?php else : ?>
+                                    <option value="">Kota</option>
+                                <?php endif; ?>
                             </select>
                         </div>
                         <div class="btn-group mr-2">
                             <select name="kecamatan_filter" id="kecamatan_filter" class="filter-form form-control" disabled>
-                                <option value="">Kecamatan</option>
+                                <?php if (!(is_null($user['id_kecamatan']))) : ?>
+                                    <option value="<?= $user['id_kecamatan']; ?>">Pilih Kecamatan</option>
+                                <?php else : ?>
+                                    <option value="">Kecamatan</option>
+                                <?php endif; ?>
                             </select>
                         </div>
                         <div class="btn-group mr-2">
@@ -80,7 +88,7 @@
                                 <?php endif ?>
                             </td>
                             <td>
-                                <a href="" class="badge badge-info" data-toggle="modal" data-target="#detailKelompokTani" data-userid="<?= $kp['id']; ?>" data-kodekelompok="<?= $kp['kode_kelompok']; ?>" data-nama="<?= $kp['nama']; ?>" data-penyuluh="<?= $kp['nama_penyuluh']; ?>" data-desa="<?= $kp['desa']; ?>" data-kecamatan="<?= $kp['kecamatan']; ?>" data-kota="<?= $kp['kota_kab']; ?>" data-bpp="<?= $kp['bpp']; ?>" data-tahun_pembentukan="<?= $kp['tahun_pembentukan']; ?>" data-alamat="<?= $kp['alamat']; ?>" data-kelas="<?= $kp['kelas']; ?>" data-skor="<?= $kp['skor']; ?>" data-tahun_penerapan="<?= $kp['tahun_penerapan']; ?>" data-teknologi="<?= $kp['teknologi']; ?>">detail</a>
+                                <a href="" class="badge badge-info" data-toggle="modal" data-target="#detailKelompokTani" data-userid="<?= $kp['id']; ?>" data-nama="<?= $kp['nama']; ?>" data-penyuluh="<?= $kp['nama_penyuluh']; ?>" data-desa="<?= $kp['desa']; ?>" data-kecamatan="<?= $kp['kecamatan']; ?>" data-kota="<?= $kp['kota_kab']; ?>" data-bpp="<?= $kp['bpp']; ?>" data-tahun_pembentukan="<?= $kp['tahun_pembentukan']; ?>" data-alamat="<?= $kp['alamat']; ?>" data-kelas="<?= $kp['kelas']; ?>" data-skor="<?= $kp['skor']; ?>" data-tahun_penerapan="<?= $kp['tahun_penerapan']; ?>" data-teknologi="<?= $kp['teknologi']; ?>">detail</a>
 
 
                                 <a href="" class="badge badge-success" data-toggle="modal" data-target="#addKelompokPetani" data-title="Edit Kelompok Tani" data-button="Edit" data-id="<?= $kp['id']; ?>" data-nama="<?= $kp['nama']; ?>" data-penyuluh="<?= $kp['id_penyuluh']; ?>" data-desa="<?= $kp['desa']; ?>" data-kecamatan="<?= $kp['kecamatan']; ?>" data-bpp="<?= $kp['bpp']; ?>" data-kota="<?= $kp['kota_kab']; ?>" data-tahun_pembentukan="<?= $kp['tahun_pembentukan']; ?>" data-alamat="<?= $kp['alamat']; ?>" data-kelas="<?= $kp['id_kelas']; ?>" data-skor="<?= $kp['skor']; ?>" data-tahun_penerapan="<?= $kp['tahun_penerapan']; ?>" data-teknologi="<?= $kp['teknologi']; ?>">edit</a>
@@ -125,7 +133,7 @@
                 <div class="modal-body">
                     <input type="text" id="id" name="id" hidden>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="kode_kelompok" name="kode_kelompok" placeholder="Kode Kelompok Tani">
+                        <input type="hidden" class="form-control" id="kode_kelompok" name="kode_kelompok" placeholder="Kode Kelompok Tani">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Kelompok Tani">
@@ -149,17 +157,13 @@
                     </div>
                     <div class="form-group">
                         <select name="id_kecamatan" id="id_kecamatan" class="form-control">
-                            <?php if (!(is_null($user['id_kecamatan']))) : ?>
-                                <option value="<?= $user['id_kecamatan']; ?>">Pilih Kecamatan</option>
-                            <?php else : ?>
-                                <option value="null">Pilih Kecamatan</option>
-                            <?php endif; ?>
+                            <option value="<?= $user['id_kecamatan']; ?>">Pilih Kecamatan</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <select name="id_desa" id="id_desa" class="form-control" disabled>
-                            <option value="">Pilih Desa</option>
+                        <select name="id_desa" id="id_desa" class="form-control">
+                            <option value="">Pilih Desa/Kelurahan</option>
                         </select>
                     </div>
 

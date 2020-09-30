@@ -22,11 +22,19 @@ class Kecamatan extends CI_Controller
 
         $data['title'] = 'Kelompok Tani';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+
+        if ($data['user']['role_id'] == 3) {
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kecamatan", $data['user']['id_kecamatan']);
+        } else if ($data['user']['role_id'] == 2) {
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kota_kab", $data['user']['id_kota']);
+        } else {
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+        }
+
         $data['penyuluh'] = $this->Penyuluh_model->getPenyuluh();
         $data['listKelas'] = $this->db->get('list_kelas')->result_array();
 
-        $this->form_validation->set_rules('kode_kelompok', 'Kode_kelompok', 'required');
+
         $this->form_validation->set_rules('nama', 'Nama', 'required');
         $this->form_validation->set_rules('penyuluh', 'Penyuluh', 'required');
         $this->form_validation->set_rules('id_kota', 'Id_kota', 'required');
@@ -50,7 +58,6 @@ class Kecamatan extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             $data = [
-                'kode_kelompok' => htmlspecialchars($this->input->post('kode_kelompok', true)),
                 'nama' => htmlspecialchars($this->input->post('nama', true)),
                 'kota_kab' => htmlspecialchars($this->input->post('id_kota', true)),
                 'bpp' => htmlspecialchars($this->input->post('bpp', true)),
@@ -65,6 +72,17 @@ class Kecamatan extends CI_Controller
                 'id_penyuluh' => htmlspecialchars($this->input->post('penyuluh', true))
             ];
             $this->db->insert('kelompok_tani', $data);
+
+            $last_row = $this->db->select('*')->order_by('id', "desc")->limit(1)->get('kelompok_tani')->row_array();
+
+            $kodeKelompok = [
+                'kode_kelompok' => $last_row['desa'] . $last_row['id']
+            ];
+
+            $this->db->set($kodeKelompok);
+            $this->db->where('id', $last_row['id']);
+            $this->db->update('kelompok_tani');
+
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Kelompok Tani added!</div>');
             redirect('kecamatan/kelompokTani');
         }
@@ -72,7 +90,6 @@ class Kecamatan extends CI_Controller
 
     public function editKelompokTani()
     {
-        $this->form_validation->set_rules('kode_kelompok', 'Kode_kelompok', 'required');
         $this->form_validation->set_rules('nama', 'Nama', 'required');
         $this->form_validation->set_rules('penyuluh', 'Penyuluh', 'required');
         $this->form_validation->set_rules('id_kota', 'Id_kota', 'required');
@@ -89,12 +106,11 @@ class Kecamatan extends CI_Controller
         $this->form_validation->set_rules('teknologi', 'Teknologi', 'required');
 
         if ($this->form_validation->run() == false) {
-            // echo validation_errors();
+            echo validation_errors();
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed edit Kelompok Tani!!</div>');
-            redirect('kecamatan/kelompokTani');
+            // redirect('kecamatan/kelompokTani');
         } else {
             $data = [
-                'kode_kelompok' => htmlspecialchars($this->input->post('kode_kelompok', true)),
                 'nama' => htmlspecialchars($this->input->post('nama', true)),
                 'kota_kab' => htmlspecialchars($this->input->post('id_kota', true)),
                 'bpp' => htmlspecialchars($this->input->post('bpp', true)),
@@ -119,7 +135,7 @@ class Kecamatan extends CI_Controller
     public function deleteKelompokTani($id)
     {
         if ($this->db->delete('kelompok_tani', array('id' => $id))) {
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">kelompokTani Deleted!!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Kelompok Tani Deleted!!</div>');
             redirect('kecamatan/kelompokTani');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed delete kelompokTani!!</div>');
@@ -134,9 +150,7 @@ class Kecamatan extends CI_Controller
         $kota = $this->input->post('kota', true);
         $kecamatan = $this->input->post('kecamatan', true);
         $desa = $this->input->post('desa', true);
-
         $from = $this->input->post('from', true);
-
         $data['kelompokTani'] = $this->KelompokTani_model->filterKelompokTani($kota, $kecamatan, $desa);
         $data['from'] = $from;
 
@@ -246,9 +260,17 @@ class Kecamatan extends CI_Controller
 
         $data['title'] = 'Lahan';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['lahan'] = $this->Lahan_model->getLahan();
 
-        $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+        if ($data['user']['role_id'] == 3) {
+            $data['lahan'] = $this->Lahan_model->getLahanByArea("kecamatan", $data['user']['id_kecamatan']);
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kecamatan", $data['user']['id_kecamatan']);
+        } else if ($data['user']['role_id'] == 2) {
+            $data['lahan'] = $this->Lahan_model->getLahanByArea("kota_kab", $data['user']['id_kecamatan']);
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kota_kab", $data['user']['id_kota']);
+        } else {
+            $data['lahan'] = $this->Lahan_model->getLahan();
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+        }
         $data['listStatusKepemilikan'] = $this->db->get('list_status_kepemilikan')->result_array();
 
 
@@ -340,9 +362,17 @@ class Kecamatan extends CI_Controller
 
         $data['title'] = 'Aset';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['aset'] = $this->Aset_model->getAset();
 
-        $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+        if ($data['user']['role_id'] == 3) {
+            $data['aset'] = $this->Aset_model->getAsetByArea("kecamatan", $data['user']['id_kecamatan']);
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kecamatan", $data['user']['id_kecamatan']);
+        } else if ($data['user']['role_id'] == 2) {
+            $data['aset'] = $this->Aset_model->getAsetByArea("kota_kab", $data['user']['id_kecamatan']);
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kota_kab", $data['user']['id_kota']);
+        } else {
+            $data['aset'] = $this->Aset_model->getAset();
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+        }
         $data['listSumberPerolehan'] = $this->db->get('list_sumber_perolehan')->result_array();
 
 
@@ -440,9 +470,20 @@ class Kecamatan extends CI_Controller
 
         $data['title'] = 'Komoditi';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['komoditi'] = $this->Komoditi_model->getKomoditi();
 
-        $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+
+
+        if ($data['user']['role_id'] == 3) {
+            $data['komoditi'] = $this->Komoditi_model->getKomoditiByArea("kecamatan", $data['user']['id_kecamatan']);
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kecamatan", $data['user']['id_kecamatan']);
+        } else if ($data['user']['role_id'] == 2) {
+            $data['komoditi'] = $this->Komoditi_model->getKomoditiByArea("kota_kab", $data['user']['id_kecamatan']);
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kota_kab", $data['user']['id_kota']);
+        } else {
+            $data['komoditi'] = $this->Komoditi_model->getKomoditi();
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+        }
+
         $data['listSubsektor'] = $this->db->get('list_subsektor')->result_array();
         $data['listKomoditas'] = $this->db->get('list_komoditas')->result_array();
 
@@ -548,9 +589,20 @@ class Kecamatan extends CI_Controller
 
         $data['title'] = 'Anggota';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['anggota'] = $this->Anggota_model->getAnggota();
 
-        $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+
+
+        if ($data['user']['role_id'] == 3) {
+            $data['anggota'] = $this->Anggota_model->getAnggotaByArea("kecamatan", $data['user']['id_kecamatan']);
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kecamatan", $data['user']['id_kecamatan']);
+        } else if ($data['user']['role_id'] == 2) {
+            $data['anggota'] = $this->Anggota_model->getAnggotaByArea("kota_kab", $data['user']['id_kecamatan']);
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kota_kab", $data['user']['id_kota']);
+        } else {
+            $data['anggota'] = $this->Anggota_model->getAnggota();
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+        }
+
         $data['listStatusAnggota'] = $this->db->get('list_status_anggota')->result_array();
 
         $this->form_validation->set_rules('id_kelompok', 'Id_kelompok', 'required');
@@ -647,22 +699,18 @@ class Kecamatan extends CI_Controller
 
     public function index()
     {
-        $this->load->model('Penyuluh_model');
         $this->load->model('KelompokTani_model');
-        $this->load->model('Aset_model');
-        $this->load->model('Anggota_model');
-        $this->load->model('Komoditi_model');
-        $this->load->model('Lahan_model');
 
         $data['title'] = 'Master Data';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
-        $data['penyuluh'] = $this->Penyuluh_model->getPenyuluh();
-        $data['aset'] = $this->Aset_model->getAset();
-        $data['anggota'] = $this->Anggota_model->getAnggota();
-        $data['komoditi'] = $this->Komoditi_model->getKomoditi();
-        $data['lahan'] = $this->Lahan_model->getLahan();
-        $data['listKelas'] = $this->db->get('list_kelas')->result_array();
+        if ($data['user']['role_id'] == 3) {
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kecamatan", $data['user']['id_kecamatan']);
+        } else if ($data['user']['role_id'] == 2) {
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kota_kab", $data['user']['id_kota']);
+        } else {
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+        }
+
 
         if ($this->form_validation->run() ==  false) {
             $this->load->view('templates/header', $data);
@@ -831,7 +879,6 @@ class Kecamatan extends CI_Controller
             }
 
             $sheet->setCellValue('AB' . $kolom, $ex['teknologi']);
-
             $kolom = $kolomAnggota - 1;
             $kolom++;
             $nomor++;
@@ -849,48 +896,101 @@ class Kecamatan extends CI_Controller
         redirect('kecamatan');
     }
 
-    // public function import_excel()
+    public function import_excel()
+    {
+        $this->load->model('KelompokTani_model');
+        $this->load->model('Anggota_model');
+        $this->load->model('Lahan_model');
+        $this->load->model('Komoditi_model');
+        $this->load->model('Aset_model');
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+        $data['listKelas'] = $this->db->get('list_kelas')->result_array();
+
+        $file_mimes = array('application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+        if (isset($_FILES['berkas_excel']['name']) && in_array($_FILES['berkas_excel']['type'], $file_mimes)) {
+
+            $arr_file = explode('.', $_FILES['berkas_excel']['name']);
+            $extension = end($arr_file);
+
+            if ('csv' == $extension) {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+            } else {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            }
+
+            $spreadsheet = $reader->load($_FILES['berkas_excel']['tmp_name']);
+
+            $sheetData = $spreadsheet->getActiveSheet()->toArray();
+
+
+            $penyuluh = array();
+
+            foreach ($sheetData as $key => $value) {
+                if ($key == 0) {
+                    continue;
+                }
+                $penyuluh[$key - 1]['nama'] = $value[4];
+                $penyuluh[$key - 1]['nip'] = str_replace("'", "", $value[5]);
+                $penyuluh[$key - 1]['nik'] = str_replace("'", "", $value[6]);
+                $penyuluh[$key - 1]['status'] = $value[7];
+            }
+
+
+            foreach ($penyuluh as $key => $value) {
+                $nip = $this->db->get_where('penyuluh', array('nip' => $value['nip']))->row();
+                $this->db->select('id');
+                $this->db->where('status', $value['status']);
+                $status =  $this->db->get('list_status_penyuluh')->row_array();
+
+                if (is_null($nip) && !(is_null($value['nama']))) {
+                    $data = [
+                        'nama' => $value['nama'],
+                        'nip' => $value['nip'],
+                        'nik' => $value['nik'],
+                        'id_status' => $status['id'],
+                    ];
+                    $this->db->insert('penyuluh', $data);
+                }
+            }
+        } else {
+            var_dump($_FILES);
+        }
+    }
+
+    // public function importExcel()
     // {
-    //     $this->load->model('KelompokTani_model');
-    //     $this->load->model('Anggota_model');
-    //     $this->load->model('Lahan_model');
-    //     $this->load->model('Komoditi_model');
-    //     $this->load->model('Aset_model');
-    //     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-    //     $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
-    //     $data['listKelas'] = $this->db->get('list_kelas')->result_array();
+    //     $inputFileType = 'Xlsx';
+    //     $inputFileName = '      ';
 
-    //     $file_mimes = array('application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    //     $filterSubset = new MyReadFilter();
 
-    //     if (isset($_FILES['berkas_excel']['name']) && in_array($_FILES['berkas_excel']['type'], $file_mimes)) {
+    //     /**  Create a new Reader of the type defined in $inputFileType  **/
+    //     $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
+    //     /**  Tell the Reader that we want to use the Read Filter  **/
+    //     $reader->setReadFilter($filterSubset);
+    //     /**  Load only the rows and columns that match our filter to Spreadsheet  **/
+    //     $spreadsheet = $reader->load($inputFileName);
 
-    //         $arr_file = explode('.', $_FILES['berkas_excel']['name']);
-    //         $extension = end($arr_file);
-
-    //         if ('csv' == $extension) {
-    //             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
-    //         } else {
-    //             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-    //         }
-
-    //         $spreadsheet = $reader->load($_FILES['berkas_excel']['tmp_name']);
-
-    //         $sheetData = $spreadsheet->getActiveSheet()->toArray();
-    //         for ($i = 1; $i < count($sheetData); $i++) {
-    //             $kode_kelompok = $sheetData[$i]['1'];
-    //             $nama = $sheetData[$i]['2'];
-    //             $kota_kab = $sheetData[$i]['3'];
-    //             $bpp = $sheetData[$i]['4'];
-    //             $kecamatan = $sheetData[$i]['5'];
-    //             $desa = $sheetData[$i]['6'];
-    //             $tahun_pembentukan = $sheetData[$i]['7'];
-    //             $alamat = $sheetData[$i]['8'];
-    //             $skor = $sheetData[$i]['9'];
-    //             $tahun_penerapan = $sheetData[$i]['10'];
-    //             $teknologi = $sheetData[$i]['11'];
-
-    //             mysqli_query($this->db, "insert into tb_siswa (id,kode_kelompok,nama,kota_kab,bpp,kecamatan,desa,tahun_pembentukan,alamat,skor,tahun_penerapan,teknologi) values ('','$kode_kelompok','$nama','$kota_kab,$bpp,$kecamatan,$desa,$tahun_pembentukan,$alamat,$skor,$tahun_penerapan,$teknologi')");
-    //         }
-    //     }
+    //     var_dump($spreadsheet);
     // }
+}
+
+class MyReadFilter implements \PhpOffice\PhpSpreadsheet\Reader\IReadFilter
+{
+    public function readCell($column, $row, $worksheetName = '')
+    {
+        //  Read rows 1 to 7 and columns A to E only
+        if ($row >= 1) {
+            if (
+                in_array($column, range('A', 'E')) &&
+                in_array($column, range('I', 'N')) &&
+                in_array($column, range('AB', 'AB'))
+            ) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

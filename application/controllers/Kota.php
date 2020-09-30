@@ -20,12 +20,12 @@ class Kota extends CI_Controller
 
         $data['title'] = 'Master Data';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+        $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kota_kab", $data['user']['id_kota']);
         $data['penyuluh'] = $this->Penyuluh_model->getPenyuluh();
-        $data['aset'] = $this->Aset_model->getAset();
-        $data['anggota'] = $this->Anggota_model->getAnggota();
-        $data['komoditi'] = $this->Komoditi_model->getKomoditi();
-        $data['lahan'] = $this->Lahan_model->getLahan();
+        $data['aset'] = $this->Aset_model->getAsetByArea("kota_kab", $data['user']['id_kota']);
+        $data['anggota'] = $this->Anggota_model->getAnggotaByArea("kota_kab", $data['user']['id_kota']);
+        $data['komoditi'] = $this->Komoditi_model->getKomoditiByArea("kota_kab", $data['user']['id_kota']);
+        $data['lahan'] = $this->Lahan_model->getLahanByArea("kota_kab", $data['user']['id_kota']);
         $data['listKelas'] = $this->db->get('list_kelas')->result_array();
 
         if ($this->form_validation->run() ==  false) {
@@ -90,15 +90,11 @@ class Kota extends CI_Controller
         $data['komoditi'] = $this->Komoditi_model->getSingleKomoditi($id);
         $data['lahan'] = $this->Lahan_model->getSingleLahan($id);
 
-        if ($this->form_validation->run() ==  false) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('kecamatan/detailMasterData', $data);
-            $this->load->view('templates/footer');
-        } else {
-            redirect('kecamatan/detailMasterData');
-        }
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('kota/detailMasterData', $data);
+        $this->load->view('templates/footer');
     }
 
     public function verifikasiPenyuluh()

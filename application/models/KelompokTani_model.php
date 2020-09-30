@@ -87,4 +87,16 @@ class KelompokTani_model extends CI_Model
 
         return json_decode($data, true);
     }
+
+    public function getKelompokTaniByArea($area, $id)
+    {
+        $query = "SELECT `kelompok_tani`.* ,`list_kelas`.`id` AS `id_kelas`, `list_kelas`.`kelas`, `penyuluh`.`nama` AS `nama_penyuluh`, `penyuluh`.`id` AS `id_penyuluh`
+                    FROM `kelompok_tani` INNER JOIN `list_kelas`
+                        ON `kelompok_tani`.`id_kelas` = `list_kelas`.`id`
+                    INNER JOIN `penyuluh`
+                        ON `kelompok_tani`.`id_penyuluh` = `penyuluh`.`id`
+                    WHERE $area = $id
+                    ";
+        return $this->db->query($query)->result_array();
+    }
 }

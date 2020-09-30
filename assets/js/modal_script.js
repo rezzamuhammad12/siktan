@@ -1,9 +1,9 @@
 // Baseurl
-
+var base_url = window.location.origin + "/siktan-jabar/";
 
 // function
 
-(function getListAnggota(id) {
+function getListAnggota(id) {
     $.ajax({
         url: 'http://localhost/siktan-jabar/kecamatan/getListAnggota',
         type: 'POST',
@@ -24,11 +24,10 @@
         },
         error: err => console.log(err),
     })
-})();
+};
 
 // 
 
-var base_url = window.location.origin + "/siktan-jabar/";
 
 $('#addPenyuluh').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget)
@@ -238,7 +237,6 @@ $('#addKelompokPetani').on('show.bs.modal', function (event) {
     var btn = button.data('button')
 
     var id = button.data('id');
-    var kode_kelompok = button.data('kode_kelompok');
     var nama = button.data('nama')
     var penyuluh = button.data('penyuluh')
     var alamat = button.data('alamat')
@@ -252,24 +250,33 @@ $('#addKelompokPetani').on('show.bs.modal', function (event) {
     var tahun_penerapan = button.data('tahun_penerapan')
     var teknologi = button.data('teknologi')
 
+
+
+    var id_kecamatan = $('#id_kecamatan').val();
+
     var modal = $(this)
     modal.find('.modal-title').text(title);
     modal.find('.action').text(btn);
+    $.ajax({
+        url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + id_kecamatan,
+        type: 'GET',
+        dataType: 'json',
+        success: function (result) {
+            $.each(result['kelurahan'], function (key, value) {
+                $('#id_desa')
+                    .append($("<option></option>")
+                        .attr("value", value['id'])
+                        .text(value['nama']));
+            });
+        },
+        error: err => console.log(err),
+    })
     if (btn == 'Add') {
         $('.modal-content form').attr('action', "kelompokTani")
-        modal.find('#kode_kelompok').removeAttr('hidden');
         modal.find('#id').val("");
-        modal.find('#kode_kelompok').val("");
         modal.find('#nama').val("");
         modal.find('#penyuluh option:eq(0)').prop('selected', true)
-        modal.find('#id_kota')
-            .prepend('<option value="">Pilih Kota</option>')
-            .val('whatever');
         modal.find('#id_kota option:eq(0)').prop('selected', true)
-        modal.find('#id_kecamatan')
-            .find('option:not(:first-child)')
-            .remove()
-            .end()
         modal.find('#id_kecamatan option:eq(0)').prop('selected', true)
         modal.find('#id_desa')
             .find('option:not(:first-child)')
@@ -284,61 +291,14 @@ $('#addKelompokPetani').on('show.bs.modal', function (event) {
         modal.find('#tahun_penerapan').val("");
         modal.find('#teknologi').val("");
     } else {
-        modal.find('#kode_kelompok').attr('hidden', 'true');
         modal.find('#id_kecamatan').removeAttr('disabled');
         modal.find('#id_desa').removeAttr('disabled');
-        //Kota
-        $.ajax({
-            url: 'https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=32',
-            type: 'GET',
-            dataType: 'json',
-            success: function (result) {
-                $.each(result['kota_kabupaten'], function (key, value) {
-                    $('#id_kota')
-                        .append($("<option></option>")
-                            .attr("value", value['id'])
-                            .text(value['nama']));
-                });
-            },
-            error: err => console.log(err),
-        })
-        // Kecamatan
-        $.ajax({
-            url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + kota,
-            type: 'GET',
-            dataType: 'json',
-            success: function (result) {
-                console.log(result['kecamatan'])
-                $.each(result['kecamatan'], function (key, value) {
-                    $('#id_kecamatan')
-                        .append($("<option></option>")
-                            .attr("value", value['id'])
-                            .text(value['nama']));
-                });
-            },
-            error: err => console.log(err),
-        })
         // Desa
-        $.ajax({
-            url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + kecamatan,
-            type: 'GET',
-            dataType: 'json',
-            success: function (result) {
-                $.each(result['kelurahan'], function (key, value) {
-                    $('#id_desa')
-                        .append($("<option></option>")
-                            .attr("value", value['id'])
-                            .text(value['nama']));
-                });
-            },
-            error: err => console.log(err),
-        })
+
 
         $('.modal-content form').attr('action', "editKelompokTani")
-
         setTimeout(() => {
             modal.find('#id').val(id);
-            modal.find('#kode_kelompok').val(kode_kelompok);
             modal.find('#nama').val(nama);
             modal.find('#penyuluh option[value="' + penyuluh + '"]').prop('selected', true)
             modal.find('#id_kota option[value="' + kota + '"]').prop('selected', true)

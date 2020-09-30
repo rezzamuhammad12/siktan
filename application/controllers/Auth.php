@@ -99,11 +99,6 @@ class Auth extends CI_Controller
         ]);
         $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
 
-        $this->load->model('Daerah_model');
-        $data['kota'] = $this->Daerah_model->getKota();
-
-        // var_dump($data['kota']);
-        // die;
 
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Siktan Registration';

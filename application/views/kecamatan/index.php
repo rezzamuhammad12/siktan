@@ -21,13 +21,21 @@
             <div class="card card-body">
                 <div class="btn-toolbar">
                     <div class="btn-group mr-2">
-                        <select name="kota_filter" id="kota_filter" class="filter-form form-control">
-                            <option value="">Kota</option>
+                        <select name="kota_filter" id="kota_filter" class="filter-form form-control" readonly="readonly">
+                            <?php if (!(is_null($user['id_kota']))) : ?>
+                                <option value="<?= $user['id_kota']; ?>">Pilih Kota/Kabupaten</option>
+                            <?php else : ?>
+                                <option value="">Kota</option>
+                            <?php endif; ?>
                         </select>
                     </div>
                     <div class="btn-group mr-2">
                         <select name="kecamatan_filter" id="kecamatan_filter" class="filter-form form-control" disabled>
-                            <option value="">Kecamatan</option>
+                            <?php if (!(is_null($user['id_kecamatan']))) : ?>
+                                <option value="<?= $user['id_kecamatan']; ?>">Pilih Kecamatan</option>
+                            <?php else : ?>
+                                <option value="">Kecamatan</option>
+                            <?php endif; ?>
                         </select>
                     </div>
                     <div class="btn-group mr-2">
@@ -36,18 +44,21 @@
                         </select>
                     </div>
 
-                    <button id="gofilter" class="btn btn-success mr-2" data-from="master">Go Filter</button>
+                    <button id="gofilter" class="btn btn-success mr-2">Go Filter</button>
                     <a href="<?= base_url('kecamatan/export_excel'); ?>" class="btn btn-warning mr-2">Export</a>
 
                 </div>
             </div>
             <!-- Import excel -->
-            <!-- <form method="post" enctype="multipart/form-data" action="proses.php">
+            <form method="post" enctype="multipart/form-data" action="kecamatan/import_excel">
                 <div class="form-group">
                     <label for="exampleInputFile">File Upload</label>
                     <input type="file" name="berkas_excel" class="form-control" id="exampleInputFile">
                 </div>
-                <a href="<?= base_url('kecamatan/import_excel'); ?>" class="btn btn-info mr-2">Import</a> -->
+
+                <button type="submit" class="btn btn-info mr-2"> import</button>
+                <!-- <a href="<?= base_url('kecamatan/import_excel'); ?>" class="btn btn-info mr-2">Import</a> -->
+            </form>
 
             <!-- End Import excel -->
 

@@ -106,7 +106,7 @@
                     </div>
                     <div class="form-group">
                         <select name="id_status" id="id_status" class="form-control">
-                            <option value="">Pilih Subsektor</option>
+                            <option value="">Pilih Status Anggota</option>
                             <?php foreach ($listStatusAnggota as $lsa) : ?>
                                 <option value="<?= $lsa['id']; ?>"><?= $lsa['status']; ?></option>
                             <?php endforeach; ?>

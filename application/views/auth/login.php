@@ -24,8 +24,7 @@
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="div">
-                        <h5>Username</h5>
-                        <input type="text" class="form-control form-control-user" id="username" name="username" value="<?= set_value('username'); ?>">
+                        <input type="text" class="form-control form-control-user" placeholder="username" id="username" name="username" value="<?= set_value('username'); ?>">
                         <?= form_error('username', '<small class="text-danger pl-3">', '</small>'); ?>
                     </div>
                 </div>
@@ -34,8 +33,7 @@
                         <i class="fas fa-lock"></i>
                     </div>
                     <div class="div">
-                        <h5>Password</h5>
-                        <input type="password" class="form-control form-control-user" id="password" name="password">
+                        <input type="password" class="form-control form-control-user" placeholder="password" id="password" name="password">
                         <?= form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
                     </div>
                 </div>

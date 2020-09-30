@@ -103,6 +103,7 @@ $(document).ready(function () {
     var idKecamatan = $("#id_kecamatan").prop("selectedIndex", 0).val();
 
     if (idKota) {
+        $('#id_kota').attr('readonly', 'readonly')
         $.ajax({
             url: 'https://dev.farizdotid.com/api/daerahindonesia/kota/' + idKota,
             type: 'GET',
@@ -130,7 +131,7 @@ $(document).ready(function () {
     }
 
     if (idKecamatan) {
-        $('#id_kecamatan').attr('disabled', 1)
+        $('#id_kecamatan').attr('readonly', 'readonly')
 
         $.ajax({
             url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan/' + idKecamatan,
@@ -218,7 +219,7 @@ $(document).ready(function () {
                 error: err => console.log(err),
             })
         } else {
-            $('#id_desa').attr('disabled', true);
+            // $('#id_desa').attr('disabled', true);
         }
     })
 
