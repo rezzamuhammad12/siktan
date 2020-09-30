@@ -750,6 +750,14 @@ class Kecamatan extends CI_Controller
         }
     }
 
+    public function excelColumnRange($lower, $upper)
+    {
+        ++$upper;
+        for ($i = $lower; $i !== $upper; ++$i) {
+            yield $i;
+        }
+    }
+
     public function export_excel()
     {
         $this->load->model('KelompokTani_model');
@@ -766,69 +774,79 @@ class Kecamatan extends CI_Controller
         $sheet = $spreadsheet->getActiveSheet();
         // Set document properties
         $spreadsheet->getProperties()->setCreator('siktan.co.th')
-            ->setLastModifiedBy('Cholcool')
-            ->setTitle('how to export data to excel use phpspreadsheet in codeigniter')
+            ->setLastModifiedBy('Siktan')
+            ->setTitle('Master Data')
             ->setSubject('Generate Excel use PhpSpreadsheet in CodeIgniter')
             ->setDescription('Export data to Excel Work for me!');
         // add style to the header
         $styleArray = array(
             'font' => array(
                 'bold' => true,
+                'color' => array('rgb' => 'ffffff'),
             ),
             'alignment' => array(
                 'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
                 'vertical'   => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
             ),
-            'borders' => array(
-                'bottom' => array(
-                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-                    'color' => array('rgb' => '#000000'),
-                ),
-            ),
             'fill' => array(
-                'type'       => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_GRADIENT_LINEAR,
-                'rotation'   => 90,
-                'startcolor' => array('rgb' => '00FF00'),
-                'endColor'   => array('rgb' => '32CD32'),
-            ),
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'color' => array('rgb' => '009343')
+            )
         );
-        $spreadsheet->getActiveSheet()->getStyle('A1:AB1')->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle('A7:AB7')->applyFromArray($styleArray);
+
         // auto fit column to content
-        foreach (range('A', 'AB') as $columnID) {
+        foreach ($this->excelColumnRange('A', 'AB') as $columnID) {
             $spreadsheet->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
         }
 
+        $spreadsheet->getActiveSheet()->mergeCells('A2:B2');
+        $spreadsheet->getActiveSheet()->mergeCells('A3:B3');
+        $spreadsheet->getActiveSheet()->mergeCells('A4:B4');
+        $spreadsheet->getActiveSheet()->mergeCells('A5:B5');
+        $sheet->setCellValue('A2', 'Kabupaten/Kota : ');
+        $sheet->setCellValue('A3', 'Kecamatan : ');
+        $sheet->setCellValue('A4', 'Admin : ');
+        $sheet->setCellValue('A5', 'No Hp : ');
 
-        $sheet->setCellValue('A1', 'No');
-        $sheet->setCellValue('B1', 'BPP');
-        $sheet->setCellValue('C1', 'Kecamatan');
-        $sheet->setCellValue('D1', 'Desa');
-        $sheet->setCellValue('E1', 'Penyuluh Pendamping');
-        $sheet->setCellValue('F1', 'Nip Penyuluh');
-        $sheet->setCellValue('G1', 'Nik Penyuluh');
-        $sheet->setCellValue('H1', 'Status Penyuluh');
-        $sheet->setCellValue('I1', 'Nama Kelompok Tani Binaan');
-        $sheet->setCellValue('J1', 'Tahun Pembentukan');
-        $sheet->setCellValue('K1', 'Alamat Sekretariat');
-        $sheet->setCellValue('L1', 'Kelas');
-        $sheet->setCellValue('M1', 'Skor');
-        $sheet->setCellValue('N1', 'Tahun Penetapan');
-        $sheet->setCellValue('O1', 'Jumlah Anggota');
-        $sheet->setCellValue('P1', 'No');
-        $sheet->setCellValue('Q1', 'Nama Anggota');
-        $sheet->setCellValue('R1', 'Nik Anggota');
-        $sheet->setCellValue('S1', 'Status Dalam Kelompok');
-        $sheet->setCellValue('T1', 'Luas Lahan (ha)');
-        $sheet->setCellValue('U1', 'Status Kepemilikan Lahan');
-        $sheet->setCellValue('V1', 'Subsektor');
-        $sheet->setCellValue('W1', 'Komoditas');
-        $sheet->setCellValue('X1', 'Aset Kelompok');
-        $sheet->setCellValue('Y1', 'Sumber Perolehan Aset');
-        $sheet->setCellValue('Z1', 'Jumlah Aset');
-        $sheet->setCellValue('AA1', 'Tahun Perolehan');
-        $sheet->setCellValue('AB1', 'Teknologi yang di Gunakan');
+        $kotaAdmin = $this->KelompokTani_model->convertCodeArea("kota", $data['user']['id_kota']);
+        $kecAdmin = $this->KelompokTani_model->convertCodeArea("kecamatan", $data['user']['id_kecamatan']);
 
-        $kolom = 2;
+        $sheet->setCellValue('C2', $kotaAdmin['nama']);
+        $sheet->setCellValue('C3', $kecAdmin['nama']);
+        $sheet->setCellValue('C4', $data['user']['name']);
+        $sheet->setCellValue('C5', $data['user']['no_hp']);
+
+        $sheet->setCellValue('A7', 'No');
+        $sheet->setCellValue('B7', 'BPP');
+        $sheet->setCellValue('C7', 'Kecamatan');
+        $sheet->setCellValue('D7', 'Desa');
+        $sheet->setCellValue('E7', 'Penyuluh Pendamping');
+        $sheet->setCellValue('F7', 'Nip Penyuluh');
+        $sheet->setCellValue('G7', 'Nik Penyuluh');
+        $sheet->setCellValue('H7', 'Status Penyuluh');
+        $sheet->setCellValue('I7', 'Nama Kelompok Tani Binaan');
+        $sheet->setCellValue('J7', 'Tahun Pembentukan');
+        $sheet->setCellValue('K7', 'Alamat Sekretariat');
+        $sheet->setCellValue('L7', 'Kelas');
+        $sheet->setCellValue('M7', 'Skor');
+        $sheet->setCellValue('N7', 'Tahun Penetapan');
+        $sheet->setCellValue('O7', 'Jumlah Anggota');
+        $sheet->setCellValue('P7', 'No');
+        $sheet->setCellValue('Q7', 'Nama Anggota');
+        $sheet->setCellValue('R7', 'Nik Anggota');
+        $sheet->setCellValue('S7', 'Status Dalam Kelompok');
+        $sheet->setCellValue('T7', 'Luas Lahan (ha)');
+        $sheet->setCellValue('U7', 'Status Kepemilikan Lahan');
+        $sheet->setCellValue('V7', 'Subsektor');
+        $sheet->setCellValue('W7', 'Komoditas');
+        $sheet->setCellValue('X7', 'Aset Kelompok');
+        $sheet->setCellValue('Y7', 'Sumber Perolehan Aset');
+        $sheet->setCellValue('Z7', 'Jumlah Aset');
+        $sheet->setCellValue('AA7', 'Tahun Perolehan');
+        $sheet->setCellValue('AB7', 'Teknologi yang di Gunakan');
+
+        $kolom = 8;
         $nomor = 1;
         foreach ($data['kelompokTani'] as $ex) {
             $kec = $this->KelompokTani_model->convertCodeArea("kecamatan", $ex['kecamatan']);
@@ -860,14 +878,22 @@ class Kecamatan extends CI_Controller
                 $sheet->setCellValue('Q' . $kolomAnggota, $a['nama']);
                 $sheet->setCellValue('R' . $kolomAnggota, "'" . $a['nik']);
                 $sheet->setCellValue('S' . $kolomAnggota, $a['status']);
-                $sheet->setCellValue('T' . $kolomAnggota, $lahan[0]['luas']);
-                $sheet->setCellValue('U' . $kolomAnggota, $lahan[0]['status']);
-                $sheet->setCellValue('V' . $kolomAnggota, $komoditi[0]['subsektor']);
-                $sheet->setCellValue('W' . $kolomAnggota, $komoditi[0]['komoditas']);
+
+                if (!empty($lahan)) {
+                    $sheet->setCellValue('T' . $kolomAnggota, $lahan[0]['luas']);
+                    $sheet->setCellValue('U' . $kolomAnggota, $lahan[0]['status']);
+                }
+
+                if (!empty($lahan)) {
+                    $sheet->setCellValue('V' . $kolomAnggota, $komoditi[0]['subsektor']);
+                    $sheet->setCellValue('W' . $kolomAnggota, $komoditi[0]['komoditas']);
+                }
+
 
                 $nomorAnggota++;
                 $kolomAnggota++;
             };
+
             $sheet->setCellValue('O' . $kolom, $nomorAnggota - 1);
             $kolomAset = $kolom;
             foreach ($aset as $a) {
@@ -884,16 +910,54 @@ class Kecamatan extends CI_Controller
             $nomor++;
         }
 
-        $writer = new Xlsx($spreadsheet);
+        // Sheet 2 Kode area section
+        $myWorkSheet = new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet($spreadsheet, 'Kode Area');
+        $spreadsheet->addSheet($myWorkSheet, 1);
 
+        $sheet2 = $spreadsheet->getSheet(1);
+        $sheet2->getStyle('A1:F1')->applyFromArray($styleArray);
+
+        $sheet2->setCellValue('A1', 'Kabupaten/Kota');
+        $sheet2->setCellValue('B1', 'Kode');
+        $sheet2->setCellValue('C1', 'Kecamatan');
+        $sheet2->setCellValue('D1', 'Kode');
+        $sheet2->setCellValue('E1', 'Desa/Kelurahan');
+        $sheet2->setCellValue('F1', 'Kode');
+
+        foreach (range('A', 'F') as $columnId) {
+            $sheet2->getColumnDimension($columnId)->setAutoSize(true);
+        }
+
+
+        $kecamatan = $this->KelompokTani_model->getCodeArea("kecamatan", $kotaAdmin['id']);
+
+        $kolom2 = 2;
+        $kolomKecamatan = 2;
+
+        $sheet2->setCellValue('A' . $kolom2, $kotaAdmin['nama']);
+        $sheet2->setCellValue('B' . $kolom2, $kotaAdmin['id']);
+        foreach ($kecamatan['kecamatan'] as $k) {
+
+            $sheet2->setCellValue('C' . $kolomKecamatan, $k['nama']);
+            $sheet2->setCellValue('D' . $kolomKecamatan, $k['id']);
+            $kelurahan = $this->KelompokTani_model->getCodeArea("kelurahan", $k['id']);
+
+            foreach ($kelurahan['kelurahan'] as $kel) {
+                $sheet2->setCellValue('E' . $kolomKecamatan, $kel['nama']);
+                $sheet2->setCellValue('F' . $kolomKecamatan, $kel['id']);
+                $kolomKecamatan++;
+            }
+        }
+
+        $spreadsheet->setActiveSheetIndex(0);
+        $writer = new Xlsx($spreadsheet);
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="SiktanJabar.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer->save('php://output');
-
-        // $writer->save('recruitment_form.xlsx');
-        redirect('kecamatan');
+        die;
+        // redirect('kecamatan');
     }
 
     public function import_excel()
@@ -975,6 +1039,8 @@ class Kecamatan extends CI_Controller
 
     //     var_dump($spreadsheet);
     // }
+
+
 }
 
 class MyReadFilter implements \PhpOffice\PhpSpreadsheet\Reader\IReadFilter

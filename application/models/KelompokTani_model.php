@@ -99,4 +99,19 @@ class KelompokTani_model extends CI_Model
                     ";
         return $this->db->query($query)->result_array();
     }
+
+    public function getCodeArea($area, $code)
+    {
+        if ($area == 'kelurahan') {
+            $url = "https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=$code";
+        } else if ($area == 'kecamatan') {
+            $url = "https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=$code";
+        } else {
+            $url = "https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=$code";
+        }
+
+        $data = $this->http_request($url);
+
+        return json_decode($data, true);
+    }
 }
