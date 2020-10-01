@@ -56,9 +56,11 @@
                     <input type="file" name="berkas_excel" class="form-control" id="exampleInputFile">
                 </div>
 
-                <button type="submit" class="btn btn-info mr-2"> import</button>
+                <button type="submit" class="btn btn-info mr-2 mb-3"> import</button>
                 <!-- <a href="<?= base_url('kecamatan/import_excel'); ?>" class="btn btn-info mr-2">Import</a> -->
             </form>
+
+            <?= $this->session->flashdata('import_message'); ?>
 
             <!-- End Import excel -->
 

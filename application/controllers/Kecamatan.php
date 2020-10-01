@@ -766,7 +766,13 @@ class Kecamatan extends CI_Controller
         $this->load->model('Komoditi_model');
         $this->load->model('Aset_model');
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+        if ($data['user']['role_id'] == 3) {
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kecamatan", $data['user']['id_kecamatan']);
+        } else if ($data['user']['role_id'] == 2) {
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kota_kab", $data['user']['id_kota']);
+        } else {
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
+        }
         $data['listKelas'] = $this->db->get('list_kelas')->result_array();
 
         $spreadsheet = new Spreadsheet;
@@ -848,6 +854,8 @@ class Kecamatan extends CI_Controller
 
         $kolom = 8;
         $nomor = 1;
+
+        // echo "<pre>", var_dump($data['kelompokTani']), "</pre>";
         foreach ($data['kelompokTani'] as $ex) {
             $kec = $this->KelompokTani_model->convertCodeArea("kecamatan", $ex['kecamatan']);
             $desa = $this->KelompokTani_model->convertCodeArea("kelurahan", $ex['desa']);
@@ -949,6 +957,195 @@ class Kecamatan extends CI_Controller
             }
         }
 
+        // Sheet 3 Petunjuk Pengisian
+        $myWorkSheet = new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet($spreadsheet, 'Petunjuk Pengisian');
+        $spreadsheet->addSheet($myWorkSheet, 2);
+        $center = array(
+            'alignment' => [
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            ],
+            'font' => [
+                'bold' => true
+            ]
+        );
+
+        $border = array(
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' =>  array('rgb' => '000000'),
+                ],
+            ],
+        );
+
+
+        $sheet3 = $spreadsheet->getSheet(2);
+        $sheet3->mergeCells('A1:K2');
+        $sheet3->getStyle('A1')->applyFromArray($center);
+        $sheet3->getStyle('A16:B16')->applyFromArray($center);
+        $sheet3->getStyle('B15')->applyFromArray($styleArray);
+        $sheet3->getStyle('F15')->applyFromArray($styleArray);
+        $sheet3->getStyle('I15')->applyFromArray($styleArray);
+        $sheet3->getStyle('B24')->applyFromArray($styleArray);
+        $sheet3->getStyle('F24')->applyFromArray($styleArray);
+        $sheet3->getStyle('B32:F32')->applyFromArray($styleArray);
+        $sheet3->mergeCells('B3:K3');
+        $sheet3->mergeCells('B4:K4');
+        $sheet3->mergeCells('B5:K5');
+        $sheet3->mergeCells('B6:K6');
+
+        $sheet3->mergeCells('B7:K7');
+        $sheet3->mergeCells('B8:K8');
+        $sheet3->mergeCells('B9:K9');
+        $sheet3->mergeCells('B10:K10');
+        $sheet3->mergeCells('B11:K11');
+        $sheet3->mergeCells('B12:K12');
+        $sheet3->mergeCells('B13:K13');
+
+        $sheet3->mergeCells('B15:D15');
+        $sheet3->mergeCells('C16:D16');
+
+        $sheet3->mergeCells('F15:G15');
+
+        $sheet3->mergeCells('I15:K15');
+        $sheet3->mergeCells('J16:K16');
+
+        $sheet3->mergeCells('B24:D24');
+        $sheet3->mergeCells('C25:D25');
+
+        $sheet3->mergeCells('F24:G24');
+
+        $sheet3->mergeCells('B32:E32');
+        $sheet3->mergeCells('C33:E33');
+
+        $sheet3->mergeCells('F32:H32');
+        $sheet3->mergeCells('G33:H33');
+
+        foreach (range('A', 'K') as $columnId) {
+            $sheet3->getColumnDimension($columnId)->setAutoSize(true);
+        }
+
+        $sheet3->setCellValue('A1', 'Petunjuk Pengisian');
+        $sheet3->setCellValue('A3', '1.');
+        $sheet3->setCellValue('B3', 'Pastikan Penulisan Area (Kabupaten/Kota, Kecamatan, Desa/Kelurahan)');
+        $sheet3->setCellValue('B4', 'sesuai dengan daftar. Bisa menulis nama daerah atau kode daerah');
+        $sheet3->setCellValue('A5', '2.');
+        $sheet3->setCellValue('B5', 'Penulisan Luas Lahan menggunakan titik (.) dalam satuan hektar (ha)');
+        $sheet3->setCellValue('A6', '3.');
+        $sheet3->setCellValue('B6', 'Kolom-kolom berikut harus diisi sesuai dengan daftar yang tertera');
+
+        $sheet3->setCellValue('B7', 'Status Penyuluh');
+        $sheet3->setCellValue('B8', 'Kelas');
+        $sheet3->setCellValue('B9', 'Status Dalam Kelompok');
+        $sheet3->setCellValue('B10', 'Status Kepemilikan Lahan');
+        $sheet3->setCellValue('B11', 'Subsektor');
+        $sheet3->setCellValue('B12', 'Komoditas');
+        $sheet3->setCellValue('B13', 'Sumber Perolehan');
+
+        $sheet3->setCellValue('B15', 'Status Penyuluh');
+        $sheet3->setCellValue('B16', 'ID');
+        $sheet3->setCellValue('C16', 'Status');
+
+        $sheet3->setCellValue('F15', 'Kelas');
+        $sheet3->setCellValue('F16', 'ID');
+        $sheet3->setCellValue('G16', 'Kelas');
+
+        $sheet3->setCellValue('I15', 'Status Anggota');
+        $sheet3->setCellValue('I16', 'ID');
+        $sheet3->setCellValue('J16', 'status');
+
+        $sheet3->setCellValue('B24', 'Status Kepemilikan');
+        $sheet3->setCellValue('B25', 'ID');
+        $sheet3->setCellValue('C25', 'Status');
+
+        $sheet3->setCellValue('F24', 'Sumber Perolehan');
+        $sheet3->setCellValue('F25', 'ID');
+        $sheet3->setCellValue('G25', 'Kelas');
+
+        $sheet3->setCellValue('B32', 'Subsektor');
+        $sheet3->setCellValue('B33', 'ID');
+        $sheet3->setCellValue('C33', 'Subsektor');
+
+        $sheet3->setCellValue('F32', 'Komoditas');
+        $sheet3->setCellValue('F33', 'ID');
+        $sheet3->setCellValue('G33', 'Subsektor');
+
+        $statusPenyuluh = $this->db->get('list_status_penyuluh')->result_array();
+        $kelas = $this->db->get('list_kelas')->result_array();
+        $statusAnggota = $this->db->get('list_status_anggota')->result_array();
+        $statusKepemilikan = $this->db->get('list_status_kepemilikan')->result_array();
+        $subsektor = $this->db->get('list_subsektor')->result_array();
+
+        $sumber = $this->db->get('list_sumber_perolehan')->result_array();
+
+        $kolom = 17;
+        foreach ($statusPenyuluh as $key => $value) {
+            $sheet3->mergeCells('C' . $kolom . ':D' . $kolom);
+            $sheet3->setCellValue('B' . $kolom, $value['id']);
+            $sheet3->setCellValue('C' . $kolom, $value['status']);
+            $kolom++;
+        }
+
+        $sheet3->getStyle('B15:D' . ($kolom - 1))->applyFromArray($border);
+
+        $kolom = 17;
+        foreach ($kelas as $key => $value) {
+            $sheet3->setCellValue('F' . $kolom, $value['id']);
+            $sheet3->setCellValue('G' . $kolom, $value['kelas']);
+            $kolom++;
+        }
+        $sheet3->getStyle('F15:G' . ($kolom - 1))->applyFromArray($border);
+
+        $kolom = 17;
+        foreach ($statusAnggota as $key => $value) {
+            $sheet3->mergeCells('J' . $kolom . ':K' . $kolom);
+            $sheet3->setCellValue('I' . $kolom, $value['id']);
+            $sheet3->setCellValue('J' . $kolom, $value['status']);
+            $kolom++;
+        }
+        $sheet3->getStyle('I15:K' . ($kolom - 1))->applyFromArray($border);
+
+        $kolom = 26;
+        foreach ($statusKepemilikan as $key => $value) {
+            $sheet3->mergeCells('C' . $kolom . ':D' . $kolom);
+            $sheet3->setCellValue('B' . $kolom, $value['id']);
+            $sheet3->setCellValue('C' . $kolom, $value['status']);
+            $kolom++;
+        }
+
+        $sheet3->getStyle('B24:D' . ($kolom - 1))->applyFromArray($border);
+
+        $kolom = 26;
+        foreach ($sumber as $key => $value) {
+            $sheet3->setCellValue('F' . $kolom, $value['id']);
+            $sheet3->setCellValue('G' . $kolom, $value['sumber_perolehan']);
+            $kolom++;
+        }
+        $sheet3->getStyle('F24:G' . ($kolom - 1))->applyFromArray($border);
+
+        $kolom = 34;
+        foreach ($subsektor as $key => $value) {
+            $sheet3->mergeCells('C' . $kolom . ':E' . $kolom);
+
+            $sheet3->setCellValue('B' . $kolom, $value['id']);
+            $sheet3->setCellValue('C' . $kolom, $value['subsektor']);
+
+            $komoditas = $this->db->get_where('list_komoditas', ['id_subsektor' => $value['id']])->result_array();
+            foreach ($komoditas as $kom) {
+                $sheet3->mergeCells('C' . $kolom . ':E' . $kolom);
+                $sheet3->mergeCells('G' . $kolom . ':H' . $kolom);
+                $sheet3->setCellValue('F' . $kolom, $kom['id']);
+                $sheet3->setCellValue('G' . $kolom, $kom['komoditas']);
+                $kolom++;
+            }
+        }
+
+        $sheet3->getStyle('B32:H' . ($kolom - 1))->applyFromArray($border);
+
+
+
+
         $spreadsheet->setActiveSheetIndex(0);
         $writer = new Xlsx($spreadsheet);
         header('Content-Type: application/vnd.ms-excel');
@@ -971,6 +1168,9 @@ class Kecamatan extends CI_Controller
         $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
         $data['listKelas'] = $this->db->get('list_kelas')->result_array();
 
+        $error = false;
+        $listError = "";
+
         $file_mimes = array('application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
         if (isset($_FILES['berkas_excel']['name']) && in_array($_FILES['berkas_excel']['type'], $file_mimes)) {
@@ -987,20 +1187,73 @@ class Kecamatan extends CI_Controller
             $spreadsheet = $reader->load($_FILES['berkas_excel']['tmp_name']);
 
             $sheetData = $spreadsheet->getActiveSheet()->toArray();
-
+            // =======================================================================
+            // Prepare Data
+            // =======================================================================
 
             $penyuluh = array();
-
+            $kelompokTani = array();
+            $anggota = array();
+            $lahan = array();
+            $komoditi = array();
+            $aset = array();
+            $i = 0;
+            $kota = "";
             foreach ($sheetData as $key => $value) {
-                if ($key == 0) {
+
+                if ($key == 1) {
+                    $kota = $value[2];
+                }
+
+                if ($key < 7) {
                     continue;
                 }
-                $penyuluh[$key - 1]['nama'] = $value[4];
-                $penyuluh[$key - 1]['nip'] = str_replace("'", "", $value[5]);
-                $penyuluh[$key - 1]['nik'] = str_replace("'", "", $value[6]);
-                $penyuluh[$key - 1]['status'] = $value[7];
+                $penyuluh[$i]['nama'] = $value[4];
+                $penyuluh[$i]['nip'] = str_replace("'", "", $value[5]);
+                $penyuluh[$i]['nik'] = str_replace("'", "", $value[6]);
+                $penyuluh[$i]['status'] = $value[7];
+
+                $kelompokTani[$i]['kota_kab'] = $kota;
+                $kelompokTani[$i]['nama'] = $value[8];
+                $kelompokTani[$i]['bpp'] = $value[1];
+                $kelompokTani[$i]['id_penyuluh'] = $penyuluh[$i]['nik'];
+                $kelompokTani[$i]['kecamatan'] = $value[2];
+                $kelompokTani[$i]['desa'] = $value[3];
+                $kelompokTani[$i]['tahun_pembentukan'] = $value[9];
+                $kelompokTani[$i]['alamat'] = $value[10];
+                $kelompokTani[$i]['id_kelas'] = $value[11];
+                $kelompokTani[$i]['skor'] = $value[12];
+                $kelompokTani[$i]['tahun_penerapan'] = $value[13];
+                $kelompokTani[$i]['teknologi'] = $value[27];
+
+                $anggota[$i]['kelompok'] = $value[8];
+                $anggota[$i]['nama'] = $value[16];
+                $anggota[$i]['nik'] = str_replace("'", "", $value[17]);
+                $anggota[$i]['status'] = $value[18];
+
+                $lahan[$i]['luas'] = $value[19];
+                $lahan[$i]['id_kelompok'] = $value[8];
+                $lahan[$i]['id_anggota'] = $value[16];
+                $lahan[$i]['id_status_kepemilikan'] = $value[20];
+
+                $komoditi[$i]['id_kelompok'] = $value[8];
+                $komoditi[$i]['id_anggota'] = $value[16];
+                $komoditi[$i]['id_subsektor'] = $value[21];
+                $komoditi[$i]['id_komoditas'] = $value[22];
+
+                $aset[$i]['id_kelompok'] = $value[8];
+                $aset[$i]['nama'] = $value[23];
+                $aset[$i]['id_sumber'] = $value[24];
+                $aset[$i]['jumlah'] = $value[25];
+                $aset[$i]['tahun_perolehan'] = $value[26];
+
+                $i++;
             }
 
+            // echo "<pre>", var_dump($aset), "</pre>";
+            // =======================================================================
+            // Import Penyuluh
+            // =======================================================================
 
             foreach ($penyuluh as $key => $value) {
                 $nip = $this->db->get_where('penyuluh', array('nip' => $value['nip']))->row();
@@ -1008,7 +1261,13 @@ class Kecamatan extends CI_Controller
                 $this->db->where('status', $value['status']);
                 $status =  $this->db->get('list_status_penyuluh')->row_array();
 
+
                 if (is_null($nip) && !(is_null($value['nama']))) {
+                    // echo "<pre>", var_dump($status), "</pre>";
+                    if (is_null($status)) {
+                        $error = true;
+                        $listError .= "<li>Kesalahan pada status penyuluh, Kolom H" . ($key + 8) . ". Pastikan nama status sesuai dengan petunjuk </li>";
+                    }
                     $data = [
                         'nama' => $value['nama'],
                         'nip' => $value['nip'],
@@ -1018,29 +1277,237 @@ class Kecamatan extends CI_Controller
                     $this->db->insert('penyuluh', $data);
                 }
             }
-        } else {
-            var_dump($_FILES);
+            // =======================================================================
+            // Import Kelompok Tani
+            // =======================================================================
+            $newKelompokTani = array();
+            $i = 0;
+            foreach ($kelompokTani as $key => $value) {
+                if (!is_null($value['nama'])) {
+                    // ===============================================
+                    // validasi area (kota, kecamatan, kelurahan)
+                    // ===============================================
+                    $idKota = $this->KelompokTani_model->convertAreaToCode("kota", $value['kota_kab'], '32');
+                    if ($idKota) {
+                        $idKec = $this->KelompokTani_model->convertAreaToCode("kecamatan", $value['kecamatan'], $idKota);
+                        if ($idKec) {
+                            $idKel = $this->KelompokTani_model->convertAreaToCode("kelurahan", $value['desa'], $idKec);
+                            if (!$idKel) {
+                                $error = true;
+                                $listError .= "<li>Kesalahan pada Desa/List, Kolom D" . ($key + 8) . " Pastikan Desa/Kelurahan sesuai dengan daftar </li>";
+                            }
+                        } else {
+                            $error = true;
+                            $listError .= "<li>Kesalahan pada Kecamatan, Kolom L" . ($key + 8) . " Pastikan Kecamatan sesuai dengan daftar </li>";
+                        }
+                    } else {
+                        $error = true;
+                        $listError .= "<li>Kesalahan pada Kabupaten/Kota, Kolom C2. Pastikan Kabupaten/kota sesuai dengan daftar </li>";
+                    }
+
+                    // ===============================================
+                    // validasi Penyuluh
+                    // ===============================================
+                    $id_penyuluh = $this->db->get_where('penyuluh', array('nik' => $value['id_penyuluh']))->row_array();
+
+                    // ===============================================
+                    // validasi Kelas
+                    // ===============================================
+                    $id_kelas = $this->db->get_where('list_kelas', array('kelas' => $value['id_kelas']))->row_array();
+
+                    if (!$id_kelas) {
+                        $error = true;
+                        $listError .= "<li>Kesalahan pada Kecamatan, Kolom C" . ($key + 8) . " Pastikan Kecamatan sesuai dengan daftar </li>";
+                    }
+
+                    $newKelompokTani[$i]['kota_kab'] = htmlspecialchars($idKota);
+                    $newKelompokTani[$i]['nama'] = htmlspecialchars($value['nama']);
+                    $newKelompokTani[$i]['bpp'] = htmlspecialchars($value['bpp']);
+                    $newKelompokTani[$i]['id_penyuluh'] = htmlspecialchars($id_penyuluh['id']);
+                    $newKelompokTani[$i]['kecamatan'] = htmlspecialchars($idKec);
+                    $newKelompokTani[$i]['desa'] = htmlspecialchars($idKel);
+                    $newKelompokTani[$i]['tahun_pembentukan'] = htmlspecialchars($value['tahun_pembentukan']);
+                    $newKelompokTani[$i]['alamat'] = htmlspecialchars($value['alamat']);
+                    $newKelompokTani[$i]['id_kelas'] = htmlspecialchars($id_kelas['id']);
+                    $newKelompokTani[$i]['skor'] = htmlspecialchars($value['skor']);
+                    $newKelompokTani[$i]['tahun_penerapan'] = htmlspecialchars($value['tahun_penerapan']);
+                    $newKelompokTani[$i]['teknologi'] = htmlspecialchars($value['teknologi']);
+                    $i++;
+                }
+            }
+
+            // =======================================================================
+            // Import Anggota
+            // =======================================================================
+            $newAnggota = array();
+            $i = 0;
+            foreach ($anggota as $key => $value) {
+                $id_status = $this->db->get_where('list_status_anggota', array('status' => $value['status']))->row_array();
+
+                if ($id_status) {
+                    $newAnggota[$i]['id_status'] = $id_status['id'];
+                    $newAnggota[$i]['id_kelompok'] = htmlspecialchars($value['kelompok']);
+                    $newAnggota[$i]['nama'] = htmlspecialchars($value['nama']);
+                    $newAnggota[$i]['nik'] = htmlspecialchars($value['nik']);
+                    $i++;
+                } else {
+                    $error = true;
+                    $listError .= "<li>Kesalahan pada status anggota, Kolom S" . ($key + 8) . " Pastikan status anggota sesuai dengan daftar </li>";
+                }
+            }
+
+            // =======================================================================
+            // Import Lahan
+            // =======================================================================
+            $newLahan = array();
+            $i = 0;
+            foreach ($lahan as $key => $value) {
+                if ($value['id_status_kepemilikan']) {
+                    $id_status = $this->db->get_where('list_status_kepemilikan', array('status' => $value['id_status_kepemilikan']))->row_array();
+                    if ($id_status) {
+                        $newLahan[$i]['id_status_kepemilikan'] = $id_status['id'];
+                        $newLahan[$i]['id_kelompok'] = htmlspecialchars($value['id_kelompok']);
+                        $newLahan[$i]['id_anggota'] = htmlspecialchars($value['id_anggota']);
+                        $newLahan[$i]['luas'] = htmlspecialchars($value['luas']);
+                        $i++;
+                    } else {
+                        $error = true;
+                        $listError .= "<li>Kesalahan pada status lahan, Kolom U" . ($key + 8) . " Pastikan status anggota sesuai dengan daftar </li>";
+                    };
+                };
+            }
+
+            // =======================================================================
+            // Import Komoditi
+            // =======================================================================
+
+            $newKomoditi = array();
+            $i = 0;
+            foreach ($komoditi as $key => $value) {
+                if ($value['id_subsektor']) {
+                    $id_subsektor = $this->db->get_where('list_subsektor', array('subsektor' => $value['id_subsektor']))->row_array();
+                    if ($id_subsektor) {
+                        $id_komoditas = $this->db->get_where('list_komoditas', array('komoditas' => $value['id_komoditas'], 'id_subsektor' => $id_subsektor['id']))->row_array();
+
+                        if ($id_komoditas) {
+                            $newKomoditi[$i]['id_kelompok'] = htmlspecialchars($value['id_kelompok']);
+                            $newKomoditi[$i]['id_anggota'] = htmlspecialchars($value['id_anggota']);
+                            $newKomoditi[$i]['id_subsektor'] = $id_subsektor['id'];
+                            $newKomoditi[$i]['id_komoditas'] = $id_komoditas['id'];
+                            $i++;
+                        } else {
+                            $error = true;
+                            $listError .= "<li>Kesalahan pada komoditas, Kolom W" . ($key + 8) . " Pastikan status anggota sesuai dengan daftar </li>";
+                        }
+                    } else {
+                        $error = true;
+                        $listError .= "<li>Kesalahan pada subsektor, Kolom V" . ($key + 8) . " Pastikan subsektor sesuai dengan daftar </li>";
+                    };
+                };
+            }
+
+            // =======================================================================
+            // Import Aset
+            // =======================================================================
+            $newAset = array();
+            $i = 0;
+            foreach ($aset as $key => $value) {
+
+                if ($value['nama']) {
+                    $id_sumber_perolehan = $this->db->get_where('list_sumber_perolehan', array('sumber_perolehan' => $value['id_sumber']))->row_array();
+                    if ($id_sumber_perolehan) {
+                        $newAset[$i]['id_kelompok'] = htmlspecialchars($value['id_kelompok']);
+                        $newAset[$i]['nama'] = htmlspecialchars($value['nama']);
+                        $newAset[$i]['id_sumber'] = $id_sumber_perolehan['id'];
+                        $newAset[$i]['jumlah'] = htmlspecialchars($value['jumlah']);
+                        $newAset[$i]['tahun_perolehan'] = htmlspecialchars($value['tahun_perolehan']);
+                        $i++;
+                    } else {
+                        $error = true;
+                        $listError .= "<li>Kesalahan pada sumber perolehan, Kolom Y" . ($key + 8) . " Pastikan sumber perolehan sesuai dengan daftar </li>";
+                    }
+                }
+            }
+
+            $last_row = array();
+            if (!$error) {
+                foreach ($newKelompokTani as $key => $value) {
+                    $this->db->insert('kelompok_tani', $value);
+                    $last_row[$key] = $this->db->select('*')->order_by('id', "desc")->limit(1)->get('kelompok_tani')->row_array();
+
+                    $kodeKelompok = [
+                        'kode_kelompok' => $last_row[$key]['desa'] . $last_row[$key]['id']
+                    ];
+
+                    $this->db->set($kodeKelompok);
+                    $this->db->where('id', $last_row[$key]['id']);
+                    $this->db->update('kelompok_tani');
+                }
+
+                $i = -1;
+                $addedAnggota = array();
+                foreach ($newAnggota as $key => $value) {
+                    if ($value['id_kelompok']) {
+                        $i++;
+                    }
+
+                    $value['id_kelompok'] = $last_row[$i]['id'];
+                    $this->db->insert('anggota', $value);
+                    $addedAnggota[$key] = $this->db->select('*')->order_by('id', "desc")->limit(1)->get('anggota')->row_array();
+                }
+
+                $i = -1;
+                $j = -1;
+                foreach ($newLahan as $key => $value) {
+                    if ($value['id_kelompok']) {
+                        $i++;
+                    }
+
+                    if ($value['id_anggota']) {
+                        $j++;
+                    }
+                    $value['id_kelompok'] = $last_row[$i]['id'];
+                    $value['id_anggota'] = $addedAnggota[$j]['id'];
+                    $this->db->insert('lahan', $value);
+                }
+
+                $i = -1;
+                $j = -1;
+                foreach ($newKomoditi as $key => $value) {
+                    if ($value['id_kelompok']) {
+                        $i++;
+                    }
+
+                    if ($value['id_anggota']) {
+                        $j++;
+                    }
+                    $value['id_kelompok'] = $last_row[$i]['id'];
+                    $value['id_anggota'] = $addedAnggota[$j]['id'];
+                    $sukses = $this->db->insert('komoditi', $value);
+                }
+
+                $i = -1;
+                foreach ($newAset as $key => $value) {
+                    if ($value['id_kelompok']) {
+                        $i++;
+                    }
+
+                    $value['id_kelompok'] = $last_row[$i]['id'];
+                    echo "<pre>", var_dump($value), "</pre>";
+                    $sukses = $this->db->insert('aset', $value);
+                    echo "<pre>", var_dump($sukses), "</pre>";
+                }
+
+                $this->session->set_flashdata('import_message', '<div class="alert alert-success" role="alert">Import Berhasil!</div>');
+            } else {
+                echo $listError;
+                echo "kesini?";
+                $this->session->set_flashdata('import_message', '<div class="alert alert-danger" role="alert">Import Gagal! <ul>' . $listError . ' </ul></div>');
+            }
+
+            redirect('kecamatan');
         }
     }
-
-    // public function importExcel()
-    // {
-    //     $inputFileType = 'Xlsx';
-    //     $inputFileName = '      ';
-
-    //     $filterSubset = new MyReadFilter();
-
-    //     /**  Create a new Reader of the type defined in $inputFileType  **/
-    //     $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
-    //     /**  Tell the Reader that we want to use the Read Filter  **/
-    //     $reader->setReadFilter($filterSubset);
-    //     /**  Load only the rows and columns that match our filter to Spreadsheet  **/
-    //     $spreadsheet = $reader->load($inputFileName);
-
-    //     var_dump($spreadsheet);
-    // }
-
-
 }
 
 class MyReadFilter implements \PhpOffice\PhpSpreadsheet\Reader\IReadFilter

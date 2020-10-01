@@ -90,11 +90,13 @@ class KelompokTani_model extends CI_Model
 
     public function getKelompokTaniByArea($area, $id)
     {
-        $query = "SELECT `kelompok_tani`.* ,`list_kelas`.`id` AS `id_kelas`, `list_kelas`.`kelas`, `penyuluh`.`nama` AS `nama_penyuluh`, `penyuluh`.`id` AS `id_penyuluh`
+        $query = "SELECT `kelompok_tani`.* ,`list_kelas`.`id` AS `id_kelas`, `list_kelas`.`kelas`, `penyuluh`.`nama` AS `nama_penyuluh`, penyuluh.`nip`, penyuluh.`nik`,`penyuluh`.`id` AS `id_penyuluh`, `list_status_penyuluh`.`status`, list_status_penyuluh.`id` AS `id_status_penyuluh`
                     FROM `kelompok_tani` INNER JOIN `list_kelas`
                         ON `kelompok_tani`.`id_kelas` = `list_kelas`.`id`
                     INNER JOIN `penyuluh`
                         ON `kelompok_tani`.`id_penyuluh` = `penyuluh`.`id`
+                    INNER JOIN `list_status_penyuluh`
+                    ON `penyuluh`.`id_status` = `list_status_penyuluh`.`id`
                     WHERE $area = $id
                     ";
         return $this->db->query($query)->result_array();
@@ -113,5 +115,28 @@ class KelompokTani_model extends CI_Model
         $data = $this->http_request($url);
 
         return json_decode($data, true);
+    }
+
+    public function convertAreaToCode($area, $name, $code)
+    {
+        $data = array();
+        if ($area == "kota") {
+            $data = $this->getCodeArea("provinsi", $code);
+            $data = $data['kota_kabupaten'];
+        } else if ($area == "kecamatan") {
+            $data = $this->getCodeArea("kecamatan", $code);
+            $data = $data['kecamatan'];
+        } else {
+            $data = $this->getCodeArea("kelurahan", $code);
+            $data = $data['kelurahan'];
+        }
+
+        foreach ($data as $key => $value) {
+            if ($value['nama'] == $name || $value['id'] == $name) {
+                return $value['id'];
+            }
+        }
+
+        return false;
     }
 }
