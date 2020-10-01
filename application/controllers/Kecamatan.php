@@ -1299,11 +1299,11 @@ class Kecamatan extends CI_Controller
                             $idKel = $this->KelompokTani_model->convertAreaToCode("kelurahan", $value['desa'], $idKec);
                             if (!$idKel) {
                                 $error = true;
-                                $listError .= "<li>Kesalahan pada Desa/List, Kolom D" . ($key + 8) . " Pastikan Desa/Kelurahan sesuai dengan daftar </li>";
+                                $listError .= "<li>Kesalahan pada Desa/Kelurahan, Kolom D" . ($key + 8) . " Pastikan Desa/Kelurahan sesuai dengan daftar </li>";
                             }
                         } else {
                             $error = true;
-                            $listError .= "<li>Kesalahan pada Kecamatan, Kolom L" . ($key + 8) . " Pastikan Kecamatan sesuai dengan daftar </li>";
+                            $listError .= "<li>Kesalahan pada Kecamatan, Kolom C" . ($key + 8) . " Pastikan Kecamatan sesuai dengan daftar </li>";
                         }
                     } else {
                         $error = true;
@@ -1322,7 +1322,7 @@ class Kecamatan extends CI_Controller
 
                     if (!$id_kelas) {
                         $error = true;
-                        $listError .= "<li>Kesalahan pada Kecamatan, Kolom C" . ($key + 8) . " Pastikan Kecamatan sesuai dengan daftar </li>";
+                        $listError .= "<li>Kesalahan pada Kelas, Kolom L" . ($key + 8) . " Pastikan Kelas sesuai dengan daftar </li>";
                     }
 
                     $newKelompokTani[$i]['kota_kab'] = htmlspecialchars($idKota);
@@ -1377,7 +1377,7 @@ class Kecamatan extends CI_Controller
                         $i++;
                     } else {
                         $error = true;
-                        $listError .= "<li>Kesalahan pada status lahan, Kolom U" . ($key + 8) . " Pastikan status anggota sesuai dengan daftar </li>";
+                        $listError .= "<li>Kesalahan pada status kepemilikan lahan, Kolom U" . ($key + 8) . " Pastikan status anggota sesuai dengan daftar </li>";
                     };
                 };
             }
