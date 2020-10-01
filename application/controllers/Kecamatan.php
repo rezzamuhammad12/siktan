@@ -818,8 +818,13 @@ class Kecamatan extends CI_Controller
         $kotaAdmin = $this->KelompokTani_model->convertCodeArea("kota", $data['user']['id_kota']);
         $kecAdmin = $this->KelompokTani_model->convertCodeArea("kecamatan", $data['user']['id_kecamatan']);
 
-        $sheet->setCellValue('C2', $kotaAdmin['nama']);
-        $sheet->setCellValue('C3', $kecAdmin['nama']);
+        if (!is_null($kotaAdmin)) {
+            $sheet->setCellValue('C2', $kotaAdmin['nama']);
+        }
+
+        if (!is_null($kecAdmin)) {
+            $sheet->setCellValue('C3', $kecAdmin['nama']);
+        }
         $sheet->setCellValue('C4', $data['user']['name']);
         $sheet->setCellValue('C5', $data['user']['no_hp']);
 
@@ -892,7 +897,7 @@ class Kecamatan extends CI_Controller
                     $sheet->setCellValue('U' . $kolomAnggota, $lahan[0]['status']);
                 }
 
-                if (!empty($lahan)) {
+                if (!empty($komoditi)) {
                     $sheet->setCellValue('V' . $kolomAnggota, $komoditi[0]['subsektor']);
                     $sheet->setCellValue('W' . $kolomAnggota, $komoditi[0]['komoditas']);
                 }
@@ -1493,15 +1498,15 @@ class Kecamatan extends CI_Controller
                     }
 
                     $value['id_kelompok'] = $last_row[$i]['id'];
-                    echo "<pre>", var_dump($value), "</pre>";
+                    // echo "<pre>", var_dump($value), "</pre>";
                     $sukses = $this->db->insert('aset', $value);
-                    echo "<pre>", var_dump($sukses), "</pre>";
+                    // echo "<pre>", var_dump($sukses), "</pre>";
                 }
 
                 $this->session->set_flashdata('import_message', '<div class="alert alert-success" role="alert">Import Berhasil!</div>');
             } else {
-                echo $listError;
-                echo "kesini?";
+                // echo $listError;
+                // echo "kesini?";
                 $this->session->set_flashdata('import_message', '<div class="alert alert-danger" role="alert">Import Gagal! <ul>' . $listError . ' </ul></div>');
             }
 
