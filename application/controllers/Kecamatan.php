@@ -1271,7 +1271,7 @@ class Kecamatan extends CI_Controller
                     // echo "<pre>", var_dump($status), "</pre>";
                     if (is_null($status)) {
                         $error = true;
-                        $listError .= "<li>Kesalahan pada status penyuluh, Kolom H" . ($key + 8) . ". Pastikan nama status sesuai dengan petunjuk </li>";
+                        $listError .= "<li>Kesalahan pada status penyuluh, Kolom H" . ($key + 8) . ". Pastikan status sesuai dengan petunjuk </li>";
                     }
                     $data = [
                         'nama' => $value['nama'],
@@ -1377,7 +1377,7 @@ class Kecamatan extends CI_Controller
                         $i++;
                     } else {
                         $error = true;
-                        $listError .= "<li>Kesalahan pada status kepemilikan lahan, Kolom U" . ($key + 8) . " Pastikan status anggota sesuai dengan daftar </li>";
+                        $listError .= "<li>Kesalahan pada status kepemilikan lahan, Kolom U" . ($key + 8) . " Pastikan status kepemilikan lahan sesuai dengan daftar </li>";
                     };
                 };
             }
@@ -1402,7 +1402,7 @@ class Kecamatan extends CI_Controller
                             $i++;
                         } else {
                             $error = true;
-                            $listError .= "<li>Kesalahan pada komoditas, Kolom W" . ($key + 8) . " Pastikan status anggota sesuai dengan daftar </li>";
+                            $listError .= "<li>Kesalahan pada komoditas, Kolom W" . ($key + 8) . " Pastikan komoditas sesuai dengan daftar </li>";
                         }
                     } else {
                         $error = true;
