@@ -18,7 +18,7 @@
         <div class="login-content">
             <form class="user" method="post" action="<?= base_url('auth'); ?>">
                 <img src="<?= base_url('assets/'); ?>img/jabar.png">
-                <h2 class="title">SIDAKEP LOGIN</h2>
+                <h2 class="title">SI-PETANI LOGIN</h2>
                 <div class="input-div one">
                     <div class="i">
                         <i class="fas fa-user"></i>

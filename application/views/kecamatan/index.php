@@ -23,7 +23,7 @@
                     <div class="btn-group mr-2">
                         <select name="kota_filter" id="kota_filter" class="filter-form form-control" readonly="readonly">
                             <?php if (!(is_null($user['id_kota']))) : ?>
-                                <option value="<?= $user['id_kota']; ?>">Pilih Kota/Kabupaten</option>
+                                <option value="<?= $user['id_kota']; ?>">Pilih Kabupaten/Kota</option>
                             <?php else : ?>
                                 <option value="">Kota</option>
                             <?php endif; ?>
@@ -40,7 +40,7 @@
                     </div>
                     <div class="btn-group mr-2">
                         <select name="desa_filter" id="desa_filter" class="filter-form form-control" disabled>
-                            <option value="">Desa</option>
+                            <option value="">Kelurahan/Desa</option>
                         </select>
                     </div>
 
@@ -71,9 +71,9 @@
                         <th scope="col">Kode Kelompok</th>
                         <th scope="col">Nama Kelompok</th>
                         <th scope="col">Penyuluh Pendamping</th>
-                        <th scope="col">Kota</th>
+                        <th scope="col">Kabupaten/Kota</th>
                         <th scope="col">Kecamatan</th>
-                        <th scope="col">Desa</th>
+                        <th scope="col">Kelurahan/Desa</th>
                         <th scope="col">Skor</th>
                         <th scope="col" data-defaultsort="disabled">Disetujui</th>
                         <th scope="col" data-defaultsort="disabled">Action</th>

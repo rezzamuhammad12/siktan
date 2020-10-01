@@ -32,8 +32,8 @@
                     <tr>
                         <th scope="col" data-defaultsort="true">#</th>
                         <th scope="col">Nama Kelompok</th>
-                        <th scope="col">NIK</th>
                         <th scope="col">Nama</th>
+                        <th scope="col">NIK</th>
                         <th scope="col">Status Anggota</th>
                         <th scope="col">Disetujui</th>
                         <th scope="col" data-defaultsort="disabled">Action</th>
@@ -45,8 +45,8 @@
                         <tr>
                             <th scope="row" data-value="<?= $i; ?>"><?= $i; ?></th>
                             <td data-value="<?= $agt['nama_kelompok']; ?>"><?= $agt['nama_kelompok']; ?></td>
-                            <td data-value="<?= $agt['nik']; ?>"><?= $agt['nik']; ?></td>
                             <td data-value="<?= $agt['nama']; ?>"><?= $agt['nama']; ?></td>
+                            <td data-value="<?= $agt['nik']; ?>"><?= $agt['nik']; ?></td>
                             <td data-value="<?= $agt['status']; ?>"><?= $agt['status']; ?></td>
                             <td><?php if (is_null($agt['verifikasi'])) : ?>
                                     <div class="badge badge-info">Diproses</div>
@@ -99,10 +99,10 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="nik" name="nik" placeholder="NIK">
+                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama">
+                        <input type="text" class="form-control" id="nik" name="nik" placeholder="NIK">
                     </div>
                     <div class="form-group">
                         <select name="id_status" id="id_status" class="form-control">

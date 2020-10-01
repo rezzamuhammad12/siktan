@@ -6,17 +6,13 @@ Modal Detail Kelompok Tani
     padding: 10px;
 }
 
-.registration select#role_id, .registration select#id_kota, .registration select#id_kecamatan {
+.registration select#role_id,
+.registration select#id_kota,
+.registration select#id_kecamatan {
     border-radius: 20px;
     font-size: 10pt;
 }
 
 .sidebar-wrapper {
     background-color: #009343;
-}
-
-.goback {
-    position: absolute;
-    right: 20px;
-    top: 100px;
 }

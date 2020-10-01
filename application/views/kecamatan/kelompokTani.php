@@ -26,7 +26,7 @@
                         <div class="btn-group mr-2">
                             <select name="kota_filter" id="kota_filter" class="filter-form form-control" readonly="readonly">
                                 <?php if (!(is_null($user['id_kota']))) : ?>
-                                    <option value="<?= $user['id_kota']; ?>">Pilih Kota/Kabupaten</option>
+                                    <option value="<?= $user['id_kota']; ?>">Pilih Kabupaten/Kota</option>
                                 <?php else : ?>
                                     <option value="">Kota</option>
                                 <?php endif; ?>
@@ -43,7 +43,7 @@
                         </div>
                         <div class="btn-group mr-2">
                             <select name="desa_filter" id="desa_filter" class="filter-form form-control" disabled>
-                                <option value="">Desa</option>
+                                <option value="">Kelurahan/Desa</option>
                             </select>
                         </div>
 
@@ -149,9 +149,9 @@
                     <div class="form-group">
                         <select name="id_kota" id="id_kota" class="form-control">
                             <?php if (!(is_null($user['id_kota']))) : ?>
-                                <option value="<?= $user['id_kota']; ?>">Pilih Kota/Kabupaten</option>
+                                <option value="<?= $user['id_kota']; ?>">Pilih Kabupaten/Kota</option>
                             <?php else : ?>
-                                <option value="">Pilih Kota/Kabupaten</option>
+                                <option value="">Pilih Kabupaten/Kota</option>
                             <?php endif; ?>
                         </select>
                     </div>
@@ -163,12 +163,12 @@
 
                     <div class="form-group">
                         <select name="id_desa" id="id_desa" class="form-control">
-                            <option value="">Pilih Desa/Kelurahan</option>
+                            <option value="">Pilih Kelurahan/Desa</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="bpp" name="bpp" placeholder="Balai Pelatihan Pertanian">
+                        <input type="text" class="form-control" id="bpp" name="bpp" placeholder="BPP">
                     </div>
 
                     <div class="form-group">
