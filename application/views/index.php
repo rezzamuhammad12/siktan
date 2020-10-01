@@ -27,8 +27,12 @@
 
     <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
     <link href="<?= base_url('assets/'); ?>css/main_landingpage.css" rel="stylesheet">
+    <link href="<?= base_url('assets/'); ?>css/landingstyle.css" rel="stylesheet">
+    <link href="<?= base_url('assets/'); ?>css/ionicons.min.css" rel="stylesheet">
+    <link href="<?= base_url('assets/'); ?>css/ionicons.css" rel="stylesheet">
 
-    <title>SIKTAN JABAR</title>
+
+    <title>Si-Petani</title>
 </head>
 
 <body>
@@ -38,14 +42,14 @@
         <div class="container d-flex align-items-center">
 
             <!-- Uncomment below if you prefer to use an image logo -->
-            <a href="index.html" class="logo mr-auto"><img src="<?= base_url('assets/'); ?>img/logo.png" alt="" class="img-fluid"></a>
+            <a href="index.php" class="logo mr-auto"><img src="<?= base_url('assets/'); ?>img/logo-baru.png" alt="" class="img-fluid"></a>
 
             <nav class="nav-menu d-none d-lg-block">
                 <ul>
-                    <li class="active"><a href="index.html">Home</a></li>
+                    <li class="active"><a href="index.php">Home</a></li>
                     <li><a href="#info">Info & Berita</a></li>
                     <li><a href="#statistik">Statistik</a></li>
-                    <li><a href="#portfolio">About Us</a></li>
+                    <li><a href="#maps">Peta Informasi</a></li>
 
                 </ul>
             </nav><!-- .nav-menu -->
@@ -61,16 +65,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
-                    <h1>Sistem Informasi Kelompok Tani</h1>
-                    <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. </h2>
+                    <h1>Sistem Informasi Database <br>Kelompok Tani</h1>
+                    <br>
+                    <h3><b>Provinsi Jawa Barat</b></h3><br>
                     <div class="d-lg-flex">
-                        <a href="#about" class="btn-get-started scrollto">About US</a>
+                        <a href="#about" class="btn-get-started scrollto">Selengkapnya...</a>
                     </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="<?= base_url('assets/'); ?>img/hero-img.png" class="img-fluid animated" alt="">
+                    <img src="<?= base_url('assets/'); ?>img/hero-logo.png" class="img-fluid animated" alt="">
                 </div>
             </div>
         </div>
@@ -86,33 +89,170 @@
                 <h2>Info & Berita</h2>
             </div>
 
-            <div class="row">
-                <div class="col-lg-7 carousel-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                    </div>
 
-                    <div class="owl-carousel owl-theme">
-                        <div class="item"> </div>
-                        <div class="item"> </div>
-                        <div class="item"> </div>
-                        <div class="item"> </div>
-                        <div class="item"> </div>
-                        <div class="item"> </div>
-                        <div class="item"> </div>
-                        <div class="item"> </div>
-                        <div class="item"> </div>
-                        <div class="item"> </div>
-                        <div class="item"> </div>
-                        <div class="item"> </div>
+
+                    <div id="carouselExample" class="carousel slide d-none d-sm-none d-md-block" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img class="d-block w-100" src="https://fakeimg.pl/800x400/?retina=1&text=Logo 1&font=noto" alt="First slide">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img class="d-block w-100" src="https://fakeimg.pl/800x400/?retina=1&text=Logo 2&font=noto" alt="First slide">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img class="d-block w-100" src="https://fakeimg.pl/800x400/?retina=1&text=Logo 3&font=noto" alt="First slide">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="carousel-item">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img class="d-block w-100" src="https://fakeimg.pl/800x400/?retina=1&text=Logo 5&font=noto" alt="First slide">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img class="d-block w-100" src="https://fakeimg.pl/800x400/?retina=1&text=Logo 6&font=noto" alt="First slide">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img class="d-block w-100" src="https://fakeimg.pl/800x400/?retina=1&text=Logo 7&font=noto" alt="First slide">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+
+
+                        <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+
+
+                    </div>
+
+
+                    <div id="carouselExampleMobile" class="carousel slide d-md-none d-lg-none d-xl-none" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="https://fakeimg.pl/800x400/?retina=1&text=Logo 1&font=noto" alt="First slide">
+                            </div>
+
+
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="https://fakeimg.pl/800x400/?retina=1&text=Logo 2&font=noto" alt="Second slide">
+                            </div>
+
+
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="https://fakeimg.pl/800x400/?retina=1&text=Logo 3&font=noto" alt="Third slide">
+                            </div>
+
+
+                        </div>
+
+                        <a class="carousel-control-prev" href="#carouselExampleMobile" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+
+
+                        <a class="carousel-control-next" href="#carouselExampleMobile" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
                 </div>
-                <div class="col-lg-5 info-wrapper">
-                    <div class="info">
+            </div>
 
-                    </div>
+            <br><br><br><br>
+
+            <div class="row feature-item">
+                <div class="col-lg-6 wow fadeInUp">
+                    <img src="<?= base_url('assets/'); ?>img/cobas.png" alt="" class="img-fluid">
+                </div>
+                <div class="col-lg-6 wow fadeInUp pt-5 pt-lg-0">
+
+                    <section id="faq">
+                        <div class="container" style="margin-top: -50px;">
+                            <header class="section-header">
+                                <h3>
+                                    <font color="white">Berita Terbaru</font>
+                                </h3>
+
+                            </header>
+
+                            <font color="white">
+                                <ul id="faq-list" class="wow fadeInUp">
+                                    <li>
+                                        <a data-toggle="collapse" class="collapsed" href="#faq1">
+                                            <font size="4px" color="white">Non consectetur a erat nam at lectus urna duis? </font> <i class="ion-android-remove"></i>
+                                        </a>
+                                        <div id="faq1" class="collapse" data-parent="#faq-list">
+                                            <p>
+                                                <font color="white">
+                                                    Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non. </font>
+                                            </p>
+                                            <p style="font-size: 10px">22 September 2020</p>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a data-toggle="collapse" href="#faq2" class="collapsed">
+                                            <font size="4px" color="white">Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque? </font><i class="ion-android-remove"></i>
+                                        </a>
+                                        <div id="faq2" class="collapse" data-parent="#faq-list">
+                                            <p>
+                                                Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
+                                            </p>
+                                            <p style="font-size: 10px">25 September 2020</p>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a data-toggle="collapse" href="#faq3" class="collapsed">
+                                            <font size="4px" color="white">Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi? </font><i class="ion-android-remove"></i>
+                                        </a>
+                                        <div id="faq3" class="collapse" data-parent="#faq-list">
+                                            <p>
+                                                Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
+                                            </p>
+                                            <p style="font-size: 10px">21 September 2020</p>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </font>
+                            <a href="#">
+                                <font color="cyan">Lihat Selengkapnya...</font>
+                            </a>
+
+                        </div>
+                    </section><!-- #faq -->
 
                 </div>
             </div>
         </div>
     </section>
+
+
+    <!-- ============== info & berita ================= -->
+
+
+
+
 
     <!-- ======= Data & statik ======= -->
 
@@ -120,7 +260,7 @@
         <div class="container" data-aos="fade-up">
             <div class="container-fluid">
                 <div class="section-title2">
-                    <h2>Info & Berita</h2>
+                    <h2>Data Statistik</h2>
                 </div>
 
 
@@ -227,15 +367,31 @@
 
     </section>
 
-    <!-- ======= footer ======= -->
+
+
+    <!-- ======= Peta Informasi ======= -->
+
+    <section id="maps">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title2">
+                <h2>Peta Informasi</h2>
+            </div>
+            <div class="map-responsive">
+                <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1xO4byHHHNenUNTj_OsEWxdGa_rLBaysO" width="1100" height="600">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
 
     <footer id="footer">
         <div class="footer-text text-center">
-            <h2><strong>Dinas Pertanian dan Ketahanan Pangan</strong></h2>
-            <h5><i class="icofont-copyright"></i> 2020 Proudly present by Bondowoso</h5>
+            <h2><strong>Dinas Tanaman Pangan dan Hortikultura Provinsi Jawa Barat</strong></h2>
+            <h5><i class="icofont-copyright"></i> 2020 Proudly present by Si-Petani Jabar</h5>
         </div>
 
     </footer>
+
 
 
 
@@ -250,6 +406,8 @@
     <script src="<?= base_url('assets/'); ?>vendor/venobox/venobox.min.js"></script>
     <script src="<?= base_url('assets/'); ?>vendor/aos/aos.js"></script>
     <script src="<?= base_url('assets/'); ?>vendor/owl.carousel/owl.carousel.min.js"></script>
+
+
 
 
 

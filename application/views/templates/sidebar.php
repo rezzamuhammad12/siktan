@@ -6,7 +6,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fab fa-pagelines"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Siktan Admin</div>
+                <div class="sidebar-brand-text mx-3">SI-PETANI Admin</div>
             </a>
 
             <!-- Divider -->
