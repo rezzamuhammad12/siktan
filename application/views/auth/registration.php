@@ -21,7 +21,7 @@
                             <div class="form-group">
                                 <select name="role_id" id="role_id" class="form-control" required>
                                     <option value="0">Pilih Role</option>
-                                    <option value="2">Admin Kota/Kabupaten</option>
+                                    <option value="2">Admin Kabupaten/Kota</option>
                                     <option value="3">Admin Kecamatan</option>
                                 </select>
                             </div>
