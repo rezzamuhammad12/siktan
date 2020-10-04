@@ -765,11 +765,19 @@ class Kecamatan extends CI_Controller
         $this->load->model('Lahan_model');
         $this->load->model('Komoditi_model');
         $this->load->model('Aset_model');
+
+
+        $kota_filter = $this->input->post('kota_filter');
+        $kecamatan_filter = $this->input->post('kecamatan_filter');
+        $desa_filter = $this->input->post('desa_filter');
+
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        if ($data['user']['role_id'] == 3) {
-            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kecamatan", $data['user']['id_kecamatan']);
-        } else if ($data['user']['role_id'] == 2) {
-            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kota_kab", $data['user']['id_kota']);
+        if ($desa_filter) {
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("desa", $desa_filter);
+        } else if ($kecamatan_filter) {
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kecamatan", $kecamatan_filter);
+        } else if ($kota_filter) {
+            $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTaniByArea("kota_kab", $kota_filter);
         } else {
             $data['kelompokTani'] = $this->KelompokTani_model->getKelompokTani();
         }
@@ -1152,12 +1160,12 @@ class Kecamatan extends CI_Controller
 
 
         $spreadsheet->setActiveSheetIndex(0);
-        $writer = new Xlsx($spreadsheet);
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="SiktanJabar.xlsx"');
-        header('Cache-Control: max-age=0');
+        // $writer = new Xlsx($spreadsheet);
+        // header('Content-Type: application/vnd.ms-excel');
+        // header('Content-Disposition: attachment;filename="SiktanJabar.xlsx"');
+        // header('Cache-Control: max-age=0');
 
-        $writer->save('php://output');
+        // $writer->save('php://output');
         die;
         // redirect('kecamatan');
     }
@@ -1420,17 +1428,14 @@ class Kecamatan extends CI_Controller
 
                 if ($value['nama']) {
                     $id_sumber_perolehan = $this->db->get_where('list_sumber_perolehan', array('sumber_perolehan' => $value['id_sumber']))->row_array();
+                    $newAset[$i]['id_kelompok'] = htmlspecialchars($value['id_kelompok']);
+                    $newAset[$i]['nama'] = htmlspecialchars($value['nama']);
+                    $newAset[$i]['jumlah'] = htmlspecialchars($value['jumlah']);
+                    $newAset[$i]['tahun_perolehan'] = htmlspecialchars($value['tahun_perolehan']);
                     if ($id_sumber_perolehan) {
-                        $newAset[$i]['id_kelompok'] = htmlspecialchars($value['id_kelompok']);
-                        $newAset[$i]['nama'] = htmlspecialchars($value['nama']);
                         $newAset[$i]['id_sumber'] = $id_sumber_perolehan['id'];
-                        $newAset[$i]['jumlah'] = htmlspecialchars($value['jumlah']);
-                        $newAset[$i]['tahun_perolehan'] = htmlspecialchars($value['tahun_perolehan']);
-                        $i++;
-                    } else {
-                        $error = true;
-                        $listError .= "<li>Kesalahan pada sumber perolehan, Kolom Y" . ($key + 8) . " Pastikan sumber perolehan sesuai dengan daftar </li>";
                     }
+                    $i++;
                 }
             }
 

@@ -155,7 +155,6 @@ $('#gofilter').on('click', function () {
     } else {
         from = '';
     }
-
     $.ajax({
         url: base_url + 'kecamatan/filterKelompok',
         type: 'POST',

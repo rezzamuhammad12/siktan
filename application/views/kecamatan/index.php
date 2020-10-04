@@ -20,32 +20,34 @@
 
             <div class="card card-body">
                 <div class="btn-toolbar">
-                    <div class="btn-group mr-2">
-                        <select name="kota_filter" id="kota_filter" class="filter-form form-control" readonly="readonly">
-                            <?php if (!(is_null($user['id_kota']))) : ?>
-                                <option value="<?= $user['id_kota']; ?>">Pilih Kabupaten/Kota</option>
-                            <?php else : ?>
-                                <option value="">Kota</option>
-                            <?php endif; ?>
-                        </select>
-                    </div>
-                    <div class="btn-group mr-2">
-                        <select name="kecamatan_filter" id="kecamatan_filter" class="filter-form form-control" disabled>
-                            <?php if (!(is_null($user['id_kecamatan']))) : ?>
-                                <option value="<?= $user['id_kecamatan']; ?>">Pilih Kecamatan</option>
-                            <?php else : ?>
-                                <option value="">Kecamatan</option>
-                            <?php endif; ?>
-                        </select>
-                    </div>
-                    <div class="btn-group mr-2">
-                        <select name="desa_filter" id="desa_filter" class="filter-form form-control" disabled>
-                            <option value="">Kelurahan/Desa</option>
-                        </select>
-                    </div>
+                    <form action="<?= base_url('kecamatan/export_excel'); ?>" method="post">
+                        <div class="btn-group mr-2">
+                            <select name="kota_filter" id="kota_filter" class="filter-form form-control" readonly="readonly">
+                                <?php if (!(is_null($user['id_kota']))) : ?>
+                                    <option value="<?= $user['id_kota']; ?>">Pilih Kabupaten/Kota</option>
+                                <?php else : ?>
+                                    <option value="">Kota</option>
+                                <?php endif; ?>
+                            </select>
+                        </div>
+                        <div class="btn-group mr-2">
+                            <select name="kecamatan_filter" id="kecamatan_filter" class="filter-form form-control" disabled>
+                                <?php if (!(is_null($user['id_kecamatan']))) : ?>
+                                    <option value="<?= $user['id_kecamatan']; ?>">Pilih Kecamatan</option>
+                                <?php else : ?>
+                                    <option value="">Kecamatan</option>
+                                <?php endif; ?>
+                            </select>
+                        </div>
+                        <div class="btn-group mr-2">
+                            <select name="desa_filter" id="desa_filter" class="filter-form form-control" disabled>
+                                <option value="">Kelurahan/Desa</option>
+                            </select>
+                        </div>
 
-                    <button id="gofilter" class="btn btn-success mr-2">Go Filter</button>
-                    <a href="<?= base_url('kecamatan/export_excel'); ?>" class="btn btn-warning mr-2">Export</a>
+                        <button type="button" id="gofilter" class="btn btn-success mr-2">Go Filter</button>
+                        <button type="submit" class="btn btn-warning mr-2">Export</button>
+                    </form>
 
                 </div>
             </div>

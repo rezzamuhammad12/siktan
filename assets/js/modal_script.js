@@ -1,11 +1,11 @@
 // Baseurl
-var base_url = window.location.origin + "/siktan-jabar/";
+var base_url = window.location.origin + "/si-petani/";
 
 // function
 
 function getListAnggota(id) {
     $.ajax({
-        url: 'http://localhost/siktan-jabar/kecamatan/getListAnggota',
+        url: 'http://localhost/si-petani/kecamatan/getListAnggota',
         type: 'POST',
         async: false,
         data: {
@@ -76,7 +76,7 @@ $('#addLahan').on('show.bs.modal', function (event) {
     var status = button.data('status')
 
     $.ajax({
-        url: 'http://localhost/siktan-jabar/kecamatan/getListAnggota',
+        url: 'http://localhost/si-petani/kecamatan/getListAnggota',
         type: 'POST',
         async: false,
         data: {
@@ -146,7 +146,7 @@ $('#id_subsektor').on('change', function () {
     if (id) {
         $('#id_komoditas').removeAttr('disabled');
         $.ajax({
-            url: 'http://localhost/siktan-jabar/kecamatan/getListKomoditas',
+            url: 'http://localhost/si-petani/kecamatan/getListKomoditas',
             type: 'POST',
             async: false,
             data: {
@@ -170,7 +170,7 @@ $('#id_subsektor').on('change', function () {
 
 function getListKomoditas(id) {
     $.ajax({
-        url: 'http://localhost/siktan-jabar/kecamatan/getListKomoditas',
+        url: 'http://localhost/si-petani/kecamatan/getListKomoditas',
         type: 'POST',
         async: false,
         data: {
