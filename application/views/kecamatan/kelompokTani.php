@@ -18,6 +18,10 @@
                 <a class="btn btn-primary" data-toggle="collapse" href="#filterTable" role="button" aria-expanded="false" aria-controls="filterTable">
                     Filter
                 </a>
+
+                <button type="button" class="btn btn-secondary ml-auto float-right">
+                    Jumlah Kelompok Tani : <span class="badge badge-light"><?= $total_kelompokTani; ?></span>
+                </button>
             </div>
 
             <div class="collapse" id="filterTable">

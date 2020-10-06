@@ -16,6 +16,9 @@
 
             <div class="btn-toolbar">
                 <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAset" data-title="Tambah Aset" data-button="Add">Tambah Aset</a>
+                <button type="button" class="btn btn-secondary ml-auto mb-3 float-right">
+                    Jumlah Aset : <span class="badge badge-light"><?= $total_aset; ?></span>
+                </button>
                 <div class="btn-group ml-auto">
                     <select name="filter_aset" id="filter_aset" class="filter-form form-control">
                         <option value="">Kelompok</option>

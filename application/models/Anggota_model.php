@@ -15,6 +15,16 @@ class Anggota_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
+    public function hitungJumlahAnggota()
+    {
+        $query = $this->db->get('anggota');
+        if ($query->num_rows() > 0) {
+            return $query->num_rows();
+        } else {
+            return 0;
+        }
+    }
+
     public function getSingleAnggota($id)
     {
         $query = "SELECT `anggota`.* ,`kelompok_tani`.`nama` AS `nama_kelompok`, `list_status_anggota`.`status`

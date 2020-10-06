@@ -32,6 +32,7 @@ class Kecamatan extends CI_Controller
         }
 
         $data['penyuluh'] = $this->Penyuluh_model->getPenyuluh();
+        $data['total_kelompokTani'] = $this->KelompokTani_model->hitungJumlahKelompokTani();
         $data['listKelas'] = $this->db->get('list_kelas')->result_array();
 
 
@@ -174,6 +175,7 @@ class Kecamatan extends CI_Controller
         $data['title'] = 'Penyuluh';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['penyuluh'] = $this->Penyuluh_model->getPenyuluh();
+        $data['total_penyuluh'] = $this->Penyuluh_model->hitungJumlahPenyuluh();
         $data['listStatus'] = $this->db->get('list_status_penyuluh')->result_array();
 
         $this->form_validation->set_rules('nama', 'Nama', 'required');
@@ -248,6 +250,7 @@ class Kecamatan extends CI_Controller
     }
 
 
+
     // ==============================================
     //     Lahan Section 
     // ==============================================
@@ -260,6 +263,7 @@ class Kecamatan extends CI_Controller
 
         $data['title'] = 'Lahan';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['total_lahan'] = $this->Lahan_model->hitungJumlahLahan();
 
         if ($data['user']['role_id'] == 3) {
             $data['lahan'] = $this->Lahan_model->getLahanByArea("kecamatan", $data['user']['id_kecamatan']);
@@ -360,8 +364,9 @@ class Kecamatan extends CI_Controller
         $this->load->model('Aset_model');
         $this->load->model('KelompokTani_model');
 
-        $data['title'] = 'Aset';
+        $data['title'] = 'Aset Kelompok';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['total_aset'] = $this->Aset_model->hitungJumlahAset();
 
         if ($data['user']['role_id'] == 3) {
             $data['aset'] = $this->Aset_model->getAsetByArea("kecamatan", $data['user']['id_kecamatan']);
@@ -470,7 +475,7 @@ class Kecamatan extends CI_Controller
 
         $data['title'] = 'Komoditi';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
+        $data['total_komoditi'] = $this->Komoditi_model->hitungJumlahKomoditi();
 
 
         if ($data['user']['role_id'] == 3) {
@@ -589,7 +594,7 @@ class Kecamatan extends CI_Controller
 
         $data['title'] = 'Anggota';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
+        $data['total_anggota'] = $this->Anggota_model->hitungJumlahAnggota();
 
 
         if ($data['user']['role_id'] == 3) {

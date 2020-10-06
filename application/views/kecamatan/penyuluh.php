@@ -15,8 +15,9 @@
             <?= $this->session->flashdata('message'); ?>
             <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addPenyuluh" data-title="Tambah Penyuluh" data-button="Add">Tambah Penyuluh</a>
 
-
-
+            <button type="button" class="btn btn-secondary ml-auto mb-3 float-right">
+                Jumlah Penyuluh : <span class="badge badge-light"><?= $total_penyuluh; ?></span>
+            </button>
             <table class="table table-hover sortable">
                 <thead>
                     <tr>

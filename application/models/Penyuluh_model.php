@@ -11,4 +11,14 @@ class Penyuluh_model extends CI_Model
                 ";
         return $this->db->query($query)->result_array();
     }
+
+    public function hitungJumlahPenyuluh()
+    {
+        $query = $this->db->get('penyuluh');
+        if ($query->num_rows() > 0) {
+            return $query->num_rows();
+        } else {
+            return 0;
+        }
+    }
 }

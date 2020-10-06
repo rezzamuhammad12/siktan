@@ -18,6 +18,16 @@ class KelompokTani_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
+    public function hitungJumlahKelompokTani()
+    {
+        $query = $this->db->get('kelompok_tani');
+        if ($query->num_rows() > 0) {
+            return $query->num_rows();
+        } else {
+            return 0;
+        }
+    }
+
     public function getSingleKelompokTani($id)
     {
 
@@ -90,7 +100,7 @@ class KelompokTani_model extends CI_Model
 
     public function getKelompokTaniByArea($area, $id)
     {
-        $query = "SELECT `kelompok_tani`.* ,`list_kelas`.`id` AS `id_kelas`, `list_kelas`.`kelas`, `penyuluh`.`nama` AS `nama_penyuluh`, penyuluh.`nip`, penyuluh.`nik`,`penyuluh`.`id` AS `id_penyuluh`, `list_status_penyuluh`.`status`, list_status_penyuluh.`id` AS `id_status_penyuluh`
+        $query = "SELECT `kelompok_tani`.* ,`list_kelas`.`id` AS `id_kelas`, `list_kelas`.`kelas`, `penyuluh`.`nama` AS `nama_penyuluh`, `penyuluh`.`nip`, `penyuluh`.`nik`,`penyuluh`.`id` AS `id_penyuluh`, `list_status_penyuluh`.`status`, `list_status_penyuluh`.`id` AS `id_status_penyuluh`
                     FROM `kelompok_tani` INNER JOIN `list_kelas`
                         ON `kelompok_tani`.`id_kelas` = `list_kelas`.`id`
                     INNER JOIN `penyuluh`

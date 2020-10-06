@@ -16,6 +16,9 @@
 
             <div class="btn-toolbar">
                 <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addLahan" data-title="Tambah Lahan" data-button="Add">Tambah Lahan</a>
+                <button type="button" class="btn btn-secondary ml-auto mb-3 float-right">
+                    Jumlah Pemilik Lahan : <span class="badge badge-light"><?= $total_lahan; ?></span>
+                </button>
                 <div class="btn-group ml-auto">
                     <select name="filter_lahan" id="filter_lahan" class="filter-form form-control">
                         <option value="">Kelompok</option>

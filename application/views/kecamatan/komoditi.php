@@ -16,6 +16,9 @@
 
             <div class="btn-toolbar">
                 <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addKomoditi" data-title="Tambah Komoditi" data-button="Add">Tambah Komoditi</a>
+                <button type="button" class="btn btn-secondary ml-auto mb-3">
+                    Jumlah Komoditi : <span class="badge badge-light"><?= $total_komoditi; ?></span>
+                </button>
                 <div class="btn-group ml-auto">
                     <select name="filter_komoditi" id="filter_komoditi" class="filter-form form-control">
                         <option value="">Kelompok</option>

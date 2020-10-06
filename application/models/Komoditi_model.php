@@ -19,6 +19,16 @@ class Komoditi_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
+    public function hitungJumlahKomoditi()
+    {
+        $query = $this->db->get('kelompok_tani');
+        if ($query->num_rows() > 0) {
+            return $query->num_rows();
+        } else {
+            return 0;
+        }
+    }
+
     public function getSingleKomoditi($id)
     {
 

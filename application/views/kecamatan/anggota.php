@@ -16,6 +16,9 @@
 
             <div class="btn-toolbar">
                 <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAnggota" data-title="Tambah Anggota" data-button="Add">Tambah Anggota</a>
+                <button type="button" class="btn btn-secondary ml-auto mb-3">
+                    Jumlah Anggota : <span class="badge badge-light"><?= $total_anggota; ?></span>
+                </button>
                 <div class="btn-group ml-auto">
                     <select name="filter_anggota" id="filter_anggota" class="filter-form form-control">
                         <option value="">Kelompok</option>
@@ -25,7 +28,9 @@
                         <?php endforeach ?>
                     </select>
                 </div>
+
             </div>
+
 
             <table class="table table-hover sortable">
                 <thead>

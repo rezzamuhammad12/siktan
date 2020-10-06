@@ -15,6 +15,16 @@ class Aset_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
+    public function hitungJumlahAset()
+    {
+        $query = $this->db->get('aset');
+        if ($query->num_rows() > 0) {
+            return $query->num_rows();
+        } else {
+            return 0;
+        }
+    }
+
     public function getSingleAset($id)
     {
         $query = "SELECT `aset`.* , `list_sumber_perolehan`.`sumber_perolehan`, `list_sumber_perolehan`.`id` AS `id_sumber`,`kelompok_tani`.`nama` AS `nama_kelompok`, `kelompok_tani`.`id` AS `id_kelompok`

@@ -17,6 +17,16 @@ class Lahan_Model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
+    public function hitungJumlahLahan()
+    {
+        $query = $this->db->get('lahan');
+        if ($query->num_rows() > 0) {
+            return $query->num_rows();
+        } else {
+            return 0;
+        }
+    }
+
     public function getSingleLahan($id)
     {
         $query = "SELECT `lahan`.`id` AS `id_lahan`, `lahan`.`luas`, `lahan`.`verifikasi` AS `verifikasi_lahan`,`kelompok_tani`.*, `list_status_kepemilikan`.`status`, `list_status_kepemilikan`.`id` AS `id_status`, `anggota`.`nama` AS `nama_anggota`, `anggota`.`id` AS `id_anggota`
