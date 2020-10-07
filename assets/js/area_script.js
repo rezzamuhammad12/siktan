@@ -1,7 +1,7 @@
 function idDesaToVal(tag) {
     $.each(tag.find(".desa"), function (key, value) {
         $.ajax({
-            url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan/' + $(value).text(),
+            url: base_url + '/api/kelurahan/' + $(value).text(),
             type: 'GET',
             dataType: 'json',
             success: function (result) {
@@ -15,7 +15,7 @@ function idDesaToVal(tag) {
 function idKecToVal(tag) {
     $.each(tag.find(".kecamatan"), function (key, value) {
         $.ajax({
-            url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan/' + $(value).text(),
+            url: base_url + '/api/kecamatan/' + $(value).text(),
             type: 'GET',
             dataType: 'json',
             success: function (result) {
@@ -29,7 +29,7 @@ function idKecToVal(tag) {
 function idKotaToVal(tag) {
     $.each(tag.find(".kota"), function (key, value) {
         $.ajax({
-            url: 'https://dev.farizdotid.com/api/daerahindonesia/kota/' + $(value).text(),
+            url: base_url + '/api/kota/' + $(value).text(),
             type: 'GET',
             dataType: 'json',
             success: function (result) {

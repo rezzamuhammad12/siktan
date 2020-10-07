@@ -258,7 +258,7 @@ $('#addKelompokPetani').on('show.bs.modal', function (event) {
     modal.find('.modal-title').text(title);
     modal.find('.action').text(btn);
     $.ajax({
-        url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + id_kecamatan,
+        url: base_url + '/api/kelurahan?id_kecamatan=' + id_kecamatan,
         type: 'GET',
         dataType: 'json',
         success: function (result) {

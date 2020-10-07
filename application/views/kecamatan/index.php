@@ -52,14 +52,13 @@
                 </div>
             </div>
             <!-- Import excel -->
-            <form method="post" enctype="multipart/form-data" action="kecamatan/import_excel">
+            <form method="post" enctype="multipart/form-data" action="<?= base_url('kecamatan/import_excel'); ?>">
                 <div class="form-group">
                     <label for="exampleInputFile">File Upload</label>
                     <input type="file" name="berkas_excel" class="form-control" id="exampleInputFile">
                 </div>
 
                 <button type="submit" class="btn btn-info mr-2 mb-3">import</button>
-                <!-- <a href="<?= base_url('kecamatan/import_excel'); ?>" class="btn btn-info mr-2">Import</a> -->
             </form>
 
             <?= $this->session->flashdata('import_message'); ?>

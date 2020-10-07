@@ -91,7 +91,7 @@ class KelompokTani_model extends CI_Model
 
     public function convertCodeArea($area, $code)
     {
-        $url = "https://dev.farizdotid.com/api/daerahindonesia/$area/$code";
+        $url = base_url('api/') . "$area/$code";
 
         $data = $this->http_request($url);
 
@@ -115,11 +115,11 @@ class KelompokTani_model extends CI_Model
     public function getCodeArea($area, $code)
     {
         if ($area == 'kelurahan') {
-            $url = "https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=$code";
+            $url =  base_url('api/') . "kelurahan?id_kecamatan=$code";
         } else if ($area == 'kecamatan') {
-            $url = "https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=$code";
+            $url =  base_url('api/') . "kecamatan?id_kota=$code";
         } else {
-            $url = "https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=$code";
+            $url =  base_url('api/') . "kota?id_provinsi=$code";
         }
 
         $data = $this->http_request($url);
@@ -142,7 +142,7 @@ class KelompokTani_model extends CI_Model
         }
 
         foreach ($data as $key => $value) {
-            if ($value['nama'] == $name || $value['id'] == $name) {
+            if ($value['nama'] ==  strtoupper($name) || $value['id'] ==  strtoupper($name)) {
                 return $value['id'];
             }
         }

@@ -1,5 +1,7 @@
+var base_url = window.location.origin + "/si-petani/";
+
 $.ajax({
-    url: 'https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=32',
+    url: base_url + '/api/kota?id_provinsi=32',
     type: 'GET',
     dataType: 'json',
     success: function (result) {
@@ -48,7 +50,7 @@ $(document).ready(function () {
             $('#id_kecamatan').removeAttr('disabled');
 
             $.ajax({
-                url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + id_kota,
+                url: base_url + '/api/kecamatan?id_kota=' + id_kota,
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {

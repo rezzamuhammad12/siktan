@@ -19,7 +19,7 @@
                 <button type="button" class="btn btn-secondary ml-auto mb-3">
                     Jumlah Komoditi : <span class="badge badge-light"><?= $total_komoditi; ?></span>
                 </button>
-                <div class="btn-group ml-auto">
+                <div class="btn-group ml-2">
                     <select name="filter_komoditi" id="filter_komoditi" class="filter-form form-control">
                         <option value="">Kelompok</option>
                         <?php foreach ($kelompokTani as $kp) : ?>

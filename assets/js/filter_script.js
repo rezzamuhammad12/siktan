@@ -6,7 +6,7 @@ kecamatan_filter = $('#kecamatan_filter').val();
 if (kota_filter) {
     $('#kota_filter').attr('readonly', 'readonly')
     $.ajax({
-        url: 'https://dev.farizdotid.com/api/daerahindonesia/kota/' + kota_filter,
+        url: base_url + '/api/kota/' + kota_filter,
         type: 'GET',
         dataType: 'json',
         success: function (result) {
@@ -16,7 +16,7 @@ if (kota_filter) {
     })
 } else {
     $.ajax({
-        url: 'https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=32',
+        url: base_url + '/api/kota?id_provinsi=32',
         type: 'GET',
         dataType: 'json',
         success: function (result) {
@@ -36,7 +36,7 @@ if (kecamatan_filter != 0) {
     $('#kecamatan_filter').removeAttr('disabled')
     $('#desa_filter').removeAttr('disabled')
     $.ajax({
-        url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan/' + kecamatan_filter,
+        url: base_url + '/api/kecamatan/' + kecamatan_filter,
         type: 'GET',
         dataType: 'json',
         success: function (result) {
@@ -46,7 +46,7 @@ if (kecamatan_filter != 0) {
     })
 
     $.ajax({
-        url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + kecamatan_filter,
+        url: base_url + '/api/kelurahan?id_kecamatan=' + kecamatan_filter,
         type: 'GET',
         dataType: 'json',
         success: function (result) {
@@ -65,7 +65,7 @@ if (kecamatan_filter != 0) {
     $('#kecamatan_filter').removeAttr('readonly')
     $('#kecamatan_filter').removeAttr('disabled')
     $.ajax({
-        url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + kota_filter,
+        url: base_url + '/api/kecamatan?id_kota=' + kota_filter,
         type: 'GET',
         dataType: 'json',
         success: function (result) {
@@ -90,7 +90,7 @@ $('#kota_filter').on('change', function () {
     if (idKota) {
         $('#kecamatan_filter').removeAttr('disabled')
         $.ajax({
-            url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + idKota,
+            url: base_url + '/api/kecamatan?id_kota=' + idKota,
             type: 'GET',
             dataType: 'json',
             success: function (result) {
@@ -118,7 +118,7 @@ $('#kecamatan_filter').on('change', function () {
     if (idKec) {
         $('#desa_filter').removeAttr('disabled')
         $.ajax({
-            url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + idKec,
+            url: base_url + '/api/kelurahan?id_kecamatan=' + idKec,
             type: 'GET',
             dataType: 'json',
             success: function (result) {

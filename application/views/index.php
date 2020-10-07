@@ -374,12 +374,69 @@
     <section id="maps">
         <div class="container" data-aos="fade-up">
             <div class="section-title2">
-                <h2>Peta Informasi</h2>
+                <h2>Peta Informasi Jawa Barat</h2>
             </div>
-            <div class="map-responsive">
-                <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1xO4byHHHNenUNTj_OsEWxdGa_rLBaysO" width="1100" height="600">
-                </iframe>
-            </div>
+
+
+            <center>
+                <h1></h1>
+                <button type="button" data-toggle="modal" data-target="#myModal">
+                    <img src="<?= base_url('assets/'); ?>img/mapjabar.png" alt="" class="img-responsive" width="700" height="1000">
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Kota Tasikmalaya</h4>
+                            </div>
+                            <div class="modal-body">
+                                <center>
+                                    <img src="<?= base_url('assets/'); ?>img/mapkotatasik.png" alt="" class="img-responsive">
+                                </center>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </center>
+
+
+
+
+
+
+            <!--<center>-->
+
+            <!--    <br><br>-->
+            <!--<img src="<?= base_url('assets/'); ?>img/mapkotatasik.png" class="img-fluid animated" alt="Workspace" usemap="#workmap" width="600" height="900" >-->
+
+            <!--    <map name="workmap">-->
+            <!--      <area shape="circle" coords="110,60,22" alt="Indihiang" href="#" >  -->
+            <!--      <area shape="circle" coords="70,100,22" alt="Bungursari" href="#" > -->
+            <!--      <area shape="circle" coords="100,200,22" alt"Mangkubumi" href="#" >-->
+            <!--      <area shape="circle" coords="220,210,22" alt="Cihideung" href="#" >-->
+            <!--      <area shape="circle" coords="240,140,22" alt="Cipedes" href="#" >-->
+            <!--      <area shape="circle" coords="140,330,30" alt"Kawalu" href="#" >-->
+            <!--      <area shape="circle" coords="270,450,30" alt"Tamansari" href="#" >-->
+            <!--      <area shape="circle" coords="280,270,23" alt"Tawang" href="#" >-->
+            <!--      <area shape="circle" coords="420,310,30" alt"Cibeureum" href="#" >-->
+            <!--      <area shape="circle" coords="480,230,27" alt"Purbaratu" href="#" >-->
+            <!--    </map>-->
+
+
+            <!--<script> function myFunction() {alert("Kecamatan Indihiang!");}</script>-->
+
+
+            <!--</center>-->
+            <!--<div class="map-responsive">-->
+            <!--    <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1xO4byHHHNenUNTj_OsEWxdGa_rLBaysO" width="1100" height="600">-->
+            <!--    </iframe>-->
+            <!--</div>-->
         </div>
     </section>
 

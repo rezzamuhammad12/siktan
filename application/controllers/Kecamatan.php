@@ -32,7 +32,8 @@ class Kecamatan extends CI_Controller
         }
 
         $data['penyuluh'] = $this->Penyuluh_model->getPenyuluh();
-        $data['total_kelompokTani'] = $this->KelompokTani_model->hitungJumlahKelompokTani();
+        // $data['total_kelompokTani'] = $this->KelompokTani_model->hitungJumlahKelompokTani();
+        $data['total_kelompokTani'] = sizeof($data['kelompokTani']);
         $data['listKelas'] = $this->db->get('list_kelas')->result_array();
 
 
@@ -792,8 +793,8 @@ class Kecamatan extends CI_Controller
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         // Set document properties
-        $spreadsheet->getProperties()->setCreator('siktan.co.th')
-            ->setLastModifiedBy('Siktan')
+        $spreadsheet->getProperties()->setCreator('sipetani.co.th')
+            ->setLastModifiedBy('Sipetani')
             ->setTitle('Master Data')
             ->setSubject('Generate Excel use PhpSpreadsheet in CodeIgniter')
             ->setDescription('Export data to Excel Work for me!');
@@ -963,16 +964,17 @@ class Kecamatan extends CI_Controller
         $sheet2->setCellValue('A' . $kolom2, $kotaAdmin['nama']);
         $sheet2->setCellValue('B' . $kolom2, $kotaAdmin['id']);
         foreach ($kecamatan['kecamatan'] as $k) {
-
             $sheet2->setCellValue('C' . $kolomKecamatan, $k['nama']);
             $sheet2->setCellValue('D' . $kolomKecamatan, $k['id']);
             $kelurahan = $this->KelompokTani_model->getCodeArea("kelurahan", $k['id']);
 
             foreach ($kelurahan['kelurahan'] as $kel) {
+
                 $sheet2->setCellValue('E' . $kolomKecamatan, $kel['nama']);
                 $sheet2->setCellValue('F' . $kolomKecamatan, $kel['id']);
                 $kolomKecamatan++;
             }
+            $kolomKecamatan++;
         }
 
         // Sheet 3 Petunjuk Pengisian
@@ -1165,12 +1167,12 @@ class Kecamatan extends CI_Controller
 
 
         $spreadsheet->setActiveSheetIndex(0);
-        // $writer = new Xlsx($spreadsheet);
-        // header('Content-Type: application/vnd.ms-excel');
-        // header('Content-Disposition: attachment;filename="SiktanJabar.xlsx"');
-        // header('Cache-Control: max-age=0');
+        $writer = new Xlsx($spreadsheet);
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="si-petani.xlsx"');
+        header('Cache-Control: max-age=0');
 
-        // $writer->save('php://output');
+        $writer->save('php://output');
         die;
         // redirect('kecamatan');
     }
@@ -1300,6 +1302,9 @@ class Kecamatan extends CI_Controller
             // =======================================================================
             $newKelompokTani = array();
             $i = 0;
+            $idKota = null;
+            $idKec = null;
+            $idKel = null;
             foreach ($kelompokTani as $key => $value) {
                 if (!is_null($value['nama'])) {
                     // ===============================================
@@ -1337,7 +1342,6 @@ class Kecamatan extends CI_Controller
                         $error = true;
                         $listError .= "<li>Kesalahan pada Kelas, Kolom L" . ($key + 8) . " Pastikan Kelas sesuai dengan daftar </li>";
                     }
-
                     $newKelompokTani[$i]['kota_kab'] = htmlspecialchars($idKota);
                     $newKelompokTani[$i]['nama'] = htmlspecialchars($value['nama']);
                     $newKelompokTani[$i]['bpp'] = htmlspecialchars($value['bpp']);

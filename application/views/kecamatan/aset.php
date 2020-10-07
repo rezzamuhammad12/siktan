@@ -19,7 +19,7 @@
                 <button type="button" class="btn btn-secondary ml-auto mb-3 float-right">
                     Jumlah Aset : <span class="badge badge-light"><?= $total_aset; ?></span>
                 </button>
-                <div class="btn-group ml-auto">
+                <div class="btn-group ml-2">
                     <select name="filter_aset" id="filter_aset" class="filter-form form-control">
                         <option value="">Kelompok</option>
                         <?php foreach ($kelompokTani as $kp) : ?>

@@ -105,7 +105,7 @@ $(document).ready(function () {
     if (idKota) {
         $('#id_kota').attr('readonly', 'readonly')
         $.ajax({
-            url: 'https://dev.farizdotid.com/api/daerahindonesia/kota/' + idKota,
+            url: base_url + '/api/kota/' + idKota,
             type: 'GET',
             dataType: 'json',
             success: function (result) {
@@ -115,7 +115,7 @@ $(document).ready(function () {
         })
     } else {
         $.ajax({
-            url: 'https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=32',
+            url: base_url + '/api/kota?id_provinsi=32',
             type: 'GET',
             dataType: 'json',
             success: function (result) {
@@ -134,7 +134,7 @@ $(document).ready(function () {
         $('#id_kecamatan').attr('readonly', 'readonly')
 
         $.ajax({
-            url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan/' + idKecamatan,
+            url: base_url + '/api/kecamatan/' + idKecamatan,
             type: 'GET',
             dataType: 'json',
             success: function (result) {
@@ -144,7 +144,7 @@ $(document).ready(function () {
         })
     } else {
         $.ajax({
-            url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + idKota,
+            url: base_url + '/api/kecamatan?id_kota=' + idKota,
             type: 'GET',
             dataType: 'json',
             success: function (result) {
@@ -171,7 +171,7 @@ $(document).ready(function () {
         if (idKota) {
             $('#id_kecamatan').removeAttr('disabled');
             $.ajax({
-                url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + idKota,
+                url: base_url + '/api/kecamatan?id_kota=' + idKota,
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
@@ -205,7 +205,7 @@ $(document).ready(function () {
         if (idKota && idKecamatan) {
             $('#id_desa').removeAttr('disabled');
             $.ajax({
-                url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + idKecamatan,
+                url: base_url + '/api/kelurahan?id_kecamatan=' + idKecamatan,
                 type: 'GET',
                 dataType: 'json',
                 success: function (result) {
